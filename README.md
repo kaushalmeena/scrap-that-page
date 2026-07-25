@@ -19,17 +19,30 @@ or copy.
 
 ## Screenshots
 
-|                                   |                                       |
-| --------------------------------- | ------------------------------------- |
-| ![Home](./screenshots/Home.png)   | ![Scripts](./screenshots/Scripts.png) |
-| ![Editor](./screenshots/Editor.png) | ![Run](./screenshots/Run.png)       |
+<table>
+  <tr>
+    <td width="50%"><img src="screenshots/Home.png" alt="Home"></td>
+    <td width="50%"><img src="screenshots/Scripts.png" alt="Scripts"></td>
+  </tr>
+</table>
 
 <details>
 <summary>More screenshots</summary>
 
-![Favorites](./screenshots/Favorites.png)
-![History](./screenshots/History.png)
-![Settings](./screenshots/Settings.png)
+<table>
+  <tr>
+    <td width="50%"><img src="screenshots/Editor.png" alt="Script editor"></td>
+    <td width="50%"><img src="screenshots/Run.png" alt="Run results"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="screenshots/Favorites.png" alt="Favorites"></td>
+    <td width="50%"><img src="screenshots/History.png" alt="Run history"></td>
+  </tr>
+  <tr>
+    <td width="50%"><img src="screenshots/Settings.png" alt="Settings"></td>
+    <td width="50%"></td>
+  </tr>
+</table>
 
 </details>
 
@@ -139,13 +152,6 @@ pnpm make
 Artifacts are written to `out/`. Forge is configured to produce a Squirrel
 installer (Windows), a ZIP (macOS), and `.deb` / `.rpm` packages (Linux); build
 on the target OS to produce that platform's package.
-
-## Contributing
-
-Contributions are welcome! If you find a bug or have a feature request, please
-[open an issue](https://github.com/kaushalmeena/scrap-that-page/issues/new/choose)
-first to discuss it. For code changes, fork the repository, create a branch,
-and open a pull request.
 
 ## License
 
