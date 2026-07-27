@@ -153,6 +153,13 @@ Artifacts are written to `out/`. Forge is configured to produce a Squirrel
 installer (Windows), a ZIP (macOS), and `.deb` / `.rpm` packages (Linux); build
 on the target OS to produce that platform's package.
 
+## Contributing
+
+Contributions are welcome! If you find a bug or have a feature request, please
+[open an issue](https://github.com/kaushalmeena/scrap-that-page/issues/new/choose)
+first to discuss it. For code changes, fork the repository, create a branch,
+and open a pull request.
+
 ## License
 
 This project is licensed under the MIT License — see the [LICENSE](LICENSE)
