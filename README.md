@@ -129,16 +129,10 @@ pnpm start
 
 ### Testing
 
-To run the unit tests:
+To lint, typecheck and run the unit tests together:
 
 ```bash
-pnpm test
-```
-
-To lint the project:
-
-```bash
-pnpm lint
+pnpm check
 ```
 
 ### Building
