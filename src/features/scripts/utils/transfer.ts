@@ -10,7 +10,7 @@ type ScriptExportFile = {
   script: Script;
 };
 
-// Anchor-click download, mirroring saveFile in runner/runnerUtils.ts (kept
+// Anchor-click download, mirroring saveFile in runner/engine.ts (kept
 // local so the scripts feature doesn't depend on runner code).
 const saveJSONFile = (data: string, filename: string) => {
   const blob = new Blob([data], { type: "application/json" });

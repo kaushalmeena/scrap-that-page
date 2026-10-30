@@ -7,7 +7,7 @@ import {
   denormalizeState,
   normalizeScript,
   validateEditorState
-} from "./editorUtils";
+} from "./state";
 
 const script: Script = {
   id: 7,

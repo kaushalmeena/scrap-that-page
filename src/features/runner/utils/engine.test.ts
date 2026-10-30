@@ -4,8 +4,8 @@ import { describe, expect, it, vi } from "vitest";
 import type { Operation } from "@/types/operation";
 import type { ExtractOperationResult } from "@/types/scraper";
 
-import { downloadAsCSV } from "./exportUtils";
-import { createRunnerGenerator, getRunnerTableData } from "./runnerUtils";
+import { createRunnerGenerator, getRunnerTableData } from "./engine";
+import { downloadAsCSV } from "./export";
 
 const setOperation = (name: string, value: string): Operation => ({
   type: "set",

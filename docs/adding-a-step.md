@@ -14,7 +14,7 @@ checker catches most omissions after step 1.
 3. **Appearance** — add the glyph, tint and library category to
    `STEP_GLYPHS` in `src/lib/glyphs.ts`.
 4. **Run behavior** — handle the type in `createRunnerGenerator`
-   (`features/runner/utils/runnerUtils.ts`):
+   (`features/runner/utils/engine.ts`):
    - renderer-only steps (variables, control flow) update `variables` and
      yield nothing;
    - browser steps yield a `ScraperOperation`, and also need a log heading in
@@ -24,7 +24,7 @@ checker catches most omissions after step 1.
    (`src/main/proxy/scraper.ts`), execute it in `processOperation`
    (`src/main/utils/scraper.ts`), and implement the action on `Scraper` /
    `DebuggerPage` with auto-waiting.
-6. **Tests** — cover the generator output in `runnerUtils.test.ts`, and any
+6. **Tests** — cover the generator output in `engine.test.ts`, and any
    formatting or validation in `src/utils/operation.test.ts`.
 
 Existing stored scripts stay valid when you add a type. Changing an existing

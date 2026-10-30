@@ -18,7 +18,7 @@ import {
   denormalizeState,
   normalizeScript,
   validateEditorState
-} from "../utils/editorUtils";
+} from "../utils/state";
 import ElementPicker from "./ElementPicker";
 import ScriptHeader from "./ScriptHeader";
 import StepLibrary from "./StepLibrary";

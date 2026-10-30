@@ -11,7 +11,7 @@ import {
   createRunnerGenerator,
   getRunnerHeaderInfo,
   getRunnerTableData
-} from "../utils/runnerUtils";
+} from "../utils/engine";
 
 type RunnerState = {
   // Script the current/last run belongs to (null before any run).

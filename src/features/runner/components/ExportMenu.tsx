@@ -11,7 +11,7 @@ import {
   downloadAsCSV,
   downloadAsJSON,
   downloadAsXLSX
-} from "../utils/exportUtils";
+} from "../utils/export";
 
 // Toolbar "Export" pull-down for a result table.
 export default function ExportMenu({ data }: { data: TableData }) {
