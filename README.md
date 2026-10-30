@@ -19,10 +19,12 @@ or copy.
 
 ## Screenshots
 
+<img src="screenshots/Library.png" alt="Script library with the selected script's steps and recent runs">
+
 <table>
   <tr>
-    <td width="50%"><img src="screenshots/Home.png" alt="Home"></td>
-    <td width="50%"><img src="screenshots/Scripts.png" alt="Scripts"></td>
+    <td width="50%"><img src="screenshots/Run.png" alt="A finished run with its results table and log, in dark appearance"></td>
+    <td width="50%"><img src="screenshots/Editor.png" alt="Script editor with step blocks and the step library"></td>
   </tr>
 </table>
 
@@ -31,12 +33,8 @@ or copy.
 
 <table>
   <tr>
-    <td width="50%"><img src="screenshots/Editor.png" alt="Script editor"></td>
-    <td width="50%"><img src="screenshots/Run.png" alt="Run results"></td>
-  </tr>
-  <tr>
-    <td width="50%"><img src="screenshots/Favorites.png" alt="Favorites"></td>
-    <td width="50%"><img src="screenshots/History.png" alt="Run history"></td>
+    <td width="50%"><img src="screenshots/History.png" alt="Run history with saved results"></td>
+    <td width="50%"><img src="screenshots/Palette.png" alt="Command palette"></td>
   </tr>
   <tr>
     <td width="50%"><img src="screenshots/Settings.png" alt="Settings"></td>
@@ -48,8 +46,12 @@ or copy.
 
 ## Features
 
-- **Visual script builder** — compose a script step by step; drag to reorder,
-  undo/redo, and a searchable step picker for adding operations.
+- **Feels like a Mac app** — a translucent source-list sidebar, list + detail
+  panes under a unified toolbar, native menu bar, light and dark appearance,
+  and controls modeled on AppKit.
+- **Visual script builder** — stack steps as Shortcuts-style blocks from an
+  always-visible step library; drag to reorder, undo/redo, inline name and
+  description.
 - **Browser steps** — `open` a URL, `click` an element, `type` into a field,
   `extract` values by CSS selector and attribute, plus `wait`, `delay`, and
   `scroll`.
@@ -60,12 +62,15 @@ or copy.
 - **Variables and control flow** — `set`/`increase`/`decrease` variables and
   branch or loop with `if`/`while`; reference variables in inputs with
   `{{variable}}` placeholders.
-- **Results table** — extracted data is collected into a table and exported to
-  **CSV**, **JSON**, or **XLSX**, or copied to the clipboard.
-- **Run history** — every run is recorded with its results and a per-step log.
-- **Library management** — create, edit, delete, favorite, search, and
-  import/export scripts as JSON.
-- **Command palette** — `Cmd/Ctrl-K` to jump anywhere or run/edit a script.
+- **Live results** — runs play next to your script list: a fast, striped results
+  table fills in as data is extracted, with a step-by-step log underneath.
+  Export to **CSV**, **JSON**, or **XLSX**, or copy to the clipboard.
+- **Run history** — every run is saved with its results and log.
+- **Keyboard first** — `⌘K` command palette, `⌘R` run, `⌘E` edit, `⌘N` new
+  (`Ctrl` on Windows and Linux), arrow-key navigation, and right-click menus.
+- **Library management** — search, favorite, duplicate, delete, and
+  import/export scripts as JSON. New installs start with five sample scripts
+  (Hacker News, GitHub Trending, book prices, quotes, IMDb).
 - **Local-first** — scripts and runs are stored on-device in IndexedDB; nothing
   leaves your machine.
 
