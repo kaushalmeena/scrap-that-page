@@ -6,22 +6,21 @@ import {
   Heart,
   Library,
   Moon,
-  Pencil,
   Settings,
   Sun
 } from "lucide-react";
 import { useNavigate } from "react-router";
 
 import db from "@/database";
-import { useRunScript } from "@/features/runner/useRunScript";
-import { scriptAppearance } from "@/features/scripts/appearance";
-import { scriptActions } from "@/features/scripts/scriptActions";
+import { useRunScript } from "@/features/runner/hooks/useRunScript";
+import { scriptActions } from "@/features/scripts/utils/scriptActions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import { shortcutLabel } from "@/lib/commands";
+import type { Script } from "@/types/script";
 import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
-import { Tile } from "@/ui/Tile";
 
-import { useResolvedTheme } from "./ThemeProvider";
+import { useResolvedTheme } from "../ThemeProvider";
+import ScriptPaletteItems from "./ScriptPaletteItems";
 
 const iconClasses =
   "size-4 text-secondary group-data-[selected=true]:text-white";
@@ -40,9 +39,47 @@ export default function CommandPalette({
   const runScript = useRunScript("/scripts");
   const scripts = useLiveQuery(() => (open ? db.getScripts() : []), [open]);
 
-  const run = (action: () => void) => () => {
-    onOpenChange(false);
-    action();
+  // Every command closes the palette first, then acts.
+  const close = () => onOpenChange(false);
+
+  const handleRunScript = (script: Script) => {
+    close();
+    runScript(script);
+  };
+  const handleEditScript = (script: Script) => {
+    close();
+    navigate(`/edit/${script.id}`);
+  };
+  const handleGoScripts = () => {
+    close();
+    navigate("/scripts");
+  };
+  const handleGoFavorites = () => {
+    close();
+    navigate("/favorites");
+  };
+  const handleGoHistory = () => {
+    close();
+    navigate("/history");
+  };
+  const handleGoSettings = () => {
+    close();
+    navigate("/settings");
+  };
+  const handleNewScript = () => {
+    close();
+    navigate("/new");
+  };
+  const handleImportScript = async () => {
+    close();
+    const id = await scriptActions.importFromFile();
+    if (id !== undefined) {
+      navigate(`/scripts/${id}`);
+    }
+  };
+  const handleToggleAppearance = () => {
+    close();
+    setTheme(resolvedTheme === "dark" ? "light" : "dark");
   };
 
   return (
@@ -54,27 +91,12 @@ export default function CommandPalette({
     >
       {scripts && scripts.length > 0 ? (
         <PaletteGroup heading="Scripts">
-          {scripts.map((script) => {
-            const { Icon, tint } = scriptAppearance(script);
-            return (
-              <PaletteItem
-                key={`run-${script.id}`}
-                value={`run ${script.name} ${script.description}`}
-                icon={<Tile Icon={Icon} tint={tint} size="small" />}
-                title={script.name}
-                subtitle="Run script"
-                shortcut="↵"
-                onSelect={run(() => runScript(script))}
-              />
-            );
-          })}
           {scripts.map((script) => (
-            <PaletteItem
-              key={`edit-${script.id}`}
-              value={`edit ${script.name}`}
-              icon={<Pencil className={iconClasses} />}
-              title={`Edit “${script.name}”`}
-              onSelect={run(() => navigate(`/edit/${script.id}`))}
+            <ScriptPaletteItems
+              key={script.id}
+              script={script}
+              onRun={handleRunScript}
+              onEdit={handleEditScript}
             />
           ))}
         </PaletteGroup>
@@ -85,28 +107,28 @@ export default function CommandPalette({
           icon={<Library className={iconClasses} />}
           title="All Scripts"
           shortcut={shortcutLabel("go-scripts")}
-          onSelect={run(() => navigate("/scripts"))}
+          onSelect={handleGoScripts}
         />
         <PaletteItem
           value="go favorites"
           icon={<Heart className={iconClasses} />}
           title="Favorites"
           shortcut={shortcutLabel("go-favorites")}
-          onSelect={run(() => navigate("/favorites"))}
+          onSelect={handleGoFavorites}
         />
         <PaletteItem
           value="go history runs"
           icon={<Clock className={iconClasses} />}
           title="History"
           shortcut={shortcutLabel("go-history")}
-          onSelect={run(() => navigate("/history"))}
+          onSelect={handleGoHistory}
         />
         <PaletteItem
           value="settings preferences"
           icon={<Settings className={iconClasses} />}
           title="Settings"
           shortcut={shortcutLabel("settings")}
-          onSelect={run(() => navigate("/settings"))}
+          onSelect={handleGoSettings}
         />
       </PaletteGroup>
       <PaletteGroup heading="Actions">
@@ -115,20 +137,14 @@ export default function CommandPalette({
           icon={<FilePlus2 className={iconClasses} />}
           title="New Script"
           shortcut={shortcutLabel("new-script")}
-          onSelect={run(() => navigate("/new"))}
+          onSelect={handleNewScript}
         />
         <PaletteItem
           value="import script json"
           icon={<FileDown className={iconClasses} />}
           title="Import Script…"
           shortcut={shortcutLabel("import-script")}
-          onSelect={run(() =>
-            scriptActions.importFromFile().then((id) => {
-              if (id !== undefined) {
-                navigate(`/scripts/${id}`);
-              }
-            })
-          )}
+          onSelect={handleImportScript}
         />
         <PaletteItem
           value="toggle appearance theme dark light mode"
@@ -144,9 +160,7 @@ export default function CommandPalette({
               ? "Use Light Appearance"
               : "Use Dark Appearance"
           }
-          onSelect={run(() =>
-            setTheme(resolvedTheme === "dark" ? "light" : "dark")
-          )}
+          onSelect={handleToggleAppearance}
         />
       </PaletteGroup>
     </Palette>

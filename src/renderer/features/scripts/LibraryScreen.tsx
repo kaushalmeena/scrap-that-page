@@ -1,8 +1,7 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { FilePlus2, Heart, Library as LibraryIcon } from "lucide-react";
+import { FilePlus2 } from "lucide-react";
 import {
   type KeyboardEvent,
-  useCallback,
   useDeferredValue,
   useMemo,
   useRef,
@@ -11,22 +10,20 @@ import {
 import { Outlet, useNavigate, useParams } from "react-router";
 
 import db from "@/database";
-import { useRunScript } from "@/features/runner/useRunScript";
 import { shortcutLabel, useCommand } from "@/lib/commands";
+import { pluralize } from "@/lib/text";
 import type { Script } from "@/types/script";
 import { IconButton } from "@/ui/Button";
-import { EmptyState } from "@/ui/EmptyState";
 import { SearchField } from "@/ui/TextField";
 import { Toolbar } from "@/ui/Toolbar";
 
-import { pluralize } from "./appearance";
-import ScriptRow from "./components/ScriptRow";
+import LibraryEmptyState from "./components/LibraryEmptyState";
+import ScriptList from "./components/ScriptList";
 import {
   type Library,
   LibraryContext,
   type LibraryFilter
-} from "./LibraryContext";
-import { scriptActions } from "./scriptActions";
+} from "./context/LibraryContext";
 
 const TITLES: Record<LibraryFilter, string> = {
   all: "All Scripts",
@@ -39,8 +36,8 @@ const matchesQuery = (script: Script, needle: string) =>
 
 /**
  * Two-pane library (content list + detail), the app's home. The list pane
- * owns search and keyboard navigation; the selected script's detail, run or
- * empty state renders in the Outlet.
+ * owns search; the selected script's detail, run or empty state renders in
+ * the Outlet.
  */
 export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
   const navigate = useNavigate();
@@ -60,55 +57,18 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
     [scripts, query]
   );
 
-  const [listFocused, setListFocused] = useState(false);
   const searchRef = useRef<HTMLInputElement>(null);
-  const runScript = useRunScript(basePath);
-
-  // Stable callbacks so memoized rows don't re-render on every keystroke.
-  const handleSelect = useCallback(
-    (script: Script) => navigate(`${basePath}/${script.id}`, { replace: true }),
-    [navigate, basePath]
-  );
-  const handleRun = runScript;
-  const handleEdit = useCallback(
-    (script: Script) => navigate(`/edit/${script.id}`),
-    [navigate]
-  );
+  const listRef = useRef<HTMLDivElement>(null);
 
   useCommand("find", () => searchRef.current?.focus());
 
-  const selectedIndex = visible?.findIndex((s) => s.id === selectedId) ?? -1;
+  const handleNewScript = () => navigate("/new");
 
-  const handleListKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
-    if (!visible || visible.length === 0) {
-      return;
-    }
-    const selected = visible[selectedIndex];
-    switch (event.key) {
-      case "ArrowDown":
-      case "ArrowUp": {
-        event.preventDefault();
-        const step = event.key === "ArrowDown" ? 1 : -1;
-        const next = Math.min(
-          visible.length - 1,
-          Math.max(0, selectedIndex === -1 ? 0 : selectedIndex + step)
-        );
-        handleSelect(visible[next]);
-        break;
-      }
-      case "Enter":
-        if (selected) {
-          event.preventDefault();
-          handleRun(selected);
-        }
-        break;
-      case "Backspace":
-      case "Delete":
-        if (selected && (event.metaKey || event.key === "Delete")) {
-          event.preventDefault();
-          scriptActions.requestDelete(selected);
-        }
-        break;
+  // ↓ from the search field moves into the results.
+  const handleSearchKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "ArrowDown") {
+      event.preventDefault();
+      listRef.current?.focus();
     }
   };
 
@@ -129,7 +89,7 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
         >
           <IconButton
             label={`New Script (${shortcutLabel("new-script")})`}
-            onClick={() => navigate("/new")}
+            onClick={handleNewScript}
           >
             <FilePlus2 />
           </IconButton>
@@ -139,57 +99,18 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
             ref={searchRef}
             value={search}
             onValueChange={setSearch}
+            onKeyDown={handleSearchKeyDown}
             placeholder="Search"
-            onKeyDown={(event) => {
-              if (event.key === "ArrowDown") {
-                event.preventDefault();
-                document.getElementById("script-list")?.focus();
-              }
-            }}
           />
         </div>
-        <div
-          id="script-list"
-          role="listbox"
-          aria-label={TITLES[filter]}
-          tabIndex={0}
-          onFocus={() => setListFocused(true)}
-          onBlur={() => setListFocused(false)}
-          onKeyDown={handleListKeyDown}
-          className="flex min-h-0 flex-1 flex-col gap-px overflow-y-auto pb-2 outline-none"
-        >
-          {visible?.map((script) => (
-            <ScriptRow
-              key={script.id}
-              script={script}
-              selected={script.id === selectedId}
-              focused={listFocused}
-              onSelect={handleSelect}
-              onRun={handleRun}
-              onEdit={handleEdit}
-            />
-          ))}
-          {visible && visible.length === 0 ? (
-            query ? (
-              <EmptyState
-                title="No Results"
-                message={`Nothing matches “${search}”.`}
-              />
-            ) : filter === "favorites" ? (
-              <EmptyState
-                Icon={Heart}
-                title="No Favorites"
-                message="Add scripts to Favorites to find them here quickly."
-              />
-            ) : (
-              <EmptyState
-                Icon={LibraryIcon}
-                title="No Scripts"
-                message="Create a script to start scraping."
-              />
-            )
-          ) : null}
-        </div>
+        <ScriptList
+          ref={listRef}
+          label={TITLES[filter]}
+          scripts={visible}
+          selectedId={selectedId}
+          basePath={basePath}
+          empty={<LibraryEmptyState filter={filter} search={search} />}
+        />
       </div>
       <div data-pane className="min-w-0 flex-1 bg-window">
         <Outlet />

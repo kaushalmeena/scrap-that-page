@@ -4,6 +4,41 @@ import { useId } from "react";
 import { SPRING } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 
+type Option<T> = { value: T; label: string };
+
+function Segment<T extends string>({
+  option,
+  selected,
+  pillId,
+  onSelect
+}: {
+  option: Option<T>;
+  selected: boolean;
+  pillId: string;
+  onSelect: (value: T) => void;
+}) {
+  const handleClick = () => onSelect(option.value);
+
+  return (
+    <button
+      type="button"
+      role="radio"
+      aria-checked={selected}
+      className="relative min-w-14 px-2.5 text-callout font-medium text-label outline-none"
+      onClick={handleClick}
+    >
+      {selected ? (
+        <motion.span
+          layoutId={pillId}
+          transition={SPRING}
+          className="absolute inset-0 rounded-[5px] bg-control shadow-control dark:bg-white/20"
+        />
+      ) : null}
+      <span className="relative">{option.label}</span>
+    </button>
+  );
+}
+
 // NSSegmentedControl: a recessed track with a raised "selected" pill that
 // slides between segments.
 export function SegmentedControl<T extends string>({
@@ -13,7 +48,7 @@ export function SegmentedControl<T extends string>({
   className
 }: {
   value: T;
-  options: { value: T; label: string }[];
+  options: Option<T>[];
   onChange: (value: T) => void;
   className?: string;
 }) {
@@ -26,28 +61,15 @@ export function SegmentedControl<T extends string>({
         className
       )}
     >
-      {options.map((option) => {
-        const selected = option.value === value;
-        return (
-          <button
-            key={option.value}
-            type="button"
-            role="radio"
-            aria-checked={selected}
-            className="relative min-w-14 px-2.5 text-callout font-medium text-label outline-none"
-            onClick={() => onChange(option.value)}
-          >
-            {selected ? (
-              <motion.span
-                layoutId={pillId}
-                transition={SPRING}
-                className="absolute inset-0 rounded-[5px] bg-control shadow-control dark:bg-white/20"
-              />
-            ) : null}
-            <span className="relative">{option.label}</span>
-          </button>
-        );
-      })}
+      {options.map((option) => (
+        <Segment
+          key={option.value}
+          option={option}
+          selected={option.value === value}
+          pillId={pillId}
+          onSelect={onChange}
+        />
+      ))}
     </div>
   );
 }

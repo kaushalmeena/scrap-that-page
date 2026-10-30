@@ -33,6 +33,11 @@ export default function TextInput({
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     updateInput({ operationId, inputIndex, value: event.target.value });
 
+  const handlePickElement = () =>
+    showElementPicker({ operationId, inputIndex });
+  const handleInsertVariable = () =>
+    showVariablePicker({ operationId, inputIndex });
+
   return (
     <div className="flex flex-col gap-1">
       <label
@@ -61,7 +66,7 @@ export default function TextInput({
             <IconButton
               size="small"
               label="Pick Element from Page"
-              onClick={() => showElementPicker({ operationId, inputIndex })}
+              onClick={handlePickElement}
             >
               <Crosshair />
             </IconButton>
@@ -70,7 +75,7 @@ export default function TextInput({
             <IconButton
               size="small"
               label="Insert Variable"
-              onClick={() => showVariablePicker({ operationId, inputIndex })}
+              onClick={handleInsertVariable}
             >
               <Braces />
             </IconButton>

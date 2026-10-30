@@ -3,7 +3,7 @@ import { useNavigate } from "react-router";
 
 import type { Script } from "@/types/script";
 
-import { useRunnerStore } from "./store/runnerStore";
+import { useRunnerStore } from "../store/runnerStore";
 
 // Starts a run (unless another one is in progress) and shows its live pane.
 export const useRunScript = (basePath: string) => {

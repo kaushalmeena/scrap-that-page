@@ -9,7 +9,10 @@
     "unicorn",
     "vitest"
   ],
-  "jsPlugins": ["eslint-plugin-better-tailwindcss"],
+  "jsPlugins": [
+    "eslint-plugin-better-tailwindcss",
+    "./tools/oxlint/local-plugin.mjs"
+  ],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -58,7 +61,8 @@
     "unicorn/require-module-specifiers": "off",
     "unicorn/no-array-reverse": "off",
     "no-await-in-loop": "off",
-    "unicorn/consistent-function-scoping": "off"
+    "unicorn/consistent-function-scoping": "off",
+    "local/no-inline-jsx-function": "error"
   },
   "ignorePatterns": [".vite", "out", "dist", "node_modules", "src/assets"]
 }

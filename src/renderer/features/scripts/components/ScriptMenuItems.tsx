@@ -4,7 +4,7 @@ import { shortcutLabel } from "@/lib/commands";
 import type { Script } from "@/types/script";
 import { MenuItem, MenuSeparator } from "@/ui/Menu";
 
-import { scriptActions } from "../scriptActions";
+import { scriptActions } from "../utils/scriptActions";
 
 // The per-script action menu, shared by the row context menu and the detail
 // toolbar's "More" pull-down.
@@ -19,12 +19,15 @@ export default function ScriptMenuItems({
   onEdit: () => void;
   onDuplicated?: (id: number) => void;
 }) {
-  const handleDuplicate = () =>
-    scriptActions.duplicate(script).then((id) => {
-      if (id !== undefined) {
-        onDuplicated?.(id);
-      }
-    });
+  const handleToggleFavorite = () => scriptActions.toggleFavorite(script);
+  const handleExport = () => scriptActions.export(script);
+  const handleDelete = () => scriptActions.requestDelete(script);
+  const handleDuplicate = async () => {
+    const id = await scriptActions.duplicate(script);
+    if (id !== undefined) {
+      onDuplicated?.(id);
+    }
+  };
 
   return (
     <>
@@ -46,22 +49,18 @@ export default function ScriptMenuItems({
       <MenuItem
         icon={<Heart />}
         shortcut={shortcutLabel("toggle-favorite")}
-        onSelect={() => scriptActions.toggleFavorite(script)}
+        onSelect={handleToggleFavorite}
       >
         {script.favorite ? "Remove from Favorites" : "Add to Favorites"}
       </MenuItem>
       <MenuItem icon={<Copy />} onSelect={handleDuplicate}>
         Duplicate
       </MenuItem>
-      <MenuItem icon={<Share />} onSelect={() => scriptActions.export(script)}>
+      <MenuItem icon={<Share />} onSelect={handleExport}>
         Export…
       </MenuItem>
       <MenuSeparator />
-      <MenuItem
-        icon={<Trash2 />}
-        destructive
-        onSelect={() => scriptActions.requestDelete(script)}
-      >
+      <MenuItem icon={<Trash2 />} destructive onSelect={handleDelete}>
         Delete…
       </MenuItem>
     </>

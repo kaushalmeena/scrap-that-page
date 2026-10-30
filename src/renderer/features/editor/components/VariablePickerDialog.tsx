@@ -1,13 +1,13 @@
 import type { Variable } from "@common/types/variable";
-import { Braces } from "lucide-react";
 
-import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
+import { Palette, PaletteGroup } from "@/ui/Palette";
 
 import {
   selectVariablePicker,
   selectVariables,
   useEditorStore
 } from "../store/editorStore";
+import VariablePaletteItem from "./VariablePaletteItem";
 
 // Picks a script variable to insert into the field that opened it.
 export default function VariablePickerDialog() {
@@ -45,15 +45,10 @@ export default function VariablePickerDialog() {
       {available.length > 0 ? (
         <PaletteGroup heading="Variables">
           {available.map((variable) => (
-            <PaletteItem
+            <VariablePaletteItem
               key={variable.ownerId}
-              value={variable.name}
-              icon={
-                <Braces className="size-4 text-teal group-data-[selected=true]:text-white" />
-              }
-              title={variable.name}
-              shortcut={variable.type}
-              onSelect={() => handleSelect(variable)}
+              variable={variable}
+              onSelect={handleSelect}
             />
           ))}
         </PaletteGroup>

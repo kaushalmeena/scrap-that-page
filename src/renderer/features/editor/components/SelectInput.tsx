@@ -21,6 +21,9 @@ export default function SelectInput({
   const updateInput = useEditorStore((s) => s.actions.updateInput);
   const inputId = useId();
 
+  const handleValueChange = (next: string) =>
+    updateInput({ operationId, inputIndex, value: next });
+
   return (
     <div className="flex flex-col gap-1">
       <label
@@ -36,9 +39,7 @@ export default function SelectInput({
         options={schema.options}
         placeholder={schema.label}
         invalid={Boolean(error)}
-        onValueChange={(next) =>
-          updateInput({ operationId, inputIndex, value: next })
-        }
+        onValueChange={handleValueChange}
       />
       {error ? <p className="text-caption text-red">{error}</p> : null}
     </div>

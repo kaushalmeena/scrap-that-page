@@ -1,14 +1,15 @@
 import { Heart } from "lucide-react";
-import { memo, useEffect, useRef } from "react";
+import { memo, type PointerEvent, useEffect, useRef } from "react";
 
 import { useRunnerStore } from "@/features/runner/store/runnerStore";
 import { cn } from "@/lib/utils";
 import type { Script } from "@/types/script";
+import { listRowClasses } from "@/ui/ListBox";
 import { ContextMenu } from "@/ui/Menu";
 import { Spinner } from "@/ui/Spinner";
 import { Tile } from "@/ui/Tile";
 
-import { scriptAppearance } from "../appearance";
+import { scriptAppearance } from "../utils/scriptAppearance";
 import ScriptMenuItems from "./ScriptMenuItems";
 
 // One script in the library's source list. The selection is accent-filled
@@ -42,13 +43,23 @@ function ScriptRow({
   const { Icon, tint } = scriptAppearance(script);
   const highlighted = selected && focused;
 
+  // Select on press (not release) like native source lists; ignore the
+  // right button so a context menu doesn't move the selection.
+  const handlePointerDown = (event: PointerEvent<HTMLDivElement>) => {
+    if (event.button === 0) {
+      onSelect(script);
+    }
+  };
+  const handleRun = () => onRun(script);
+  const handleEdit = () => onEdit(script);
+
   return (
     <ContextMenu
       menu={
         <ScriptMenuItems
           script={script}
-          onRun={() => onRun(script)}
-          onEdit={() => onEdit(script)}
+          onRun={handleRun}
+          onEdit={handleEdit}
         />
       }
     >
@@ -57,17 +68,9 @@ function ScriptRow({
         role="option"
         tabIndex={-1}
         aria-selected={selected}
-        onPointerDown={(event) => {
-          if (event.button === 0) {
-            onSelect(script);
-          }
-        }}
-        onDoubleClick={() => onRun(script)}
-        className={cn(
-          "mx-2 flex items-center gap-2.5 rounded-[7px] px-2 py-[7px]",
-          highlighted && "bg-accent text-white",
-          selected && !focused && "bg-fill-strong"
-        )}
+        onPointerDown={handlePointerDown}
+        onDoubleClick={handleRun}
+        className={listRowClasses({ selected, focused })}
       >
         <Tile Icon={Icon} tint={tint} />
         <div className="min-w-0 flex-1">

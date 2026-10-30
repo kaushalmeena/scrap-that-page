@@ -33,7 +33,7 @@ export function Sheet({
   className?: string;
 }) {
   return (
-    <Dialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Backdrop className={backdropClasses} />
         <Dialog.Popup className={cn(popupClasses, "w-[440px] p-5", className)}>
@@ -79,7 +79,7 @@ export function Alert({
   };
 
   return (
-    <AlertDialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
+    <AlertDialog.Root open={open} onOpenChange={onOpenChange}>
       <AlertDialog.Portal>
         <AlertDialog.Backdrop className={backdropClasses} />
         <AlertDialog.Popup

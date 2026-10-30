@@ -19,7 +19,8 @@ const STATUS_LABEL = {
   error: "Failed"
 } as const;
 
-export default function RunDetail() {
+// One saved run: its outcome in the toolbar, results and log below.
+export default function RunDetailPane() {
   const params = useParams();
   const navigate = useNavigate();
   const runId = Number(params.runId);
@@ -47,6 +48,7 @@ export default function RunDetail() {
       })
       .catch(() => toast.error(TOAST_MESSAGES.RUN_DELETE_FAILURE));
   };
+  const handleShowScript = () => navigate(`/scripts/${run.scriptId}`);
 
   return (
     <div className="flex h-full flex-col">
@@ -67,9 +69,7 @@ export default function RunDetail() {
         {run.scriptId !== undefined ? (
           <>
             <ToolbarDivider />
-            <Button onClick={() => navigate(`/scripts/${run.scriptId}`)}>
-              Show Script
-            </Button>
+            <Button onClick={handleShowScript}>Show Script</Button>
           </>
         ) : null}
       </Toolbar>

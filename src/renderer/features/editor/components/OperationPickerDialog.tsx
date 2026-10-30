@@ -1,17 +1,14 @@
-import {
-  OPERATION_SCHEMA,
-  OPERATION_TYPES
-} from "@common/constants/operationSchema";
+import { OPERATION_TYPES } from "@common/constants/operationSchema";
 import type { OperationType } from "@common/types/operation";
 
 import {
   OPERATION_APPEARANCE,
   OPERATION_CATEGORIES
 } from "@/lib/operationAppearance";
-import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
-import { Tile } from "@/ui/Tile";
+import { Palette, PaletteGroup } from "@/ui/Palette";
 
 import { selectOperationPicker, useEditorStore } from "../store/editorStore";
+import StepPaletteItem from "./StepPaletteItem";
 
 // Spotlight-style step picker for "Add Step" (root or inside a block): type
 // to filter, Return to add.
@@ -44,20 +41,9 @@ export default function OperationPickerDialog() {
         <PaletteGroup key={category} heading={category}>
           {OPERATION_TYPES.filter(
             (type) => OPERATION_APPEARANCE[type].category === category
-          ).map((type) => {
-            const schema = OPERATION_SCHEMA[type];
-            const { Icon, tint } = OPERATION_APPEARANCE[type];
-            return (
-              <PaletteItem
-                key={type}
-                value={`${schema.name} ${schema.description}`}
-                icon={<Tile Icon={Icon} tint={tint} />}
-                title={schema.name}
-                subtitle={schema.description}
-                onSelect={() => handleSelect(type)}
-              />
-            );
-          })}
+          ).map((type) => (
+            <StepPaletteItem key={type} type={type} onSelect={handleSelect} />
+          ))}
         </PaletteGroup>
       ))}
     </Palette>

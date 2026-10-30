@@ -1,5 +1,5 @@
 import { Search, XCircle } from "lucide-react";
-import type { ComponentProps, Ref } from "react";
+import type { ChangeEvent, ComponentProps, KeyboardEvent, Ref } from "react";
 
 import { cn } from "@/lib/utils";
 
@@ -27,6 +27,7 @@ export function TextArea({ className, ...props }: ComponentProps<"textarea">) {
 export function SearchField({
   value,
   onValueChange,
+  onKeyDown,
   className,
   ref,
   ...props
@@ -35,6 +36,20 @@ export function SearchField({
   onValueChange: (value: string) => void;
   ref?: Ref<HTMLInputElement>;
 }) {
+  const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
+    onValueChange(event.target.value);
+
+  // Escape clears first (and is swallowed), like NSSearchField.
+  const handleKeyDown = (event: KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === "Escape" && value) {
+      event.stopPropagation();
+      onValueChange("");
+    }
+    onKeyDown?.(event);
+  };
+
+  const handleClear = () => onValueChange("");
+
   return (
     <div className={cn("relative", className)}>
       <Search className="pointer-events-none absolute top-1/2 left-2 size-3.5 -translate-y-1/2 text-secondary" />
@@ -43,13 +58,8 @@ export function SearchField({
         type="text"
         spellCheck={false}
         value={value}
-        onChange={(event) => onValueChange(event.target.value)}
-        onKeyDown={(event) => {
-          if (event.key === "Escape" && value) {
-            event.stopPropagation();
-            onValueChange("");
-          }
-        }}
+        onChange={handleChange}
+        onKeyDown={handleKeyDown}
         className="h-7 w-full rounded-[7px] bg-fill px-7 text-body text-label transition-shadow outline-none placeholder:text-secondary focus:bg-control focus:shadow-[0_0_0_3.5px_color-mix(in_srgb,var(--accent)_40%,transparent),0_0_0_0.5px_var(--accent)]"
         {...props}
       />
@@ -59,7 +69,7 @@ export function SearchField({
           tabIndex={-1}
           aria-label="Clear search"
           className="absolute top-1/2 right-1.5 -translate-y-1/2 text-tertiary hover:text-secondary"
-          onClick={() => onValueChange("")}
+          onClick={handleClear}
         >
           <XCircle className="size-3.5 fill-current stroke-window" />
         </button>

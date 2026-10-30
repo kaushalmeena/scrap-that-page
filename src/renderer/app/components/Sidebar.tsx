@@ -8,73 +8,19 @@ import {
   Settings
 } from "lucide-react";
 import { motion } from "motion/react";
-import type { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
 
 import db from "@/database";
-import { scriptAppearance } from "@/features/scripts/appearance";
+import { scriptAppearance } from "@/features/scripts/utils/scriptAppearance";
 import { shortcutLabel } from "@/lib/commands";
 import { SPRING } from "@/lib/motion";
-import { cn } from "@/lib/utils";
 import { Button, IconButton } from "@/ui/Button";
 import { Tile } from "@/ui/Tile";
 
+import SidebarItem from "./SidebarItem";
+import SidebarSection from "./SidebarSection";
+
 export const SIDEBAR_WIDTH = 220;
-
-function Section({ title, children }: { title: string; children: ReactNode }) {
-  return (
-    <div className="mt-3 first:mt-0">
-      <h2 className="px-2 pb-1 text-caption font-semibold text-tertiary">
-        {title}
-      </h2>
-      <div className="flex flex-col gap-px">{children}</div>
-    </div>
-  );
-}
-
-function Item({
-  icon,
-  label,
-  count,
-  active,
-  onClick
-}: {
-  icon: ReactNode;
-  label: string;
-  count?: number;
-  active: boolean;
-  onClick: () => void;
-}) {
-  return (
-    <button
-      type="button"
-      aria-current={active ? "page" : undefined}
-      onPointerDown={(event) => {
-        // Navigate on press, not release, like a native source list.
-        if (event.button === 0) {
-          onClick();
-        }
-      }}
-      onKeyDown={(event) => {
-        if (event.key === "Enter" || event.key === " ") {
-          onClick();
-        }
-      }}
-      className={cn(
-        "flex h-7 items-center gap-2 rounded-control px-2 text-left text-body outline-none",
-        active && "bg-black/[0.09] dark:bg-white/[0.11]"
-      )}
-    >
-      {icon}
-      <span className="min-w-0 flex-1 truncate">{label}</span>
-      {count !== undefined ? (
-        <span className="text-callout text-secondary tabular-nums">
-          {count}
-        </span>
-      ) : null}
-    </button>
-  );
-}
 
 function NavIcon({ Icon }: { Icon: LucideIcon }) {
   return <Icon className="size-4 shrink-0 text-accent" strokeWidth={2} />;
@@ -91,6 +37,9 @@ export default function Sidebar({ open }: { open: boolean }) {
 
   const favorites = scripts?.filter((s) => s.favorite) ?? [];
 
+  const handleNewScript = () => navigate("/new");
+  const handleOpenSettings = () => navigate("/settings");
+
   return (
     <motion.aside
       initial={false}
@@ -106,45 +55,45 @@ export default function Sidebar({ open }: { open: boolean }) {
       >
         <div className="h-[52px] shrink-0 app-region-drag" />
         <nav className="min-h-0 flex-1 overflow-y-auto px-2.5 pb-3">
-          <Section title="Library">
-            <Item
+          <SidebarSection title="Library">
+            <SidebarItem
+              to="/scripts"
               icon={<NavIcon Icon={Library} />}
               label="All Scripts"
               count={scripts?.length}
               active={pathname.startsWith("/scripts")}
-              onClick={() => navigate("/scripts")}
             />
-            <Item
+            <SidebarItem
+              to="/favorites"
               icon={<NavIcon Icon={Heart} />}
               label="Favorites"
               count={favorites.length}
               active={pathname.startsWith("/favorites")}
-              onClick={() => navigate("/favorites")}
             />
-            <Item
+            <SidebarItem
+              to="/history"
               icon={<NavIcon Icon={Clock} />}
               label="History"
               count={runCount}
               active={pathname.startsWith("/history")}
-              onClick={() => navigate("/history")}
             />
-          </Section>
+          </SidebarSection>
           {favorites.length > 0 ? (
-            <Section title="Favorites">
+            <SidebarSection title="Favorites">
               {favorites.map((script) => {
                 const { Icon, tint } = scriptAppearance(script);
                 const route = `/favorites/${script.id}`;
                 return (
-                  <Item
+                  <SidebarItem
                     key={script.id}
+                    to={route}
                     icon={<Tile Icon={Icon} tint={tint} size="small" />}
                     label={script.name}
                     active={pathname.startsWith(route)}
-                    onClick={() => navigate(route)}
                   />
                 );
               })}
-            </Section>
+            </SidebarSection>
           ) : null}
         </nav>
         <footer className="flex items-center justify-between px-2.5 pb-2.5">
@@ -152,7 +101,7 @@ export default function Sidebar({ open }: { open: boolean }) {
             variant="plain"
             className="text-secondary hover:text-label"
             title={`New Script (${shortcutLabel("new-script")})`}
-            onClick={() => navigate("/new")}
+            onClick={handleNewScript}
           >
             <Plus />
             New Script
@@ -160,7 +109,7 @@ export default function Sidebar({ open }: { open: boolean }) {
           <IconButton
             label={`Settings (${shortcutLabel("settings")})`}
             active={pathname === "/settings"}
-            onClick={() => navigate("/settings")}
+            onClick={handleOpenSettings}
           >
             <Settings />
           </IconButton>

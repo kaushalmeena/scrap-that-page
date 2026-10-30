@@ -1,4 +1,4 @@
-import { type KeyboardEvent, useId, useState } from "react";
+import { type ChangeEvent, type KeyboardEvent, useId, useState } from "react";
 import { toast } from "sonner";
 
 import { TOAST_MESSAGES } from "@/lib/messages";
@@ -64,14 +64,19 @@ export default function ElementPickerDialog() {
     }
   };
 
+  const handleOpenChange = (open: boolean) => {
+    if (!open) {
+      handlePickerClose();
+    }
+  };
+
+  const handleUrlChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setDraftUrl(event.target.value);
+
   return (
     <Sheet
       open={isOpen}
-      onOpenChange={(open) => {
-        if (!open) {
-          handlePickerClose();
-        }
-      }}
+      onOpenChange={handleOpenChange}
       title="Pick an Element"
       description="The page opens in the scraper window. Hover to highlight, then click the element you want. Hold Shift to scroll or follow links without picking; press Esc to cancel."
       footer={
@@ -99,7 +104,7 @@ export default function ElementPickerDialog() {
           spellCheck={false}
           placeholder="https://example.com"
           value={url}
-          onChange={(event) => setDraftUrl(event.target.value)}
+          onChange={handleUrlChange}
           onKeyDown={handleKeyDown}
         />
       </div>

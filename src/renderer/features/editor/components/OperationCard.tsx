@@ -84,12 +84,15 @@ export default function OperationCard({
   const { Icon, tint } = OPERATION_APPEARANCE[operation.type];
   const invalid = !isOperationValid(operation);
 
+  // dnd-kit and the scroll-into-view effect both need the card element.
+  const setCardRef = (node: HTMLDivElement | null) => {
+    setNodeRef(node);
+    cardRef.current = node;
+  };
+
   return (
     <div
-      ref={(node) => {
-        setNodeRef(node);
-        cardRef.current = node;
-      }}
+      ref={setCardRef}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={cn(
         "group/card rounded-box bg-control shadow-card",

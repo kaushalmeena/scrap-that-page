@@ -1,21 +1,21 @@
 import { createMemoryRouter, Navigate } from "react-router";
 
-import LibraryIndex from "@/features/scripts/LibraryIndex";
+import LibraryIndexPane from "@/features/scripts/LibraryIndexPane";
 import LibraryScreen from "@/features/scripts/LibraryScreen";
-import ScriptDetail from "@/features/scripts/ScriptDetail";
+import ScriptDetailPane from "@/features/scripts/ScriptDetailPane";
 
 import AppShell from "./AppShell";
 import {
   EditorScreen,
   HistoryScreen,
-  RunDetail,
+  RunDetailPane,
   RunPane,
   SettingsScreen
 } from "./lazyScreens";
 
 const libraryChildren = [
-  { index: true, element: <LibraryIndex /> },
-  { path: ":scriptId", element: <ScriptDetail /> },
+  { index: true, element: <LibraryIndexPane /> },
+  { path: ":scriptId", element: <ScriptDetailPane /> },
   { path: ":scriptId/run", element: <RunPane /> }
 ];
 
@@ -40,7 +40,7 @@ const router = createMemoryRouter(
         {
           path: "/history",
           element: <HistoryScreen />,
-          children: [{ path: ":runId", element: <RunDetail /> }]
+          children: [{ path: ":runId", element: <RunDetailPane /> }]
         },
         { path: "/settings", element: <SettingsScreen /> }
       ]

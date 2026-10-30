@@ -25,6 +25,9 @@ export default function ExportMenu({ data }: { data: TableData }) {
       .then(() => toast.success(TOAST_MESSAGES.RESULTS_COPY_SUCCESS))
       .catch(() => toast.error(TOAST_MESSAGES.RESULTS_COPY_FAILURE));
 
+  const handleCSV = () => downloadAsCSV(data);
+  const handleJSON = () => downloadAsJSON(data);
+
   return (
     <Menu
       trigger={
@@ -34,8 +37,8 @@ export default function ExportMenu({ data }: { data: TableData }) {
         </Button>
       }
     >
-      <MenuItem onSelect={() => downloadAsCSV(data)}>CSV…</MenuItem>
-      <MenuItem onSelect={() => downloadAsJSON(data)}>JSON…</MenuItem>
+      <MenuItem onSelect={handleCSV}>CSV…</MenuItem>
+      <MenuItem onSelect={handleJSON}>JSON…</MenuItem>
       <MenuItem onSelect={handleXLSX}>Excel Workbook…</MenuItem>
       <MenuSeparator />
       <MenuItem onSelect={handleCopy}>Copy as Table</MenuItem>

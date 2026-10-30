@@ -3,9 +3,9 @@ import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useStore } from "zustand";
 
-import { pluralize } from "@/features/scripts/appearance";
 import { shortcutLabel, useCommand } from "@/lib/commands";
 import { isMac } from "@/lib/platform";
+import { pluralize } from "@/lib/text";
 import type { Script } from "@/types/script";
 import { Button, IconButton } from "@/ui/Button";
 import { Alert } from "@/ui/Sheet";
@@ -87,6 +87,10 @@ export default function ScriptEditor({
     }
   };
 
+  const handleUndo = () => undo();
+  const handleRedo = () => redo();
+  const handleAddStep = () => showOperationPicker(ROOT);
+
   useCommand("save", handleSave);
 
   const undoKey = isMac ? "⌘Z" : "Ctrl+Z";
@@ -107,22 +111,19 @@ export default function ScriptEditor({
           <IconButton
             label={`Undo (${undoKey})`}
             disabled={!pastStates.length}
-            onClick={() => undo()}
+            onClick={handleUndo}
           >
             <Undo2 />
           </IconButton>
           <IconButton
             label={`Redo (${redoKey})`}
             disabled={!futureStates.length}
-            onClick={() => redo()}
+            onClick={handleRedo}
           >
             <Redo2 />
           </IconButton>
           <ToolbarDivider />
-          <IconButton
-            label="Add Step"
-            onClick={() => showOperationPicker(ROOT)}
-          >
+          <IconButton label="Add Step" onClick={handleAddStep}>
             <Plus />
           </IconButton>
           <ToolbarDivider />

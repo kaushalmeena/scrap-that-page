@@ -22,15 +22,17 @@ export function PopUpButton({
   id?: string;
   className?: string;
 }) {
+  const handleValueChange = (next: string | null) => {
+    if (next !== null) {
+      onValueChange(next);
+    }
+  };
+
   return (
     <Select.Root
       items={options}
       value={value || null}
-      onValueChange={(next) => {
-        if (next !== null) {
-          onValueChange(next);
-        }
-      }}
+      onValueChange={handleValueChange}
     >
       <Select.Trigger
         id={id}

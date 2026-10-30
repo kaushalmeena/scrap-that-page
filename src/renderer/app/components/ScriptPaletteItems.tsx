@@ -1,0 +1,43 @@
+import { Pencil } from "lucide-react";
+
+import { scriptAppearance } from "@/features/scripts/utils/scriptAppearance";
+import type { Script } from "@/types/script";
+import { PaletteItem } from "@/ui/Palette";
+import { Tile } from "@/ui/Tile";
+
+// The palette's two entries for one script: run it, or open it in the editor.
+export default function ScriptPaletteItems({
+  script,
+  onRun,
+  onEdit
+}: {
+  script: Script;
+  onRun: (script: Script) => void;
+  onEdit: (script: Script) => void;
+}) {
+  const { Icon, tint } = scriptAppearance(script);
+
+  const handleRun = () => onRun(script);
+  const handleEdit = () => onEdit(script);
+
+  return (
+    <>
+      <PaletteItem
+        value={`run ${script.id} ${script.name} ${script.description}`}
+        icon={<Tile Icon={Icon} tint={tint} size="small" />}
+        title={script.name}
+        subtitle="Run script"
+        shortcut="↵"
+        onSelect={handleRun}
+      />
+      <PaletteItem
+        value={`edit ${script.id} ${script.name}`}
+        icon={
+          <Pencil className="size-4 text-secondary group-data-[selected=true]:text-white" />
+        }
+        title={`Edit “${script.name}”`}
+        onSelect={handleEdit}
+      />
+    </>
+  );
+}

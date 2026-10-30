@@ -5,7 +5,7 @@ import db from "@/database";
 import { TOAST_MESSAGES } from "@/lib/messages";
 import type { Script } from "@/types/script";
 
-import { exportScriptToJSON, parseScriptImport } from "./utils/scriptUtils";
+import { exportScriptToJSON, parseScriptImport } from "./scriptUtils";
 
 /**
  * Every side effect a user can apply to a stored script, in one place. List

@@ -2,8 +2,8 @@ import { ChevronDown, Terminal } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
 
-import { pluralize } from "@/features/scripts/appearance";
 import { SPRING } from "@/lib/motion";
+import { pluralize } from "@/lib/text";
 import { cn } from "@/lib/utils";
 import type { RunLogEntry } from "@/types/run";
 
@@ -26,6 +26,8 @@ export default function RunReport({
 }) {
   const [logOpen, setLogOpen] = useState(!result || result.rows.length === 0);
 
+  const handleToggleLog = () => setLogOpen((open) => !open);
+
   return (
     <div className="flex min-h-0 flex-1 flex-col">
       <div className="min-h-0 flex-1">
@@ -34,7 +36,7 @@ export default function RunReport({
       <div className="shrink-0 border-t">
         <button
           type="button"
-          onClick={() => setLogOpen((open) => !open)}
+          onClick={handleToggleLog}
           className="flex h-7 w-full items-center gap-2 px-3 text-callout text-secondary hover:text-label"
         >
           <Terminal className="size-3.5" />

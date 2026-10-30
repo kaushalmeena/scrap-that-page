@@ -1,5 +1,5 @@
 import type { AppCommand } from "@common/types/app";
-import { useEffect, useId, useState } from "react";
+import { type ChangeEvent, useEffect, useId, useState } from "react";
 
 import Logo from "@/components/Logo";
 import { shortcutLabel } from "@/lib/commands";
@@ -43,6 +43,9 @@ export default function SettingsScreen() {
     window.scraper?.getVersion().then(setVersion);
   }, []);
 
+  const handleDelayChange = (event: ChangeEvent<HTMLInputElement>) =>
+    setStepDelayMs(Number(event.target.value) || 0);
+
   return (
     <div data-pane className="flex min-w-0 flex-1 flex-col">
       <Toolbar title="Settings" />
@@ -85,9 +88,7 @@ export default function SettingsScreen() {
                   step={100}
                   className="w-20 text-right tabular-nums"
                   value={stepDelayMs}
-                  onChange={(event) =>
-                    setStepDelayMs(Number(event.target.value) || 0)
-                  }
+                  onChange={handleDelayChange}
                 />
                 <span className="text-secondary">ms</span>
               </div>

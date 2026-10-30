@@ -21,7 +21,7 @@ export function Palette({
   children: ReactNode;
 }) {
   return (
-    <Dialog.Root open={open} onOpenChange={(next) => onOpenChange(next)}>
+    <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Popup className="fixed top-[16%] left-1/2 z-50 w-[600px] max-w-[calc(100vw-32px)] -translate-x-1/2 overflow-hidden rounded-sheet bg-popover shadow-sheet backdrop-blur-2xl backdrop-saturate-[1.8] transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.2,0.9,0.3,1.1)] outline-none data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.96] data-starting-style:opacity-0">
           <Dialog.Title className="sr-only">{label}</Dialog.Title>

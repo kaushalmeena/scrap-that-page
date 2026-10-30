@@ -2,6 +2,7 @@ import {
   OPERATION_SCHEMA,
   OPERATION_TYPES
 } from "@common/constants/operationSchema";
+import type { OperationType } from "@common/types/operation";
 import { useDeferredValue, useState } from "react";
 
 import {
@@ -9,9 +10,9 @@ import {
   OPERATION_CATEGORIES
 } from "@/lib/operationAppearance";
 import { SearchField } from "@/ui/TextField";
-import { Tile } from "@/ui/Tile";
 
 import { useEditorStore } from "../store/editorStore";
+import StepLibraryItem from "./StepLibraryItem";
 
 const ROOT = { parentId: null };
 
@@ -21,6 +22,8 @@ export default function StepLibrary() {
   const appendOperation = useEditorStore((s) => s.actions.appendOperation);
   const [search, setSearch] = useState("");
   const query = useDeferredValue(search.trim().toLowerCase());
+
+  const handleAdd = (type: OperationType) => appendOperation(type, ROOT);
 
   const matching = OPERATION_TYPES.filter((type) => {
     if (!query) {
@@ -52,27 +55,9 @@ export default function StepLibrary() {
               <h3 className="px-2 py-1 text-caption font-semibold text-tertiary">
                 {category}
               </h3>
-              {types.map((type) => {
-                const schema = OPERATION_SCHEMA[type];
-                const { Icon, tint } = OPERATION_APPEARANCE[type];
-                return (
-                  <button
-                    key={type}
-                    type="button"
-                    title={`Add “${schema.name}”`}
-                    onClick={() => appendOperation(type, ROOT)}
-                    className="flex w-full items-start gap-2.5 rounded-[7px] px-2 py-1.5 text-left transition-transform duration-100 hover:bg-fill active:scale-[0.98] active:bg-fill-strong"
-                  >
-                    <Tile Icon={Icon} tint={tint} />
-                    <span className="min-w-0 flex-1">
-                      <span className="block font-medium">{schema.name}</span>
-                      <span className="line-clamp-2 text-caption text-secondary">
-                        {schema.description}
-                      </span>
-                    </span>
-                  </button>
-                );
-              })}
+              {types.map((type) => (
+                <StepLibraryItem key={type} type={type} onAdd={handleAdd} />
+              ))}
             </section>
           );
         })}

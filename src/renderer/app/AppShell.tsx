@@ -3,7 +3,7 @@ import { Suspense, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
 
 import DeleteScriptAlert from "@/features/scripts/components/DeleteScriptAlert";
-import { scriptActions } from "@/features/scripts/scriptActions";
+import { scriptActions } from "@/features/scripts/utils/scriptActions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import {
   connectCommandSources,
@@ -13,9 +13,9 @@ import {
 import { IconButton } from "@/ui/Button";
 import { Toaster } from "@/ui/Toaster";
 
-import CommandPalette from "./CommandPalette";
+import CommandPalette from "./components/CommandPalette";
+import Sidebar from "./components/Sidebar";
 import { preloadAllScreens } from "./lazyScreens";
-import Sidebar from "./Sidebar";
 
 /**
  * The window: sidebar + main area. Owns the app-wide commands (navigation,
