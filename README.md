@@ -81,13 +81,13 @@ windows stay active so lazily rendered content still loads.
 
 ## Tech Stack
 
-| Area          | Tools                                                                                                                                                                        |
-| ------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **Framework** | [Electron](https://www.electronjs.org/) + [Electron Forge](https://www.electronforge.io/) · [Vite](https://vite.dev/)                                                        |
-| **UI**        | [React 19](https://react.dev/) · [shadcn/ui](https://ui.shadcn.com/) · [Tailwind CSS v4](https://tailwindcss.com/) · [Motion](https://motion.dev/)                           |
-| **State**     | [Zustand](https://zustand.docs.pmnd.rs/) (with [zundo](https://github.com/charkour/zundo) for undo/redo) · [Dexie](https://dexie.org/) (IndexedDB) · [Zod](https://zod.dev/) |
-| **Testing**   | [Vitest](https://vitest.dev/)                                                                                                                                                |
-| **Tooling**   | [TypeScript](https://www.typescriptlang.org/) (strict) · [Biome](https://biomejs.dev/) (lint and format)                                                                     |
+| Area          | Tools                                                                                                                                                                                                                          |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| **Framework** | [Electron](https://www.electronjs.org/) + [Electron Forge](https://www.electronforge.io/) · [Vite](https://vite.dev/)                                                                                                          |
+| **UI**        | [React 19](https://react.dev/) · [Base UI](https://base-ui.com/) · [Tailwind CSS v4](https://tailwindcss.com/) · [Motion](https://motion.dev/)                                                                                 |
+| **State**     | [Zustand](https://zustand.docs.pmnd.rs/) (with [zundo](https://github.com/charkour/zundo) for undo/redo) · [Dexie](https://dexie.org/) (IndexedDB) · [Zod](https://zod.dev/)                                                   |
+| **Testing**   | [Vitest](https://vitest.dev/)                                                                                                                                                                                                  |
+| **Tooling**   | [TypeScript](https://www.typescriptlang.org/) (strict) · [oxlint](https://oxc.rs/docs/guide/usage/linter) · [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (lint and format, Tailwind class sorting and canonical classes) |
 
 ## Getting Started
 
@@ -129,11 +129,35 @@ pnpm start
 
 ### Testing
 
-To lint, typecheck and run the unit tests together:
+To check formatting, lint, typecheck and run the unit tests together:
 
 ```bash
 pnpm check
 ```
+
+`pnpm format` formats the codebase (oxfmt, including Tailwind class order)
+and `pnpm lint:fix` applies auto-fixable lint findings (e.g. non-canonical
+Tailwind classes).
+
+### Code organization
+
+The renderer (`src/renderer`) is organized by feature:
+
+```text
+app/         window shell, router, sidebar, command palette
+ui/          macOS-style component kit (Base UI primitives + design tokens)
+lib/         cross-feature helpers (commands, motion, formatting)
+features/
+  <feature>/
+    *Screen.tsx   top-level route
+    *Pane.tsx     nested route rendered in a screen's detail pane
+    components/   feature-only components
+    hooks/  context/  store/  utils/
+```
+
+Conventions: handlers are named functions declared above the `return`
+(no inline functions in JSX — enforced by `local/no-inline-jsx-function`),
+and every script side effect goes through `features/scripts/utils/scriptActions`.
 
 ### Building
 
