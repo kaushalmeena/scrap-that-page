@@ -2,7 +2,7 @@ import { type ChangeEvent, useEffect, useId, useState } from "react";
 
 import { FormRow, FormSection } from "@/components/Form";
 import Logo from "@/components/Logo";
-import { SegmentedControl } from "@/components/SegmentedControl";
+import { Segmented } from "@/components/Segmented";
 import { TextField } from "@/components/TextField";
 import { Toggle } from "@/components/Toggle";
 import { Toolbar } from "@/components/Toolbar";
@@ -56,7 +56,7 @@ export default function SettingsScreen() {
               label="Appearance"
               description="Auto follows your system setting."
             >
-              <SegmentedControl
+              <Segmented
                 value={theme}
                 options={THEME_OPTIONS}
                 onChange={setTheme}

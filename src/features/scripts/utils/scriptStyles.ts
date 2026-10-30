@@ -1,6 +1,6 @@
 import { FileCode2, type LucideIcon } from "lucide-react";
 
-import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
+import { STEP_STYLES } from "@/lib/stepStyles";
 import type { Script } from "@/types/script";
 
 const TINTS = [
@@ -16,7 +16,7 @@ const TINTS = [
 
 // Stable per-script identity: the tint comes from the script's id (or name
 // before it has one) and the glyph from the step it starts with.
-export const scriptAppearance = (
+export const scriptStyles = (
   script: Script
 ): { Icon: LucideIcon; tint: string } => {
   const seed = String(script.id ?? script.name);
@@ -26,7 +26,7 @@ export const scriptAppearance = (
   }
   const first = script.operations[0];
   return {
-    Icon: first ? OPERATION_APPEARANCE[first.type].Icon : FileCode2,
+    Icon: first ? STEP_STYLES[first.type].Icon : FileCode2,
     tint: TINTS[Math.abs(hash) % TINTS.length]
   };
 };

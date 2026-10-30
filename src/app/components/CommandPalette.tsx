@@ -20,7 +20,7 @@ import { shortcutLabel } from "@/lib/commands";
 import type { Script } from "@/types/script";
 
 import { useResolvedTheme } from "../ThemeProvider";
-import ScriptPaletteItems from "./ScriptPaletteItems";
+import ScriptCommands from "./ScriptCommands";
 
 const iconClasses =
   "size-4 text-secondary group-data-[selected=true]:text-white";
@@ -92,7 +92,7 @@ export default function CommandPalette({
       {scripts && scripts.length > 0 ? (
         <PaletteGroup heading="Scripts">
           {scripts.map((script) => (
-            <ScriptPaletteItems
+            <ScriptCommands
               key={script.id}
               script={script}
               onRun={handleRunScript}

@@ -17,7 +17,7 @@ import { shortcutLabel, useCommand } from "@/lib/commands";
 import type { Script } from "@/types/script";
 import { pluralize } from "@/utils/text";
 
-import LibraryEmptyState from "./components/LibraryEmptyState";
+import EmptyLibrary from "./components/EmptyLibrary";
 import ScriptList from "./components/ScriptList";
 import {
   type Library,
@@ -106,7 +106,7 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
           scripts={visible}
           selectedId={selectedId}
           basePath={basePath}
-          empty={<LibraryEmptyState filter={filter} search={search} />}
+          empty={<EmptyLibrary filter={filter} search={search} />}
         />
       </div>
       <div data-pane className="min-w-0 flex-1 bg-window">

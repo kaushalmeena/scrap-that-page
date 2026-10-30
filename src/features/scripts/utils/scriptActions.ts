@@ -89,7 +89,7 @@ export const scriptActions = {
     })
 };
 
-// The script awaiting delete confirmation (rendered by DeleteScriptAlert).
+// The script awaiting delete confirmation (rendered by DeleteAlert).
 // `script` outlives `open` so the alert keeps its text while animating out.
 export const useDeleteRequest = create<{
   script: Script | null;

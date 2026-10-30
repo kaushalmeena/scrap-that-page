@@ -10,12 +10,12 @@ export type StepListComponent = ComponentType<{
 // Steps nest through block inputs (if/while bodies). Rather than having the
 // input import the list that renders it (an import cycle), the editor root
 // injects the list component here and block inputs render it from context.
-export const NestedStepsContext = createContext<StepListComponent | null>(null);
+export const StepListContext = createContext<StepListComponent | null>(null);
 
-export const useNestedStepList = () => {
-  const StepList = useContext(NestedStepsContext);
+export const useStepList = () => {
+  const StepList = useContext(StepListContext);
   if (!StepList) {
-    throw new Error("useNestedStepList must be used inside the script editor");
+    throw new Error("useStepList must be used inside the script editor");
   }
   return StepList;
 };

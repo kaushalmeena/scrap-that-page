@@ -5,7 +5,7 @@ import { useEditorStore } from "../store/editorStore";
 // Standard editor shortcuts: Cmd/Ctrl+Z undoes, Shift+Cmd/Ctrl+Z redoes.
 // Skipped while focus is in a text field so native text undo still works.
 // Undo/redo are driven by zundo's temporal store.
-export const useUndoRedoShortcuts = () => {
+export const useUndoKeys = () => {
   useEffect(() => {
     const handleKeyDown = (event: KeyboardEvent) => {
       if (

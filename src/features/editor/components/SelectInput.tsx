@@ -1,7 +1,7 @@
 import { useId } from "react";
 
-import { PopUpButton } from "@/components/PopUpButton";
-import type { SelectInputSchema } from "@/types/operationSchema";
+import { PopUp } from "@/components/PopUp";
+import type { SelectInputSchema } from "@/types/stepSchema";
 
 import { useEditorStore } from "../store/editorStore";
 
@@ -32,7 +32,7 @@ export default function SelectInput({
       >
         {schema.label}
       </label>
-      <PopUpButton
+      <PopUp
         id={inputId}
         className="w-full"
         value={value}

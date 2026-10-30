@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from "react-router";
 
 import { IconButton } from "@/components/Button";
 import { Toaster } from "@/components/Toaster";
-import DeleteScriptAlert from "@/features/scripts/components/DeleteScriptAlert";
+import DeleteAlert from "@/features/scripts/components/DeleteAlert";
 import { scriptActions } from "@/features/scripts/utils/scriptActions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import {
@@ -15,7 +15,7 @@ import {
 
 import CommandPalette from "./components/CommandPalette";
 import Sidebar from "./components/Sidebar";
-import { preloadAllScreens } from "./lazyScreens";
+import { preloadAllScreens } from "./screens";
 
 /**
  * The window: sidebar + main area. Owns the app-wide commands (navigation,
@@ -74,7 +74,7 @@ export default function AppShell() {
       </div>
 
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
-      <DeleteScriptAlert />
+      <DeleteAlert />
       <Toaster />
     </div>
   );

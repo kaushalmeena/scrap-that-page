@@ -1,6 +1,6 @@
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
+import { STEPS } from "@/constants/steps";
 
-import { useNestedStepList } from "../context/NestedStepsContext";
+import { useStepList } from "../context/StepListContext";
 import { useEditorStore } from "../store/editorStore";
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
@@ -8,8 +8,8 @@ import TextInput from "./TextInput";
 // Renders one operation input by its schema type: a text field (with
 // variable/element pickers), a select, or a nested operation list. The value
 // and error come from the normalized editor node; the labels, options and
-// picker config come from OPERATION_SCHEMA (looked up by operation type).
-export default function OperationInput({
+// picker config come from STEPS (looked up by operation type).
+export default function StepInput({
   operationId,
   inputIndex,
   numberPrefix
@@ -25,13 +25,13 @@ export default function OperationInput({
   const input = useEditorStore(
     (s) => s.operations[operationId]?.inputs[inputIndex]
   );
-  const StepList = useNestedStepList();
+  const StepList = useStepList();
 
   if (!type || !input) {
     return null;
   }
 
-  const inputSchema = OPERATION_SCHEMA[type].inputs[inputIndex];
+  const inputSchema = STEPS[type].inputs[inputIndex];
 
   switch (inputSchema.type) {
     case "text":

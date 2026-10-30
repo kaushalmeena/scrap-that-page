@@ -41,7 +41,7 @@ function Segment<T extends string>({
 
 // NSSegmentedControl: a recessed track with a raised "selected" pill that
 // slides between segments.
-export function SegmentedControl<T extends string>({
+export function Segmented<T extends string>({
   value,
   options,
   onChange,

@@ -9,8 +9,8 @@ import { useRunnerStore } from "@/features/runner/store/runnerStore";
 import type { Script } from "@/types/script";
 import { cn } from "@/utils/cn";
 
-import { scriptAppearance } from "../utils/scriptAppearance";
-import ScriptMenuItems from "./ScriptMenuItems";
+import { scriptStyles } from "../utils/scriptStyles";
+import ScriptMenu from "./ScriptMenu";
 
 // One script in the library's source list. The selection is accent-filled
 // while the list has focus and gray otherwise, as in Mail or Notes.
@@ -40,7 +40,7 @@ function ScriptRow({
     }
   }, [selected]);
 
-  const { Icon, tint } = scriptAppearance(script);
+  const { Icon, tint } = scriptStyles(script);
   const highlighted = selected && focused;
 
   // Select on press (not release) like native source lists; ignore the
@@ -56,11 +56,7 @@ function ScriptRow({
   return (
     <ContextMenu
       menu={
-        <ScriptMenuItems
-          script={script}
-          onRun={handleRun}
-          onEdit={handleEdit}
-        />
+        <ScriptMenu script={script} onRun={handleRun} onEdit={handleEdit} />
       }
     >
       <div

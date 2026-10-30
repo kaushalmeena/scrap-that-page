@@ -3,7 +3,7 @@ import { type ChangeEvent, useId } from "react";
 
 import { IconButton } from "@/components/Button";
 import { TextField } from "@/components/TextField";
-import type { TextInputSchema } from "@/types/operationSchema";
+import type { TextInputSchema } from "@/types/stepSchema";
 import { cn } from "@/utils/cn";
 
 import { useEditorStore } from "../store/editorStore";

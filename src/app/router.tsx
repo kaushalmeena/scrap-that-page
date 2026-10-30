@@ -11,7 +11,7 @@ import {
   RunDetailPane,
   RunPane,
   SettingsScreen
-} from "./lazyScreens";
+} from "./screens";
 
 const libraryChildren = [
   { index: true, element: <LibraryIndexPane /> },

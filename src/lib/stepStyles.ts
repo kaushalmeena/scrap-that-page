@@ -16,7 +16,7 @@ import {
 
 import type { OperationType } from "@/types/operation";
 
-export type OperationCategory =
+export type StepCategory =
   | "Browser"
   | "Data"
   | "Variables"
@@ -26,9 +26,9 @@ export type OperationCategory =
 // Glyph, tint and library category per step type, shared by the editor, the
 // step library, script outlines and run logs so a step is recognizable
 // everywhere (like action colors in Shortcuts).
-export const OPERATION_APPEARANCE: Record<
+export const STEP_STYLES: Record<
   OperationType,
-  { Icon: LucideIcon; tint: string; category: OperationCategory }
+  { Icon: LucideIcon; tint: string; category: StepCategory }
 > = {
   open: { Icon: Globe, tint: "var(--accent)", category: "Browser" },
   click: {
@@ -48,7 +48,7 @@ export const OPERATION_APPEARANCE: Record<
   delay: { Icon: Timer, tint: "var(--yellow)", category: "Timing" }
 };
 
-export const OPERATION_CATEGORIES: OperationCategory[] = [
+export const STEP_CATEGORIES: StepCategory[] = [
   "Browser",
   "Data",
   "Variables",

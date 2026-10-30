@@ -1,17 +1,17 @@
 import { Tile } from "@/components/Tile";
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
-import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
+import { STEPS } from "@/constants/steps";
+import { STEP_STYLES } from "@/lib/stepStyles";
 import type { OperationType } from "@/types/operation";
 
-export default function StepLibraryItem({
+export default function LibraryItem({
   type,
   onAdd
 }: {
   type: OperationType;
   onAdd: (type: OperationType) => void;
 }) {
-  const schema = OPERATION_SCHEMA[type];
-  const { Icon, tint } = OPERATION_APPEARANCE[type];
+  const schema = STEPS[type];
+  const { Icon, tint } = STEP_STYLES[type];
 
   const handleClick = () => onAdd(type);
 

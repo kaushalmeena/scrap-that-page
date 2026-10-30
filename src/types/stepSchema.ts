@@ -59,7 +59,7 @@ export type InputSchema =
   | SelectInputSchema
   | BlockInputSchema;
 
-export type OperationSchema = {
+export type StepSchema = {
   name: string;
   description: string;
   // Display-format string with single-brace `{index}` tokens (see

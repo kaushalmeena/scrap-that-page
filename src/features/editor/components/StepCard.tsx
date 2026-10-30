@@ -6,9 +6,9 @@ import { useEffect, useRef, useState } from "react";
 
 import { IconButton } from "@/components/Button";
 import { Tile } from "@/components/Tile";
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
+import { STEPS } from "@/constants/steps";
 import { SPRING } from "@/lib/motion";
-import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
+import { STEP_STYLES } from "@/lib/stepStyles";
 import { cn } from "@/utils/cn";
 import {
   hasAnyInputValue,
@@ -21,7 +21,7 @@ import {
   type OperationListRef,
   useEditorStore
 } from "../store/editorStore";
-import OperationInput from "./OperationInput";
+import StepInput from "./StepInput";
 
 const INPUT_WIDTH_CLASSES: Record<number, string> = {
   4: "col-span-12 md:col-span-4",
@@ -31,7 +31,7 @@ const INPUT_WIDTH_CLASSES: Record<number, string> = {
 
 // One step as a Shortcuts-style block: tinted glyph, name and a one-line
 // summary; click to expand its fields. Drag by the grip to reorder.
-export default function OperationCard({
+export default function StepCard({
   id,
   listRef,
   number
@@ -74,14 +74,14 @@ export default function OperationCard({
   const handleDuplicateClick = () => duplicateOperation({ listRef, id });
   const handleDeleteClick = () => deleteOperation({ listRef, id });
 
-  const schema = OPERATION_SCHEMA[operation.type];
+  const schema = STEPS[operation.type];
   // Until the user fills something in, the format string is all placeholders;
   // show the step description instead so new steps stay self-explanatory.
   const summary = hasAnyInputValue(operation.inputs)
     ? replaceFormatWithInputs(schema.format, operation.inputs)
     : schema.description;
 
-  const { Icon, tint } = OPERATION_APPEARANCE[operation.type];
+  const { Icon, tint } = STEP_STYLES[operation.type];
   const invalid = !isOperationValid(operation);
 
   // dnd-kit and the scroll-into-view effect both need the card element.
@@ -174,7 +174,7 @@ export default function OperationCard({
                     key={`${id}-input-${inputIndex}`}
                     className={INPUT_WIDTH_CLASSES[width]}
                   >
-                    <OperationInput
+                    <StepInput
                       operationId={id}
                       inputIndex={inputIndex}
                       numberPrefix={`${number}.`}

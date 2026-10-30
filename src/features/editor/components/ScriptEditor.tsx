@@ -11,20 +11,20 @@ import { isMac } from "@/lib/platform";
 import type { Script } from "@/types/script";
 import { pluralize } from "@/utils/text";
 
-import { NestedStepsContext } from "../context/NestedStepsContext";
-import { useUndoRedoShortcuts } from "../hooks/useUndoRedoShortcuts";
+import { StepListContext } from "../context/StepListContext";
+import { useUndoKeys } from "../hooks/useUndoKeys";
 import { getOperationIds, useEditorStore } from "../store/editorStore";
 import {
   denormalizeState,
   normalizeScript,
   validateEditorState
 } from "../utils/editorUtils";
-import ElementPickerDialog from "./ElementPickerDialog";
-import OperationPanel from "./OperationPanel";
-import OperationPickerDialog from "./OperationPickerDialog";
+import ElementPicker from "./ElementPicker";
 import ScriptHeader from "./ScriptHeader";
 import StepLibrary from "./StepLibrary";
-import VariablePickerDialog from "./VariablePickerDialog";
+import StepList from "./StepList";
+import StepPicker from "./StepPicker";
+import VariablePicker from "./VariablePicker";
 
 const ROOT = { parentId: null };
 
@@ -56,7 +56,7 @@ export default function ScriptEditor({
   const dirty = pastStates.length > 0;
   const [confirmDiscard, setConfirmDiscard] = useState(false);
 
-  useUndoRedoShortcuts();
+  useUndoKeys();
 
   // Snapshot the script once: the live query behind it may emit new objects
   // while editing, and those must not wipe the user's edits.
@@ -97,7 +97,7 @@ export default function ScriptEditor({
   const redoKey = isMac ? "⇧⌘Z" : "Ctrl+Shift+Z";
 
   return (
-    <NestedStepsContext value={OperationPanel}>
+    <StepListContext value={StepList}>
       <div data-pane className="flex min-w-0 flex-1 flex-col">
         <Toolbar
           leading={
@@ -141,15 +141,15 @@ export default function ScriptEditor({
           <div className="min-w-0 flex-1 overflow-y-auto bg-fill/60 dark:bg-black/20">
             <div className="mx-auto flex max-w-180 flex-col gap-6 px-8 pt-8 pb-24">
               <ScriptHeader />
-              <OperationPanel listRef={ROOT} numberPrefix="" />
+              <StepList listRef={ROOT} numberPrefix="" />
             </div>
           </div>
           <StepLibrary />
         </div>
 
-        <OperationPickerDialog />
-        <VariablePickerDialog />
-        <ElementPickerDialog />
+        <StepPicker />
+        <VariablePicker />
+        <ElementPicker />
         <Alert
           open={confirmDiscard}
           onOpenChange={setConfirmDiscard}
@@ -160,6 +160,6 @@ export default function ScriptEditor({
           onConfirm={onClose}
         />
       </div>
-    </NestedStepsContext>
+    </StepListContext>
   );
 }

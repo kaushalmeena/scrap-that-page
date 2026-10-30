@@ -25,9 +25,9 @@ import {
   type OperationListRef,
   useEditorStore
 } from "../store/editorStore";
-import OperationCard from "./OperationCard";
+import StepCard from "./StepCard";
 
-export default function OperationPanel({
+export default function StepList({
   listRef,
   numberPrefix
 }: {
@@ -78,7 +78,7 @@ export default function OperationPanel({
         >
           <SortableContext items={ids} strategy={verticalListSortingStrategy}>
             {ids.map((id, index) => (
-              <OperationCard
+              <StepCard
                 key={id}
                 id={id}
                 listRef={listRef}

@@ -5,7 +5,7 @@ import { Toolbar } from "@/components/Toolbar";
 import db from "@/database";
 import { pluralize } from "@/utils/text";
 
-import ClearHistoryButton from "./components/ClearHistoryButton";
+import ClearButton from "./components/ClearButton";
 import RunList from "./components/RunList";
 
 const HISTORY_LIMIT = 200;
@@ -29,7 +29,7 @@ export default function HistoryScreen() {
           title="History"
           subtitle={runs ? pluralize(runs.length, "run") : undefined}
         >
-          <ClearHistoryButton disabled={!hasRuns} />
+          <ClearButton disabled={!hasRuns} />
         </Toolbar>
         <RunList runs={runs} selectedId={selectedId} />
       </div>

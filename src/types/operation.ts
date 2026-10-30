@@ -5,7 +5,7 @@ import { z } from "zod";
  * the input type and value(s), with no editor metadata. This is what gets
  * persisted to the database, fed to the runner, and held (per node) by the
  * editor. The static per-type editor metadata (labels, layout, validation,
- * picker config) lives separately in OPERATION_SCHEMA (see operationSchema.ts).
+ * picker config) lives separately in the STEPS catalog (constants/steps.ts).
  *
  * The zod schema below (z-prefixed) is the single source of truth: it validates
  * records at the database boundary, and the TypeScript types are derived from

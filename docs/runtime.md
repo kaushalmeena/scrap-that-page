@@ -56,7 +56,7 @@ Runs are app-generated and skip validation. Screens read data with
 
 ## Code splitting
 
-Only the library is in the startup chunk. `app/lazyScreens.ts` code-splits the
+Only the library is in the startup chunk. `app/screens.ts` code-splits the
 editor, run pane, history and settings, and warms them on idle. `mathjs`
 (conditions) and `exceljs` (XLSX export) are dynamic imports at their single
 call sites. Keep heavy dependencies behind the same kind of seam.

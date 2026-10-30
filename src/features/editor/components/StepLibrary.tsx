@@ -1,15 +1,12 @@
 import { useDeferredValue, useState } from "react";
 
 import { SearchField } from "@/components/TextField";
-import { OPERATION_SCHEMA, OPERATION_TYPES } from "@/constants/operationSchema";
-import {
-  OPERATION_APPEARANCE,
-  OPERATION_CATEGORIES
-} from "@/lib/operationAppearance";
+import { STEPS, STEP_TYPES } from "@/constants/steps";
+import { STEP_STYLES, STEP_CATEGORIES } from "@/lib/stepStyles";
 import type { OperationType } from "@/types/operation";
 
 import { useEditorStore } from "../store/editorStore";
-import StepLibraryItem from "./StepLibraryItem";
+import LibraryItem from "./LibraryItem";
 
 const ROOT = { parentId: null };
 
@@ -22,11 +19,11 @@ export default function StepLibrary() {
 
   const handleAdd = (type: OperationType) => appendOperation(type, ROOT);
 
-  const matching = OPERATION_TYPES.filter((type) => {
+  const matching = STEP_TYPES.filter((type) => {
     if (!query) {
       return true;
     }
-    const schema = OPERATION_SCHEMA[type];
+    const schema = STEPS[type];
     return `${schema.name} ${schema.description}`.toLowerCase().includes(query);
   });
 
@@ -40,9 +37,9 @@ export default function StepLibrary() {
         />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
-        {OPERATION_CATEGORIES.map((category) => {
+        {STEP_CATEGORIES.map((category) => {
           const types = matching.filter(
-            (type) => OPERATION_APPEARANCE[type].category === category
+            (type) => STEP_STYLES[type].category === category
           );
           if (types.length === 0) {
             return null;
@@ -53,7 +50,7 @@ export default function StepLibrary() {
                 {category}
               </h3>
               {types.map((type) => (
-                <StepLibraryItem key={type} type={type} onAdd={handleAdd} />
+                <LibraryItem key={type} type={type} onAdd={handleAdd} />
               ))}
             </section>
           );

@@ -55,8 +55,14 @@ Key shared files:
 
 - **`types/operation.ts`** — the zod `zOperation` union: the stored shape of
   every step type and the source of the `Operation` types.
-- **`constants/operationSchema.ts`** — per-step editor metadata: name,
-  description, summary format, inputs, validation, pickers.
+- **`constants/steps.ts`** — the `STEPS` catalog: per-step name,
+  description, summary format, inputs, validation and pickers, typed by
+  `types/stepSchema.ts`.
+
+Vocabulary: a **step** is what the user adds to a script; an **operation** is
+a step's stored value shape (`Operation`, `zOperation`), which is also what
+the database and the scraper IPC carry.
+
 - **`types/scraper.ts`**, **`types/app.ts`** — IPC channels and payloads.
 
 Each feature keeps route entries at its root — `*Screen.tsx` for a top-level

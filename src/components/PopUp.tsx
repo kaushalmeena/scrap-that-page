@@ -5,7 +5,7 @@ import { cn } from "@/utils/cn";
 
 // NSPopUpButton: a push-button-styled select whose menu opens over the
 // trigger with the current item aligned, like the native control.
-export function PopUpButton({
+export function PopUp({
   value,
   options,
   onValueChange,

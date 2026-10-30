@@ -3,7 +3,7 @@ import { Braces } from "lucide-react";
 import { PaletteItem } from "@/components/Palette";
 import type { Variable } from "@/types/variable";
 
-export default function VariablePaletteItem({
+export default function VariableItem({
   variable,
   onSelect
 }: {

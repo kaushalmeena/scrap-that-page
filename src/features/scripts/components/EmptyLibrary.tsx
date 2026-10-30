@@ -5,7 +5,7 @@ import { EmptyState } from "@/components/EmptyState";
 import type { LibraryFilter } from "../context/LibraryContext";
 
 // What the script list shows when nothing is in it.
-export default function LibraryEmptyState({
+export default function EmptyLibrary({
   filter,
   search
 }: {

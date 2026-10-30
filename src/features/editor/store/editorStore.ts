@@ -5,7 +5,7 @@ import { create } from "zustand";
 import { immer } from "zustand/middleware/immer";
 import { shallow } from "zustand/shallow";
 
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
+import { STEPS } from "@/constants/steps";
 import type { OperationType } from "@/types/operation";
 import type { Variable } from "@/types/variable";
 import { validateWithRules } from "@/utils/operation";
@@ -119,7 +119,7 @@ const applyInputValue = (
   if (!operation || !input || input.type === "block") {
     return;
   }
-  const schema = OPERATION_SCHEMA[operation.type].inputs[inputIndex];
+  const schema = STEPS[operation.type].inputs[inputIndex];
   if (schema.type === "block") {
     return;
   }
@@ -309,7 +309,7 @@ export const useEditorStore = create<EditorStore>()(
             if (!operation) {
               return;
             }
-            const schema = OPERATION_SCHEMA[operation.type].inputs[inputIndex];
+            const schema = STEPS[operation.type].inputs[inputIndex];
             if (schema.type === "text" && schema.variablePicker) {
               state.variablePicker.target = { operationId, inputIndex };
               state.variablePicker.filterType = schema.variablePicker.type;
@@ -326,7 +326,7 @@ export const useEditorStore = create<EditorStore>()(
             if (!operation) {
               return;
             }
-            const schema = OPERATION_SCHEMA[operation.type].inputs[inputIndex];
+            const schema = STEPS[operation.type].inputs[inputIndex];
             if (schema.type === "text" && schema.elementPicker) {
               state.elementPicker.target = { operationId, inputIndex };
             }

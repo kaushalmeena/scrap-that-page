@@ -16,11 +16,7 @@ const clearHistory = async () => {
 };
 
 // Toolbar "Clear" with its confirmation alert.
-export default function ClearHistoryButton({
-  disabled
-}: {
-  disabled: boolean;
-}) {
+export default function ClearButton({ disabled }: { disabled: boolean }) {
   const [confirming, setConfirming] = useState(false);
 
   const handleClick = () => setConfirming(true);

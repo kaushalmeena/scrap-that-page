@@ -6,10 +6,10 @@ import {
   selectVariables,
   useEditorStore
 } from "../store/editorStore";
-import VariablePaletteItem from "./VariablePaletteItem";
+import VariableItem from "./VariableItem";
 
 // Picks a script variable to insert into the field that opened it.
-export default function VariablePickerDialog() {
+export default function VariablePicker() {
   const picker = useEditorStore(selectVariablePicker);
   const variables = useEditorStore(selectVariables);
   const { hideVariablePicker, updateInputWithVariable } = useEditorStore(
@@ -44,7 +44,7 @@ export default function VariablePickerDialog() {
       {available.length > 0 ? (
         <PaletteGroup heading="Variables">
           {available.map((variable) => (
-            <VariablePaletteItem
+            <VariableItem
               key={variable.ownerId}
               variable={variable}
               onSelect={handleSelect}

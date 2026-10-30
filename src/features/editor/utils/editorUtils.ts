@@ -1,7 +1,7 @@
 import { produce } from "immer";
 import { nanoid } from "nanoid";
 
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
+import { STEPS } from "@/constants/steps";
 import type { Input, Operation, OperationType } from "@/types/operation";
 import type { Script } from "@/types/script";
 import type { ValidationRule } from "@/types/validation";
@@ -17,7 +17,7 @@ import { validateWithRules } from "@/utils/operation";
  *
  * The editor holds operations NORMALIZED: a flat id -> operation map plus id
  * lists (the root list and one per block input). Each node is as thin as the
- * stored Operation; all static metadata is looked up from OPERATION_SCHEMA.
+ * stored Operation; all static metadata is looked up from STEPS.
  * Kept store-free so the store (store/editorStore.ts) and these transforms can
  * import them without a cycle.
  */
@@ -116,7 +116,7 @@ export const createEditorOperation = (
 ): EditorOperation => ({
   id: nanoid(),
   type,
-  inputs: OPERATION_SCHEMA[type].inputs.map((input): EditorInput =>
+  inputs: STEPS[type].inputs.map((input): EditorInput =>
     input.type === "block"
       ? { type: "block", operationIds: [] }
       : { type: input.type, value: input.defaultValue, error: "" }
@@ -297,7 +297,7 @@ export const validateEditorState = (state: EditorState) => {
 
     for (const id of orderedIds) {
       const operation = draft.operations[id];
-      const schema = OPERATION_SCHEMA[operation.type];
+      const schema = STEPS[operation.type];
       let hasError = false;
       operation.inputs.forEach((input, index) => {
         if (input.type === "block") {

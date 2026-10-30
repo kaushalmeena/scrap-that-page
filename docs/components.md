@@ -10,8 +10,8 @@ style raw Base UI parts or invent one-off controls.
 | `Button`                               | NSButton (push)                    | `push` (default), `primary` (one per view), `destructive`, `plain`, `accent` |
 | `IconButton`                           | Toolbar item                       | `label` is the tooltip and accessible name; include the shortcut             |
 | `TextField`, `TextArea`, `SearchField` | NSTextField, NSSearchField         | `aria-invalid` shows the red ring; Escape clears a search                    |
-| `PopUpButton`                          | NSPopUpButton                      | Menu opens aligned over the current item                                     |
-| `Toggle`, `SegmentedControl`           | NSSwitch, NSSegmentedControl       |                                                                              |
+| `PopUp`                                | NSPopUpButton                      | Menu opens aligned over the current item                                     |
+| `Toggle`, `Segmented`                  | NSSwitch, NSSegmentedControl       |                                                                              |
 | `Menu`, `ContextMenu`, `MenuItem`      | NSMenu                             | One `MenuItem` serves both; show shortcuts with `shortcutLabel()`            |
 | `Sheet`, `Alert`                       | Sheet, NSAlert                     | `Alert` for confirmations: app icon, two equal buttons                       |
 | `Palette`, `PaletteItem`               | Spotlight                          | ⌘K, the step picker, the variable picker                                     |
@@ -42,6 +42,6 @@ style raw Base UI parts or invent one-off controls.
 - An ellipsis (…) on any command that asks for more input before acting
   ("Export…", "Delete…", "Import Script…").
 - Alerts ask a question ("Delete “Name”?") and say what cannot be undone.
-- Step and script tints come from `lib/operationAppearance.ts` and
-  `scripts/utils/scriptAppearance.ts`; reuse them so a step looks the same
+- Step and script tints come from `lib/stepStyles.ts` and
+  `scripts/utils/scriptStyles.ts`; reuse them so a step looks the same
   everywhere.

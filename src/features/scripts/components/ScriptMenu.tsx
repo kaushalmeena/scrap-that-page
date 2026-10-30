@@ -8,7 +8,7 @@ import { scriptActions } from "../utils/scriptActions";
 
 // The per-script action menu, shared by the row context menu and the detail
 // toolbar's "More" pull-down.
-export default function ScriptMenuItems({
+export default function ScriptMenu({
   script,
   onRun,
   onEdit,

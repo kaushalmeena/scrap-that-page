@@ -1,11 +1,11 @@
 import type { OperationType } from "../types/operation";
 import type {
   BlockInputSchema,
-  OperationSchema,
+  StepSchema,
   SelectInputSchema,
   SelectOption,
   TextInputSchema
-} from "../types/operationSchema";
+} from "../types/stepSchema";
 import type { ValidationRule } from "../types/validation";
 
 // Builders keep the catalog terse: only fields that differ from the defaults
@@ -48,7 +48,7 @@ const block = (label: string): BlockInputSchema => ({ type: "block", label });
  * keyed by type. The stored Operation carries only values; everything here
  * (labels, layout, validation, picker config) is derived from the type.
  */
-export const OPERATION_SCHEMA: Record<OperationType, OperationSchema> = {
+export const STEPS: Record<OperationType, StepSchema> = {
   open: {
     name: "Open page",
     description: "Go to a URL in the scraper window.",
@@ -256,5 +256,5 @@ export const OPERATION_SCHEMA: Record<OperationType, OperationSchema> = {
   }
 };
 
-// Catalog order for the step picker (insertion order of OPERATION_SCHEMA).
-export const OPERATION_TYPES = Object.keys(OPERATION_SCHEMA) as OperationType[];
+// Catalog order for the step picker (insertion order of STEPS).
+export const STEP_TYPES = Object.keys(STEPS) as OperationType[];

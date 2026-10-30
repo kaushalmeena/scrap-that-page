@@ -3,7 +3,7 @@ import { Alert } from "@/components/Sheet";
 import { scriptActions, useDeleteRequest } from "../utils/scriptActions";
 
 // Single app-wide confirmation for scriptActions.requestDelete.
-export default function DeleteScriptAlert() {
+export default function DeleteAlert() {
   const script = useDeleteRequest((s) => s.script);
   const isOpen = useDeleteRequest((s) => s.open);
 

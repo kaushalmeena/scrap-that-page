@@ -16,12 +16,12 @@ import { pluralize } from "@/utils/text";
 import { formatRelative } from "@/utils/time";
 
 import RecentRunRow from "./components/RecentRunRow";
-import ScriptMenuItems from "./components/ScriptMenuItems";
+import ScriptMenu from "./components/ScriptMenu";
 import StepOutline from "./components/StepOutline";
 import { useLibrary } from "./context/LibraryContext";
 import { useScriptById } from "./hooks/useScriptById";
 import { scriptActions } from "./utils/scriptActions";
-import { scriptAppearance } from "./utils/scriptAppearance";
+import { scriptStyles } from "./utils/scriptStyles";
 
 // The selected script: identity header, step outline and recent runs, with
 // Run / Edit / Favorite in the toolbar (and on ⌘R / ⌘E / ⌘D).
@@ -59,7 +59,7 @@ export default function ScriptDetailPane() {
     return <Navigate to={basePath} replace />;
   }
 
-  const { Icon, tint } = scriptAppearance(script);
+  const { Icon, tint } = scriptStyles(script);
   const lastRun = runs?.[0];
 
   return (
@@ -86,7 +86,7 @@ export default function ScriptDetailPane() {
             </IconButton>
           }
         >
-          <ScriptMenuItems
+          <ScriptMenu
             script={script}
             onRun={handleRun}
             onEdit={handleEdit}

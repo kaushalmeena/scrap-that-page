@@ -32,7 +32,7 @@
 - **Stable props for memoized rows.** `ScriptRow` is `memo`; pass memoized
   rows handlers wrapped in `useCallback`.
 - **Recursion through context, not imports.** Nested step lists are injected
-  through `NestedStepsContext`, which keeps `import/no-cycle` clean.
+  through `StepListContext`, which keeps `import/no-cycle` clean.
 
 ## Structure
 

@@ -12,10 +12,10 @@ import {
   useEditorStore
 } from "../store/editorStore";
 
-// Store-driven (like VariablePickerDialog): opens for whichever input started
+// Store-driven (like VariablePicker): opens for whichever input started
 // the pick. Prompts for a URL, opens it in the scraper window, then lets the
 // user click an element there and writes its CSS selector back to that input.
-export default function ElementPickerDialog() {
+export default function ElementPicker() {
   const { target } = useEditorStore(selectElementPicker);
   const { hideElementPicker, updateInput } = useEditorStore((s) => s.actions);
   // Default to the page the script already opens, so picking usually targets

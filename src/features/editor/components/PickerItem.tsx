@@ -1,18 +1,18 @@
 import { PaletteItem } from "@/components/Palette";
 import { Tile } from "@/components/Tile";
-import { OPERATION_SCHEMA } from "@/constants/operationSchema";
-import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
+import { STEPS } from "@/constants/steps";
+import { STEP_STYLES } from "@/lib/stepStyles";
 import type { OperationType } from "@/types/operation";
 
-export default function StepPaletteItem({
+export default function PickerItem({
   type,
   onSelect
 }: {
   type: OperationType;
   onSelect: (type: OperationType) => void;
 }) {
-  const schema = OPERATION_SCHEMA[type];
-  const { Icon, tint } = OPERATION_APPEARANCE[type];
+  const schema = STEPS[type];
+  const { Icon, tint } = STEP_STYLES[type];
 
   const handleSelect = () => onSelect(type);
 
