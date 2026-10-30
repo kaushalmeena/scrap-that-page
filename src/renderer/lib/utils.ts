@@ -17,7 +17,16 @@ const twMerge = extendTailwindMerge({
         "mini"
       ],
       radius: ["control", "box", "sheet"],
-      shadow: ["control", "popover", "sheet", "card"]
+      shadow: [
+        "control",
+        "popover",
+        "sheet",
+        "card",
+        "glyph",
+        "primary",
+        "track",
+        "knob"
+      ]
     }
   }
 });

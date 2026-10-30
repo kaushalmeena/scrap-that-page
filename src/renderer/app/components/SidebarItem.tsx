@@ -40,7 +40,7 @@ export default function SidebarItem({
       onKeyDown={handleKeyDown}
       className={cn(
         "flex h-7 items-center gap-2 rounded-control px-2 text-left text-body outline-none",
-        active && "bg-black/[0.09] dark:bg-white/[0.11]"
+        active && "bg-black/9 dark:bg-white/11"
       )}
     >
       {icon}

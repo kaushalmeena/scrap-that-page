@@ -8,7 +8,7 @@ export default function Logo({ className }: { className?: string }) {
   return (
     <div
       className={cn(
-        "flex items-center justify-center bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_78%,white),var(--accent))] text-white shadow-[inset_0_0.5px_0_rgb(255_255_255/0.35),0_1px_3px_rgb(0_0_0/0.15)]",
+        "flex items-center justify-center bg-[linear-gradient(180deg,color-mix(in_srgb,var(--accent)_78%,white),var(--accent))] text-white shadow-glyph",
         className
       )}
     >

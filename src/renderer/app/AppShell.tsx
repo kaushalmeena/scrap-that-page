@@ -56,7 +56,7 @@ export default function AppShell() {
       className="flex h-full overflow-hidden"
     >
       <Sidebar open={sidebarOpen} />
-      <main className="flex min-w-0 flex-1 border-l bg-window shadow-[-1px_0_0_rgb(0_0_0/0.04)] dark:border-black/60">
+      <main className="flex min-w-0 flex-1 border-l bg-window dark:border-black/60">
         <Suspense fallback={null}>
           <Outlet />
         </Suspense>

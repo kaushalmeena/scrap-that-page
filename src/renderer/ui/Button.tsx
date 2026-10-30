@@ -14,7 +14,7 @@ const buttonVariants = cva(
       variant: {
         push: "bg-control text-label shadow-control active:brightness-95",
         primary:
-          "bg-accent text-white shadow-[inset_0_0.5px_0_rgb(255_255_255/0.25),0_0_0_0.5px_rgb(0_0_0/0.12),0_0.5px_1.5px_rgb(0_0_0/0.15)] hover:bg-accent-hover active:brightness-90",
+          "bg-accent text-white shadow-primary hover:bg-accent-hover active:brightness-90",
         destructive:
           "bg-red text-white shadow-control hover:brightness-105 active:brightness-90",
         plain: "text-label hover:bg-fill active:bg-fill-strong",

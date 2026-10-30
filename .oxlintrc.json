@@ -9,10 +9,7 @@
     "unicorn",
     "vitest"
   ],
-  "jsPlugins": [
-    "eslint-plugin-better-tailwindcss",
-    "./tools/oxlint/local-plugin.mjs"
-  ],
+  "jsPlugins": ["oxlint-tailwindcss", "./tools/oxlint/local-plugin.mjs"],
   "categories": {
     "correctness": "error",
     "suspicious": "warn",
@@ -24,9 +21,8 @@
     "es2024": true
   },
   "settings": {
-    "better-tailwindcss": {
-      "entryPoint": "src/renderer/index.css",
-      "callees": ["cn", "cva", "clsx"]
+    "tailwindcss": {
+      "entryPoint": "src/renderer/index.css"
     }
   },
   "rules": {
@@ -48,12 +44,6 @@
         "argsIgnorePattern": "^_"
       }
     ],
-    "better-tailwindcss/enforce-canonical-classes": "error",
-    "better-tailwindcss/no-conflicting-classes": "error",
-    "better-tailwindcss/no-duplicate-classes": "error",
-    "better-tailwindcss/no-deprecated-classes": "error",
-    "better-tailwindcss/no-unknown-classes": "warn",
-    "better-tailwindcss/no-unnecessary-whitespace": "error",
     "jsx-a11y/prefer-tag-over-role": "off",
     "vitest/require-mock-type-parameters": "off",
     "vitest/require-to-throw-message": "off",
@@ -62,7 +52,23 @@
     "unicorn/no-array-reverse": "off",
     "no-await-in-loop": "off",
     "unicorn/consistent-function-scoping": "off",
-    "local/no-inline-jsx-function": "error"
+    "local/no-inline-jsx-function": "error",
+    "tailwindcss/no-conflicting-classes": "error",
+    "tailwindcss/no-contradicting-variants": "error",
+    "tailwindcss/no-duplicate-classes": "error",
+    "tailwindcss/no-dynamic-classes": "error",
+    "tailwindcss/no-unknown-classes": "error",
+    "tailwindcss/enforce-canonical": "error",
+    "tailwindcss/enforce-negative-arbitrary-values": "error",
+    "tailwindcss/no-deprecated-classes": "error",
+    "tailwindcss/no-unnecessary-arbitrary-value": "error",
+    "tailwindcss/prefer-theme-tokens": "error",
+    "tailwindcss/consistent-variant-order": "error",
+    "tailwindcss/enforce-consistent-important-position": "error",
+    "tailwindcss/enforce-consistent-variable-syntax": "error",
+    "tailwindcss/enforce-shorthand": "error",
+    "tailwindcss/no-unnecessary-whitespace": "error",
+    "tailwindcss/no-hardcoded-colors": "warn"
   },
   "ignorePatterns": [".vite", "out", "dist", "node_modules", "src/assets"]
 }

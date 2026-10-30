@@ -43,6 +43,15 @@
   --elev-sheet:
     0 0 0 0.5px rgb(0 0 0 / 0.16), 0 24px 64px -8px rgb(0 0 0 / 0.32);
   --elev-card: 0 0 0 0.5px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
+  /* Same in both appearances: they sit on tinted, opaque fills. */
+  --elev-glyph:
+    inset 0 0.5px 0 rgb(255 255 255 / 0.35), 0 0 0 0.5px rgb(0 0 0 / 0.08),
+    0 1px 2px rgb(0 0 0 / 0.12);
+  --elev-primary:
+    inset 0 0.5px 0 rgb(255 255 255 / 0.25), 0 0 0 0.5px rgb(0 0 0 / 0.12),
+    0 0.5px 1.5px rgb(0 0 0 / 0.15);
+  --elev-track: inset 0 0 0 0.5px rgb(0 0 0 / 0.08);
+  --elev-knob: 0 0 0 0.5px rgb(0 0 0 / 0.06), 0 1px 3px rgb(0 0 0 / 0.25);
 }
 
 .dark {
@@ -119,6 +128,10 @@
   --shadow-popover: var(--elev-popover);
   --shadow-sheet: var(--elev-sheet);
   --shadow-card: var(--elev-card);
+  --shadow-glyph: var(--elev-glyph);
+  --shadow-primary: var(--elev-primary);
+  --shadow-track: var(--elev-track);
+  --shadow-knob: var(--elev-knob);
 
   --color-window: var(--window);
   --color-sidebar: var(--sidebar);
