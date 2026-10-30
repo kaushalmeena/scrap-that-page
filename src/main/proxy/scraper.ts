@@ -1,10 +1,11 @@
+import { app, ipcMain } from "electron";
+
 import {
   type PickElementResponse,
   ScraperChannel,
   type ScraperConfig,
   type ScraperOperation
-} from "@common/types/scraper";
-import { app, ipcMain } from "electron";
+} from "@/types/scraper";
 
 import type Scraper from "../lib/Scraper";
 import { PickCancelledError } from "../lib/Scraper/DebuggerPage";

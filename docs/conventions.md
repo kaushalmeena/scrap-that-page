@@ -7,7 +7,7 @@
 - **oxlint** lints (`pnpm lint`, `pnpm lint:fix`) with the react, a11y, import,
   unicorn and vitest plugins, plus two JS plugins:
   - `oxlint-tailwindcss` — reads the real Tailwind build from
-    `src/renderer/index.css` and enforces canonical classes (`px-7`, not
+    `src/index.css` and enforces canonical classes (`px-7`, not
     `pl-7 pr-7`; `rounded-control`, not `rounded-[14px]`; `bg-black/9`, not
     `bg-black/[0.09]`), and rejects unknown, conflicting, duplicate and
     deprecated classes. Custom classes must be declared as Tailwind `@utility`
@@ -38,9 +38,10 @@
 
 - Feature layout and route naming: see [code-map.md](code-map.md).
 - A feature imports another feature's public pieces (a hook, a component), and
-  never the app layer. Shared building blocks go in `ui/` or `lib/`.
-- Cross-feature data shapes live in `types/`; cross-process ones in
-  `src/common`.
+  never the app layer. Shared building blocks go in `components/` or `lib/`.
+- Data shapes live in `types/`, constants in `constants/`, pure helpers in
+  `utils/`. These are shared with main and preload, so they import nothing
+  from the renderer folders (lint-enforced).
 - Comments explain _why_: the constraint, the trade-off, the gotcha.
 
 ## Commits

@@ -24,8 +24,7 @@ export default defineConfig((env) => {
     resolve: {
       preserveSymlinks: true,
       alias: {
-        "@": path.resolve(__dirname, "src/renderer"),
-        "@common": path.resolve(__dirname, "src/common")
+        "@": path.resolve(__dirname, "src")
       }
     },
     clearScreen: false

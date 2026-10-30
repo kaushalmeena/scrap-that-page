@@ -32,7 +32,7 @@ export default defineConfig((env) => {
       // Load the Node.js entry.
       mainFields: ["module", "jsnext:main", "jsnext"],
       alias: {
-        "@common": path.resolve(__dirname, "src/common")
+        "@": path.resolve(__dirname, "src")
       }
     }
   };

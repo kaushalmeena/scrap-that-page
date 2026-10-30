@@ -1,6 +1,6 @@
 # Components
 
-`src/renderer/ui/` is the app's own kit, built on unstyled
+`src/components/` is the app's own kit, built on unstyled
 [Base UI](https://base-ui.com/) primitives and the tokens in
 [foundations.md](foundations.md). Feature code composes these; it does not
 style raw Base UI parts or invent one-off controls.

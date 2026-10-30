@@ -141,12 +141,16 @@ Tailwind classes).
 
 ### Code organization
 
-The renderer (`src/renderer`) is organized by feature:
+Everything sits one level under `src/`, grouped by role, behind a single `@/`
+import alias:
 
 ```text
-app/         window shell, router, sidebar, command palette
-ui/          macOS-style component kit (Base UI primitives + design tokens)
-lib/         cross-feature helpers (commands, motion, formatting)
+main/  preload/            Electron processes (Node)
+types/  constants/  utils/ shared by every process, kept pure
+app/                       window shell, router, sidebar, command palette
+components/                macOS-style component kit (Base UI + design tokens)
+lib/                       renderer-only modules (commands, motion, platform)
+database/                  IndexedDB storage
 features/
   <feature>/
     *Screen.tsx   top-level route

@@ -1,4 +1,4 @@
-import type { AppCommand, ThemeSource } from "@common/types/app";
+import type { AppCommand, ThemeSource } from "@/types/app";
 
 export type AppAPI = {
   platform: NodeJS.Platform;

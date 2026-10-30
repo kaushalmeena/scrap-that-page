@@ -1,9 +1,10 @@
+import { ipcRenderer } from "electron";
+
 import {
   ScraperChannel,
   type ScraperConfig,
   type ScraperOperation
-} from "@common/types/scraper";
-import { ipcRenderer } from "electron";
+} from "@/types/scraper";
 
 import type { ScraperAPI } from "../types/scraper";
 

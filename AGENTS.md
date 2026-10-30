@@ -30,7 +30,7 @@ Start with [`docs/overview.md`](docs/overview.md), then follow the work:
 
 ## Rules
 
-- **Build UI from `src/renderer/ui`.** It wraps Base UI in AppKit styling.
+- **Build UI from `src/components`.** It wraps Base UI in AppKit styling.
   Style with the design tokens (`text-secondary`, `bg-fill`, `rounded-control`);
   a literal color or pixel radius is a bug.
 - **Every action has a command.** App actions are `AppCommand`s run through
@@ -41,6 +41,8 @@ Start with [`docs/overview.md`](docs/overview.md), then follow the work:
   from the route.
 - **The renderer is untrusted.** It reaches main only through `window.scraper`
   and `window.app`; main validates every IPC argument.
+- **Shared code stays pure.** `types/`, `constants/` and `utils/` are imported
+  by every process; `main/` and `preload/` import nothing else (lint-enforced).
 - **Handlers are named, above the return.** Lint rejects inline functions in
   JSX.
 - **Heavy code loads on demand.** Secondary screens are lazy routes; mathjs and
@@ -49,5 +51,5 @@ Start with [`docs/overview.md`](docs/overview.md), then follow the work:
 ## Non-goals
 
 Each absence is a decision: a web or server build of the app; a third-party
-component library on top of `ui/`; page-transition animations; more than one
+component library on top of `components/`; page-transition animations; more than one
 run at a time.

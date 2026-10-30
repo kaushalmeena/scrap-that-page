@@ -1,9 +1,6 @@
-import {
-  AppChannel,
-  type AppCommand,
-  type ThemeSource
-} from "@common/types/app";
 import { ipcRenderer, type IpcRendererEvent } from "electron";
+
+import { AppChannel, type AppCommand, type ThemeSource } from "@/types/app";
 
 import type { AppAPI } from "../types/app";
 

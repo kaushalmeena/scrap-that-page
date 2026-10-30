@@ -1,5 +1,6 @@
-import type { ScraperConfig } from "@common/types/scraper";
 import { BrowserWindow } from "electron";
+
+import type { ScraperConfig } from "@/types/scraper";
 
 import DebuggerPage from "./DebuggerPage";
 

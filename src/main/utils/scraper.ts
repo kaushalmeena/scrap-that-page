@@ -2,7 +2,7 @@ import type {
   ExecuteResponse,
   ScraperOperation,
   ScraperResult
-} from "@common/types/scraper";
+} from "@/types/scraper";
 
 import type Scraper from "../lib/Scraper";
 

@@ -1,10 +1,11 @@
-import type { AppCommand } from "@common/types/app";
 import {
   app,
   type BrowserWindow,
   Menu,
   type MenuItemConstructorOptions
 } from "electron";
+
+import type { AppCommand } from "@/types/app";
 
 const isMac = process.platform === "darwin";
 

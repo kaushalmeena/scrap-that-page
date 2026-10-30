@@ -9,7 +9,7 @@
   "sortImports": {},
   "sortPackageJson": false,
   "sortTailwindcss": {
-    "stylesheet": "./src/renderer/index.css",
+    "stylesheet": "./src/index.css",
     "functions": ["cn", "cva", "clsx"]
   },
   "ignorePatterns": [".vite", "out", "dist", "pnpm-lock.yaml", "src/assets"]

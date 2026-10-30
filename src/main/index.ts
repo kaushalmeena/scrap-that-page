@@ -1,7 +1,8 @@
 import path from "node:path";
 
-import { AppChannel, type ThemeSource } from "@common/types/app";
 import { app, BrowserWindow, ipcMain, nativeTheme, shell } from "electron";
+
+import { AppChannel, type ThemeSource } from "@/types/app";
 
 import Scraper from "./lib/Scraper";
 import { installAppMenu } from "./menu";

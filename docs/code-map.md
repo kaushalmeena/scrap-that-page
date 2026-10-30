@@ -17,32 +17,47 @@ Where things live. For _why_ they are shaped this way, follow the links.
 ## `src/preload`
 
 - **`proxy/`** — `ScraperProxy` and `AppProxy`, the objects exposed on
-  `window`. **`types/`** declares them globally for the renderer.
+  `window`. `preload/types/` declares them globally for the renderer.
 
-## `src/common`
+## Layout
 
-- **`types/operation.ts`** — the zod `zOperation` union: the stored shape of
-  every step type and the source of the `Operation` types.
-- **`constants/operationSchema.ts`** — per-step editor metadata: name,
-  description, summary format, inputs, validation, pickers.
-- **`types/scraper.ts`**, **`types/app.ts`** — IPC channels and payloads.
-
-## `src/renderer`
+Everything lives one level under `src/`, grouped by role. Each process imports
+by the single `@/` alias (`@/types/run`, `@/components/Button`).
 
 ```text
-app/          shell: router, AppShell, lazy screens, theme
+main/         Electron main process (Node)
+preload/      the bridge exposed to the renderer (Node)
+
+types/        shared types: operations, IPC payloads, Script, Run
+constants/    shared constants: step catalog, validation, messages
+utils/        shared pure helpers: operation formatting, cn(), time, text
+
+app/          renderer shell: router, AppShell, lazy screens, theme
   components/ sidebar, command palette
-ui/           macOS component kit (see components.md)
-lib/          commands, motion, formatting, step appearance, cn()
+components/   macOS component kit (see components.md) and the Logo
+lib/          renderer-only modules: commands, motion, platform, step appearance
 database/     Dexie database, zod validation at the boundary, seed script
-types/        Script and Run records
 features/
   scripts/    library: list + detail, script actions (the home screen)
   runner/     run engine, run pane, result table, export
   editor/     script editor and its undoable store
   history/    saved runs: list + detail
   settings/   preferences and the settings store
+index.tsx     renderer entry; index.css holds the design tokens
 ```
+
+**Process boundary.** `main/` and `preload/` run in Node and may import only
+`types/`, `constants/` and `utils/`; those three stay free of renderer modules
+so every process can use them. Both rules are enforced by
+`no-restricted-imports` overrides in `.oxlintrc.json`.
+
+Key shared files:
+
+- **`types/operation.ts`** — the zod `zOperation` union: the stored shape of
+  every step type and the source of the `Operation` types.
+- **`constants/operationSchema.ts`** — per-step editor metadata: name,
+  description, summary format, inputs, validation, pickers.
+- **`types/scraper.ts`**, **`types/app.ts`** — IPC channels and payloads.
 
 Each feature keeps route entries at its root — `*Screen.tsx` for a top-level
 route, `*Pane.tsx` for a nested route rendered in a screen's detail pane — and

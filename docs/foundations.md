@@ -10,7 +10,7 @@ what those apps do.
 
 ## Tokens
 
-All tokens live in `src/renderer/index.css` and follow AppKit's semantic colors,
+All tokens live in `src/index.css` and follow AppKit's semantic colors,
 redefined under `.dark`. They are registered in Tailwind's `@theme`, so they are
 real utilities: write `text-secondary`, never `text-(--secondary)` or a literal
 color.
@@ -57,7 +57,7 @@ boxes, step cards), `rounded-sheet` (14 px: sheets, palette). Elevations:
 `shadow-knob` (switch). Dark mode
 swaps shadows for inner highlights, so do not add ad-hoc shadows.
 
-`cn()` (`lib/utils.ts`) runs tailwind-merge configured with these type, radius
+`cn()` (`utils/cn.ts`) runs tailwind-merge configured with these type, radius
 and shadow names. Add any new size, radius or shadow token there too, or `cn()`
 will silently drop classes it thinks conflict.
 

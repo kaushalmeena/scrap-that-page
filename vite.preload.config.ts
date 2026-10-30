@@ -28,7 +28,7 @@ export default defineConfig((env) => {
     plugins: [pluginHotRestart("reload")],
     resolve: {
       alias: {
-        "@common": path.resolve(__dirname, "src/common")
+        "@": path.resolve(__dirname, "src")
       }
     }
   };

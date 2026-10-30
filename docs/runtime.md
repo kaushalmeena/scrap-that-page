@@ -5,7 +5,7 @@
 The renderer is **untrusted**: it is sandboxed, has no Node access, and reaches
 main only through the two preload objects.
 
-| Bridge           | Channels (`src/common/types`)                        | Used for                                |
+| Bridge           | Channels (`src/types`)                               | Used for                                |
 | ---------------- | ---------------------------------------------------- | --------------------------------------- |
 | `window.scraper` | `ScraperChannel`: load, run operation, pick…         | Driving the scraper window              |
 | `window.app`     | `AppChannel`: `COMMAND` (main→renderer), `SET_THEME` | Native menu commands, native appearance |

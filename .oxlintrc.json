@@ -22,7 +22,7 @@
   },
   "settings": {
     "tailwindcss": {
-      "entryPoint": "src/renderer/index.css"
+      "entryPoint": "src/index.css"
     }
   },
   "rules": {
@@ -70,5 +70,53 @@
     "tailwindcss/no-unnecessary-whitespace": "error",
     "tailwindcss/no-hardcoded-colors": "warn"
   },
-  "ignorePatterns": [".vite", "out", "dist", "node_modules", "src/assets"]
+  "ignorePatterns": [".vite", "out", "dist", "node_modules", "src/assets"],
+  "overrides": [
+    {
+      "files": ["src/main/**", "src/preload/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "@/app/*",
+                  "@/components/*",
+                  "@/features/*",
+                  "@/lib/*",
+                  "@/database/*",
+                  "@/index*"
+                ],
+                "message": "Main and preload run in Node: import only from @/types, @/constants and @/utils."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "files": ["src/types/**", "src/constants/**", "src/utils/**"],
+      "rules": {
+        "no-restricted-imports": [
+          "error",
+          {
+            "patterns": [
+              {
+                "group": [
+                  "@/app/*",
+                  "@/components/*",
+                  "@/features/*",
+                  "@/lib/*",
+                  "@/database/*",
+                  "@/index*"
+                ],
+                "message": "Shared code is imported by every process: keep it free of renderer modules."
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ]
 }
