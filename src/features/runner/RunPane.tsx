@@ -7,7 +7,7 @@ import { Tile } from "@/components/Tile";
 import { Toolbar, ToolbarDivider } from "@/components/Toolbar";
 import { useLibrary } from "@/features/scripts/context/LibraryContext";
 import { useScriptById } from "@/features/scripts/hooks/useScriptById";
-import { scriptStyles } from "@/features/scripts/utils/scriptStyles";
+import { scriptGlyph } from "@/features/scripts/utils/glyph";
 import { shortcutLabel, useCommand } from "@/lib/commands";
 import { pluralize } from "@/utils/text";
 
@@ -59,7 +59,7 @@ export default function RunPane() {
     return <EmptyState title="Script Not Found" />;
   }
 
-  const appearance = scriptStyles(script);
+  const appearance = scriptGlyph(script);
 
   return (
     <div className="flex h-full min-w-0 flex-col">

@@ -16,7 +16,7 @@ const TINTS = [
 
 // Stable per-script identity: the tint comes from the script's id (or name
 // before it has one) and the glyph from the step it starts with.
-export const scriptStyles = (
+export const scriptGlyph = (
   script: Script
 ): { Icon: LucideIcon; tint: string } => {
   const seed = String(script.id ?? script.name);

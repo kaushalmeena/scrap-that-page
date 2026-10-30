@@ -5,7 +5,7 @@ import { Outlet, useNavigate } from "react-router";
 import { IconButton } from "@/components/Button";
 import { Toaster } from "@/components/Toaster";
 import DeleteAlert from "@/features/scripts/components/DeleteAlert";
-import { scriptActions } from "@/features/scripts/utils/scriptActions";
+import { scriptActions } from "@/features/scripts/utils/actions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import {
   connectCommandSources,

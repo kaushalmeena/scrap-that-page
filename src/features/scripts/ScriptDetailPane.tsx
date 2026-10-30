@@ -20,8 +20,8 @@ import ScriptMenu from "./components/ScriptMenu";
 import StepOutline from "./components/StepOutline";
 import { useLibrary } from "./context/LibraryContext";
 import { useScriptById } from "./hooks/useScriptById";
-import { scriptActions } from "./utils/scriptActions";
-import { scriptStyles } from "./utils/scriptStyles";
+import { scriptActions } from "./utils/actions";
+import { scriptGlyph } from "./utils/glyph";
 
 // The selected script: identity header, step outline and recent runs, with
 // Run / Edit / Favorite in the toolbar (and on ⌘R / ⌘E / ⌘D).
@@ -59,7 +59,7 @@ export default function ScriptDetailPane() {
     return <Navigate to={basePath} replace />;
   }
 
-  const { Icon, tint } = scriptStyles(script);
+  const { Icon, tint } = scriptGlyph(script);
   const lastRun = runs?.[0];
 
   return (

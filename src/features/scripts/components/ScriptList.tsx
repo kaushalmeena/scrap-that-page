@@ -5,7 +5,7 @@ import { ListBox, type ListBoxItemState } from "@/components/ListBox";
 import { useRunScript } from "@/features/runner/hooks/useRunScript";
 import type { Script } from "@/types/script";
 
-import { scriptActions } from "../utils/scriptActions";
+import { scriptActions } from "../utils/actions";
 import ScriptRow from "./ScriptRow";
 
 const getScriptKey = (script: Script) => script.id;

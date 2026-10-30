@@ -2,7 +2,7 @@ import { Pencil } from "lucide-react";
 
 import { PaletteItem } from "@/components/Palette";
 import { Tile } from "@/components/Tile";
-import { scriptStyles } from "@/features/scripts/utils/scriptStyles";
+import { scriptGlyph } from "@/features/scripts/utils/glyph";
 import type { Script } from "@/types/script";
 
 // The palette's two entries for one script: run it, or open it in the editor.
@@ -15,7 +15,7 @@ export default function ScriptCommands({
   onRun: (script: Script) => void;
   onEdit: (script: Script) => void;
 }) {
-  const { Icon, tint } = scriptStyles(script);
+  const { Icon, tint } = scriptGlyph(script);
 
   const handleRun = () => onRun(script);
   const handleEdit = () => onEdit(script);

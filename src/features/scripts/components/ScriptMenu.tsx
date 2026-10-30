@@ -4,7 +4,7 @@ import { MenuItem, MenuSeparator } from "@/components/Menu";
 import { shortcutLabel } from "@/lib/commands";
 import type { Script } from "@/types/script";
 
-import { scriptActions } from "../utils/scriptActions";
+import { scriptActions } from "../utils/actions";
 
 // The per-script action menu, shared by the row context menu and the detail
 // toolbar's "More" pull-down.

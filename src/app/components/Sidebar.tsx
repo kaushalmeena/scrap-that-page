@@ -13,7 +13,7 @@ import { useLocation, useNavigate } from "react-router";
 import { Button, IconButton } from "@/components/Button";
 import { Tile } from "@/components/Tile";
 import db from "@/database";
-import { scriptStyles } from "@/features/scripts/utils/scriptStyles";
+import { scriptGlyph } from "@/features/scripts/utils/glyph";
 import { shortcutLabel } from "@/lib/commands";
 import { SPRING } from "@/lib/motion";
 
@@ -81,7 +81,7 @@ export default function Sidebar({ open }: { open: boolean }) {
           {favorites.length > 0 ? (
             <SidebarSection title="Favorites">
               {favorites.map((script) => {
-                const { Icon, tint } = scriptStyles(script);
+                const { Icon, tint } = scriptGlyph(script);
                 const route = `/favorites/${script.id}`;
                 return (
                   <SidebarItem

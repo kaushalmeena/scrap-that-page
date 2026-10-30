@@ -9,7 +9,7 @@ import { useRunnerStore } from "@/features/runner/store/runnerStore";
 import type { Script } from "@/types/script";
 import { cn } from "@/utils/cn";
 
-import { scriptStyles } from "../utils/scriptStyles";
+import { scriptGlyph } from "../utils/glyph";
 import ScriptMenu from "./ScriptMenu";
 
 // One script in the library's source list. The selection is accent-filled
@@ -40,7 +40,7 @@ function ScriptRow({
     }
   }, [selected]);
 
-  const { Icon, tint } = scriptStyles(script);
+  const { Icon, tint } = scriptGlyph(script);
   const highlighted = selected && focused;
 
   // Select on press (not release) like native source lists; ignore the

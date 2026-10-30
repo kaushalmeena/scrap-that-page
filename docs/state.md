@@ -2,15 +2,15 @@
 
 Know which owner a piece of state belongs to before you touch it.
 
-| State                                   | Owner                                               | Lifetime                       |
-| --------------------------------------- | --------------------------------------------------- | ------------------------------ |
-| Scripts, runs                           | Dexie (`database/`), read with `useLiveQuery`       | Persistent (IndexedDB)         |
-| Theme, show window, step delay, sidebar | `settingsStore` (zustand `persist`)                 | Persistent (localStorage)      |
-| The current run                         | `runnerStore`                                       | App session, one run at a time |
-| The script being edited                 | `editorStore` (immer + zundo history)               | While the editor is mounted    |
-| Selected script / run                   | The route (`/scripts/:id`, `/history/:runId`)       | Navigation                     |
-| Pending delete confirmation             | `useDeleteRequest` in `scripts/utils/scriptActions` | Until answered                 |
-| Search text, list focus, open menus     | Component state                                     | Component                      |
+| State                                   | Owner                                         | Lifetime                       |
+| --------------------------------------- | --------------------------------------------- | ------------------------------ |
+| Scripts, runs                           | Dexie (`database/`), read with `useLiveQuery` | Persistent (IndexedDB)         |
+| Theme, show window, step delay, sidebar | `settingsStore` (zustand `persist`)           | Persistent (localStorage)      |
+| The current run                         | `runnerStore`                                 | App session, one run at a time |
+| The script being edited                 | `editorStore` (immer + zundo history)         | While the editor is mounted    |
+| Selected script / run                   | The route (`/scripts/:id`, `/history/:runId`) | Navigation                     |
+| Pending delete confirmation             | `useDeleteRequest` in `scripts/utils/actions` | Until answered                 |
+| Search text, list focus, open menus     | Component state                               | Component                      |
 
 ## Rules
 

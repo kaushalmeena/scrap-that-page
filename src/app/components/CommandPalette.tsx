@@ -14,7 +14,7 @@ import { useNavigate } from "react-router";
 import { Palette, PaletteGroup, PaletteItem } from "@/components/Palette";
 import db from "@/database";
 import { useRunScript } from "@/features/runner/hooks/useRunScript";
-import { scriptActions } from "@/features/scripts/utils/scriptActions";
+import { scriptActions } from "@/features/scripts/utils/actions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import { shortcutLabel } from "@/lib/commands";
 import type { Script } from "@/types/script";

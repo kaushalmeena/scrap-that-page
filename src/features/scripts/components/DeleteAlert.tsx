@@ -1,6 +1,6 @@
 import { Alert } from "@/components/Sheet";
 
-import { scriptActions, useDeleteRequest } from "../utils/scriptActions";
+import { scriptActions, useDeleteRequest } from "../utils/actions";
 
 // Single app-wide confirmation for scriptActions.requestDelete.
 export default function DeleteAlert() {

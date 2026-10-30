@@ -43,5 +43,5 @@ style raw Base UI parts or invent one-off controls.
   ("Export…", "Delete…", "Import Script…").
 - Alerts ask a question ("Delete “Name”?") and say what cannot be undone.
 - Step and script tints come from `lib/glyphs.ts` and
-  `scripts/utils/scriptStyles.ts`; reuse them so a step looks the same
+  `scripts/utils/glyph.ts`; reuse them so a step looks the same
   everywhere.

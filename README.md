@@ -161,7 +161,7 @@ features/
 
 Conventions: handlers are named functions declared above the `return`
 (no inline functions in JSX — enforced by `local/no-inline-jsx-function`),
-and every script side effect goes through `features/scripts/utils/scriptActions`.
+and every script side effect goes through `features/scripts/utils/actions`.
 
 ### Building
 
