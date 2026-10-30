@@ -3,7 +3,7 @@ import Dexie, { type PromiseExtended, type Table } from "dexie";
 import type { Run } from "../types/run";
 import type { Script } from "../types/script";
 import { parseStoredScript, prepareScriptForWrite } from "./schema";
-import { mostPopularMoviesScript } from "./seed";
+import { SEED_SCRIPTS } from "./seed";
 
 // Every script passes through the zod schema at this boundary: writes are
 // validated (and version-stamped) so corrupt data never lands in IndexedDB,
@@ -24,9 +24,9 @@ class AppDatabase extends Dexie {
     });
     this.scripts = this.table("scripts");
     this.runs = this.table("runs");
-    // Seed a sample script the first time the database is created.
+    // Seed the sample scripts the first time the database is created.
     this.on("populate", () => {
-      this.scripts.add(prepareScriptForWrite(mostPopularMoviesScript));
+      this.scripts.bulkAdd(SEED_SCRIPTS.map(prepareScriptForWrite));
     });
   }
 
