@@ -36,7 +36,7 @@ app/          renderer shell: router, AppShell, lazy screens, theme
   components/ sidebar, command palette
 components/   macOS component kit (see components.md) and the Logo
 lib/          renderer-only modules: commands, motion, platform, step appearance
-database/     Dexie database, zod validation at the boundary, seed script
+database/     Dexie database, zod validation at the boundary, sample scripts (`seed.ts`)
 features/
   scripts/    library: list + detail, script actions (the home screen)
   runner/     run engine, run pane, result table, export
