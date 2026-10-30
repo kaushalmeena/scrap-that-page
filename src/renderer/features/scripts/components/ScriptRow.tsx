@@ -1,11 +1,13 @@
 import { Heart } from "lucide-react";
 import { memo, useEffect, useRef } from "react";
+
 import { useRunnerStore } from "@/features/runner/store/runnerStore";
 import { cn } from "@/lib/utils";
 import type { Script } from "@/types/script";
 import { ContextMenu } from "@/ui/Menu";
 import { Spinner } from "@/ui/Spinner";
 import { Tile } from "@/ui/Tile";
+
 import { scriptAppearance } from "../appearance";
 import ScriptMenuItems from "./ScriptMenuItems";
 
@@ -53,6 +55,7 @@ function ScriptRow({
       <div
         ref={ref}
         role="option"
+        tabIndex={-1}
         aria-selected={selected}
         onPointerDown={(event) => {
           if (event.button === 0) {

@@ -30,7 +30,11 @@ export const OPERATION_APPEARANCE: Record<
   { Icon: LucideIcon; tint: string; category: OperationCategory }
 > = {
   open: { Icon: Globe, tint: "var(--accent)", category: "Browser" },
-  click: { Icon: MousePointerClick, tint: "var(--orange)", category: "Browser" },
+  click: {
+    Icon: MousePointerClick,
+    tint: "var(--orange)",
+    category: "Browser"
+  },
   type: { Icon: Keyboard, tint: "var(--orange)", category: "Browser" },
   scroll: { Icon: MoveVertical, tint: "var(--indigo)", category: "Browser" },
   extract: { Icon: ScanText, tint: "var(--purple)", category: "Data" },

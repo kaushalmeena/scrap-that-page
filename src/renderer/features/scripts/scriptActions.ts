@@ -1,8 +1,10 @@
 import { toast } from "sonner";
 import { create } from "zustand";
+
 import db from "@/database";
 import { TOAST_MESSAGES } from "@/lib/messages";
 import type { Script } from "@/types/script";
+
 import { exportScriptToJSON, parseScriptImport } from "./utils/scriptUtils";
 
 /**
@@ -66,21 +68,23 @@ export const scriptActions = {
       const input = document.createElement("input");
       input.type = "file";
       input.accept = "application/json,.json";
-      input.onchange = async () => {
+      input.addEventListener("change", async () => {
         const file = input.files?.[0];
         if (!file) {
           resolve(undefined);
           return;
         }
         try {
-          const id = await db.createScript(parseScriptImport(await file.text()));
+          const id = await db.createScript(
+            parseScriptImport(await file.text())
+          );
           toast.success(TOAST_MESSAGES.SCRIPT_IMPORT_SUCCESS);
           resolve(id);
         } catch {
           toast.error(TOAST_MESSAGES.SCRIPT_IMPORT_FAILURE);
           resolve(undefined);
         }
-      };
+      });
       input.click();
     })
 };

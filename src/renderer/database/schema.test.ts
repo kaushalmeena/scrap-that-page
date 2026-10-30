@@ -1,5 +1,7 @@
 import { describe, expect, it } from "vitest";
+
 import type { Script } from "@/types/script";
+
 import {
   parseStoredScript,
   prepareScriptForWrite,

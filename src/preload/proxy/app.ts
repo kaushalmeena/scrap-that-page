@@ -4,6 +4,7 @@ import {
   type ThemeSource
 } from "@common/types/app";
 import { ipcRenderer, type IpcRendererEvent } from "electron";
+
 import type { AppAPI } from "../types/app";
 
 export const AppProxy: AppAPI = {

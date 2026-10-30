@@ -1,6 +1,8 @@
 import path from "node:path";
+
 import type { ConfigEnv, UserConfig } from "vite";
 import { defineConfig, mergeConfig } from "vite";
+
 import {
   external,
   getBuildConfig,

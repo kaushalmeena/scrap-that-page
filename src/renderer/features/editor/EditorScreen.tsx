@@ -1,11 +1,13 @@
 import { useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+
 import db from "@/database";
 import { useScriptById } from "@/features/scripts/hooks/useScriptById";
 import { INITIAL_SCRIPT } from "@/lib/constants";
 import { TOAST_MESSAGES } from "@/lib/messages";
 import type { Script } from "@/types/script";
 import { EmptyState } from "@/ui/EmptyState";
+
 import ScriptEditor from "./components/ScriptEditor";
 
 // /new creates a script, /edit/:scriptId edits one. Both land on the saved

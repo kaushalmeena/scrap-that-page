@@ -1,6 +1,7 @@
 import { CircleCheck, CircleSlash, CircleX } from "lucide-react";
-import type { Run } from "@/types/run";
+
 import { cn } from "@/lib/utils";
+import type { Run } from "@/types/run";
 
 export default function RunStatusIcon({
   status,

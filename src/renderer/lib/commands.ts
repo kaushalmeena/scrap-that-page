@@ -1,5 +1,6 @@
 import type { AppCommand } from "@common/types/app";
-import { useEffect, useRef } from "react";
+import { useEffect, useEffectEvent } from "react";
+
 import { isMac } from "./platform";
 
 type Shortcut = { key: string; shift?: boolean; ctrl?: boolean };
@@ -46,14 +47,14 @@ export const useCommand = (
   handler: () => void,
   enabled = true
 ) => {
-  const ref = useRef(handler);
-  ref.current = handler;
+  // Always runs the latest handler without re-registering.
+  const run = useEffectEvent(handler);
 
   useEffect(() => {
     if (!enabled) {
       return;
     }
-    const entry = { current: () => ref.current() };
+    const entry = { current: () => run() };
     const stack = handlers.get(command) ?? [];
     stack.push(entry);
     handlers.set(command, stack);

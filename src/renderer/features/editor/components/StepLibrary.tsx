@@ -1,8 +1,16 @@
-import { OPERATION_SCHEMA, OPERATION_TYPES } from "@common/constants/operationSchema";
+import {
+  OPERATION_SCHEMA,
+  OPERATION_TYPES
+} from "@common/constants/operationSchema";
 import { useDeferredValue, useState } from "react";
-import { OPERATION_APPEARANCE, OPERATION_CATEGORIES } from "@/lib/operationAppearance";
+
+import {
+  OPERATION_APPEARANCE,
+  OPERATION_CATEGORIES
+} from "@/lib/operationAppearance";
 import { SearchField } from "@/ui/TextField";
 import { Tile } from "@/ui/Tile";
+
 import { useEditorStore } from "../store/editorStore";
 
 const ROOT = { parentId: null };
@@ -25,7 +33,11 @@ export default function StepLibrary() {
   return (
     <aside className="flex w-[268px] shrink-0 flex-col border-l bg-window">
       <div className="px-3 pt-3 pb-2">
-        <SearchField value={search} onValueChange={setSearch} placeholder="Search Steps" />
+        <SearchField
+          value={search}
+          onValueChange={setSearch}
+          placeholder="Search Steps"
+        />
       </div>
       <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
         {OPERATION_CATEGORIES.map((category) => {
@@ -65,7 +77,9 @@ export default function StepLibrary() {
           );
         })}
         {matching.length === 0 ? (
-          <p className="py-8 text-center text-callout text-secondary">No Matching Steps</p>
+          <p className="py-8 text-center text-callout text-secondary">
+            No Matching Steps
+          </p>
         ) : null}
       </div>
     </aside>

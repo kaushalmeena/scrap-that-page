@@ -1,4 +1,5 @@
 import { useLiveQuery } from "dexie-react-hooks";
+
 import db from "@/database";
 
 // Live-queries a single script. Distinguishes "still loading" (undefined)

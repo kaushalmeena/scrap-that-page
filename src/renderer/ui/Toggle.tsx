@@ -1,5 +1,6 @@
 import { Switch } from "@base-ui/react/switch";
 import type { ComponentProps } from "react";
+
 import { cn } from "@/lib/utils";
 
 // macOS switch: accent track when on, knob slides with a slight overshoot.
@@ -10,7 +11,7 @@ export function Toggle({
   return (
     <Switch.Root
       className={cn(
-        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full bg-fill-strong shadow-[inset_0_0_0_0.5px_rgb(0_0_0/0.08)] outline-none transition-colors duration-200 data-checked:bg-accent data-disabled:opacity-40",
+        "relative inline-flex h-[22px] w-[38px] shrink-0 items-center rounded-full bg-fill-strong shadow-[inset_0_0_0_0.5px_rgb(0_0_0/0.08)] transition-colors duration-200 outline-none data-checked:bg-accent data-disabled:opacity-40",
         className
       )}
       {...props}

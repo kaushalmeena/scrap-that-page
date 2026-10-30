@@ -1,5 +1,6 @@
 import { MotionConfig } from "motion/react";
 import { RouterProvider } from "react-router";
+
 import router from "./router";
 import ThemeProvider from "./ThemeProvider";
 

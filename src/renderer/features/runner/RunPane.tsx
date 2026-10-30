@@ -1,5 +1,6 @@
 import { ChevronLeft, Pencil, Play, RotateCw, Square } from "lucide-react";
 import { useNavigate, useParams } from "react-router";
+
 import { pluralize, scriptAppearance } from "@/features/scripts/appearance";
 import { useScriptById } from "@/features/scripts/hooks/useScriptById";
 import { useLibrary } from "@/features/scripts/LibraryContext";
@@ -11,6 +12,7 @@ import { EmptyState } from "@/ui/EmptyState";
 import { Spinner } from "@/ui/Spinner";
 import { Tile } from "@/ui/Tile";
 import { Toolbar, ToolbarDivider } from "@/ui/Toolbar";
+
 import ExportMenu from "./components/ExportMenu";
 import RunReport from "./components/RunReport";
 import RunStatusIcon from "./components/RunStatusIcon";
@@ -22,7 +24,13 @@ function Elapsed() {
   return <span className="tabular-nums">{formatDuration(elapsedMs)}</span>;
 }
 
-function Stat({ label, children }: { label: string; children: React.ReactNode }) {
+function Stat({
+  label,
+  children
+}: {
+  label: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="text-right">
       <p className="text-title3 font-semibold tabular-nums">{children}</p>
@@ -44,7 +52,9 @@ export default function RunPane() {
 
   // The runner is global; only show its state when it belongs to this script.
   const isThis = useRunnerStore((s) => s.scriptId === id);
-  const status = useRunnerStore((s) => (s.scriptId === id ? s.status : "ready"));
+  const status = useRunnerStore((s) =>
+    s.scriptId === id ? s.status : "ready"
+  );
   const heading = useRunnerStore((s) => s.heading);
   const message = useRunnerStore((s) => s.message);
   const result = useRunnerStore((s) => s.result);
@@ -123,7 +133,13 @@ export default function RunPane() {
                 <Spinner className="size-5" />
               ) : (
                 <RunStatusIcon
-                  status={status === "error" ? "error" : status === "finished" ? "finished" : "stopped"}
+                  status={
+                    status === "error"
+                      ? "error"
+                      : status === "finished"
+                        ? "finished"
+                        : "stopped"
+                  }
                   className="size-6"
                 />
               )}
@@ -137,7 +153,10 @@ export default function RunPane() {
               >
                 {heading}
               </p>
-              <p className="allow-select truncate text-callout text-secondary" title={message}>
+              <p
+                className="truncate text-callout text-secondary allow-select"
+                title={message}
+              >
                 {message}
               </p>
             </div>

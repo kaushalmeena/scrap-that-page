@@ -1,12 +1,18 @@
 import { PanelLeft } from "lucide-react";
 import { Suspense, useEffect, useState } from "react";
 import { Outlet, useNavigate } from "react-router";
+
 import DeleteScriptAlert from "@/features/scripts/components/DeleteScriptAlert";
 import { scriptActions } from "@/features/scripts/scriptActions";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
-import { connectCommandSources, shortcutLabel, useCommand } from "@/lib/commands";
+import {
+  connectCommandSources,
+  shortcutLabel,
+  useCommand
+} from "@/lib/commands";
 import { IconButton } from "@/ui/Button";
 import { Toaster } from "@/ui/Toaster";
+
 import CommandPalette from "./CommandPalette";
 import { preloadAllScreens } from "./lazyScreens";
 import Sidebar from "./Sidebar";
@@ -58,7 +64,7 @@ export default function AppShell() {
 
       {/* Sits next to the traffic lights; inside the sidebar header when it
           is open, at the start of the first toolbar when it is closed. */}
-      <div className="app-region-no-drag fixed top-3 left-(--traffic-inset) z-40">
+      <div className="fixed top-3 left-(--traffic-inset) z-40 app-region-no-drag">
         <IconButton
           label={`${sidebarOpen ? "Hide" : "Show"} Sidebar (${shortcutLabel("toggle-sidebar")})`}
           onClick={toggleSidebar}

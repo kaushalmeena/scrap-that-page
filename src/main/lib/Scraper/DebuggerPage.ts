@@ -205,6 +205,8 @@ export default class DebuggerPage {
     }
     // Fan the raw event out to any one-shot waiters (e.g. the element picker
     // parked on Overlay.inspectNodeRequested).
+    // Snapshot: resolving a waiter removes it from the set mid-iteration.
+    // oxlint-disable-next-line unicorn/no-useless-spread
     for (const waiter of [...this.pendingEvents]) {
       if (waiter.method === method) {
         waiter.resolve(params);
@@ -258,6 +260,8 @@ export default class DebuggerPage {
           this.attachPromise = undefined;
           // Nothing more will arrive; fail any parked waiters (e.g. a picker
           // still running when the scraper window is closed).
+          // Snapshot: rejecting a waiter removes it from the set.
+          // oxlint-disable-next-line unicorn/no-useless-spread
           for (const waiter of [...this.pendingEvents]) {
             waiter.reject(
               new Error("Scraper window was closed while picking.")

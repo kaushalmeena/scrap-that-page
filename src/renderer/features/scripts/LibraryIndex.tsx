@@ -1,8 +1,10 @@
 import { FilePlus2, MousePointerClick } from "lucide-react";
 import { Navigate, useNavigate } from "react-router";
+
 import { shortcutLabel } from "@/lib/commands";
 import { Button } from "@/ui/Button";
 import { EmptyState } from "@/ui/EmptyState";
+
 import { useLibrary } from "./LibraryContext";
 
 // Detail pane with nothing selected: jump to the first script (as Mail does),

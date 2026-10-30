@@ -1,9 +1,11 @@
 import type { TextInputSchema } from "@common/types/operationSchema";
 import { Braces, Crosshair } from "lucide-react";
 import { type ChangeEvent, useId } from "react";
+
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/ui/Button";
 import { TextField } from "@/ui/TextField";
+
 import { useEditorStore } from "../store/editorStore";
 
 export default function TextInput({
@@ -33,14 +35,20 @@ export default function TextInput({
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={inputId} className="text-caption font-medium text-secondary">
+      <label
+        htmlFor={inputId}
+        className="text-caption font-medium text-secondary"
+      >
         {schema.label}
       </label>
       <div className="relative">
         <TextField
           id={inputId}
           spellCheck={false}
-          className={cn(pickerCount === 1 && "pr-7", pickerCount === 2 && "pr-12")}
+          className={cn(
+            pickerCount === 1 && "pr-7",
+            pickerCount === 2 && "pr-12"
+          )}
           value={value}
           readOnly={schema.inputProps?.readOnly}
           placeholder={schema.inputProps?.placeholder}

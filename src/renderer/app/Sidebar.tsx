@@ -1,8 +1,16 @@
 import { useLiveQuery } from "dexie-react-hooks";
-import { Clock, Heart, Library, type LucideIcon, Plus, Settings } from "lucide-react";
+import {
+  Clock,
+  Heart,
+  Library,
+  type LucideIcon,
+  Plus,
+  Settings
+} from "lucide-react";
 import { motion } from "motion/react";
 import type { ReactNode } from "react";
 import { useLocation, useNavigate } from "react-router";
+
 import db from "@/database";
 import { scriptAppearance } from "@/features/scripts/appearance";
 import { shortcutLabel } from "@/lib/commands";
@@ -53,14 +61,16 @@ function Item({
         }
       }}
       className={cn(
-        "flex h-7 items-center gap-2 rounded-[6px] px-2 text-left text-body outline-none",
+        "flex h-7 items-center gap-2 rounded-control px-2 text-left text-body outline-none",
         active && "bg-black/[0.09] dark:bg-white/[0.11]"
       )}
     >
       {icon}
       <span className="min-w-0 flex-1 truncate">{label}</span>
       {count !== undefined ? (
-        <span className="text-callout text-secondary tabular-nums">{count}</span>
+        <span className="text-callout text-secondary tabular-nums">
+          {count}
+        </span>
       ) : null}
     </button>
   );
@@ -87,14 +97,14 @@ export default function Sidebar({ open }: { open: boolean }) {
       animate={{ width: open ? SIDEBAR_WIDTH : 0 }}
       transition={SPRING}
       aria-hidden={!open}
-      className="shrink-0 overflow-hidden bg-sidebar [.vibrancy_&]:bg-transparent"
+      className="shrink-0 overflow-hidden bg-sidebar in-[.vibrancy]:bg-transparent"
     >
       <div
         className="flex h-full flex-col"
         style={{ width: SIDEBAR_WIDTH }}
         inert={!open}
       >
-        <div className="app-region-drag h-[52px] shrink-0" />
+        <div className="h-[52px] shrink-0 app-region-drag" />
         <nav className="min-h-0 flex-1 overflow-y-auto px-2.5 pb-3">
           <Section title="Library">
             <Item

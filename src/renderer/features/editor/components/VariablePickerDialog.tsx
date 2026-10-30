@@ -1,6 +1,8 @@
 import type { Variable } from "@common/types/variable";
 import { Braces } from "lucide-react";
+
 import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
+
 import {
   selectVariablePicker,
   selectVariables,
@@ -28,7 +30,8 @@ export default function VariablePickerDialog() {
 
   const available = variables.filter(
     (item) =>
-      item.name && (picker.filterType === "any" || item.type === picker.filterType)
+      item.name &&
+      (picker.filterType === "any" || item.type === picker.filterType)
   );
 
   return (

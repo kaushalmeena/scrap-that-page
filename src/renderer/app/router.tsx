@@ -1,7 +1,9 @@
 import { createMemoryRouter, Navigate } from "react-router";
+
 import LibraryIndex from "@/features/scripts/LibraryIndex";
 import LibraryScreen from "@/features/scripts/LibraryScreen";
 import ScriptDetail from "@/features/scripts/ScriptDetail";
+
 import AppShell from "./AppShell";
 import {
   EditorScreen,

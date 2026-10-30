@@ -22,7 +22,13 @@ export const preloadEditor = () => {
 
 // Warm every chunk once the app is idle, so first visits never wait.
 export const preloadAllScreens = () => {
-  for (const load of [loadEditor, loadRun, loadHistory, loadRunDetail, loadSettings]) {
+  for (const load of [
+    loadEditor,
+    loadRun,
+    loadHistory,
+    loadRunDetail,
+    loadSettings
+  ]) {
     load();
   }
 };

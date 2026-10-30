@@ -9,11 +9,13 @@ import { CSS } from "@dnd-kit/utilities";
 import { ChevronDown, Copy, GripVertical, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
 import { useEffect, useRef, useState } from "react";
+
 import { SPRING } from "@/lib/motion";
 import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
 import { cn } from "@/lib/utils";
 import { IconButton } from "@/ui/Button";
 import { Tile } from "@/ui/Tile";
+
 import {
   consumeJustAdded,
   type OperationListRef,
@@ -45,7 +47,8 @@ export default function OperationCard({
   );
 
   // Freshly added steps open (and scroll into view) so they can be filled in.
-  const [expanded, setExpanded] = useState(() => consumeJustAdded(id));
+  const [justAdded] = useState(() => consumeJustAdded(id));
+  const [expanded, setExpanded] = useState(justAdded);
   const cardRef = useRef<HTMLDivElement | null>(null);
 
   const {
@@ -57,12 +60,11 @@ export default function OperationCard({
     isDragging
   } = useSortable({ id });
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
   useEffect(() => {
-    if (expanded) {
+    if (justAdded) {
       cardRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
     }
-  }, []);
+  }, [justAdded]);
 
   if (!operation) {
     return null;
@@ -91,7 +93,8 @@ export default function OperationCard({
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={cn(
         "group/card rounded-box bg-control shadow-card",
-        invalid && "shadow-[0_0_0_1px_color-mix(in_srgb,var(--red)_55%,transparent),var(--elev-card)]",
+        invalid &&
+          "shadow-[0_0_0_1px_color-mix(in_srgb,var(--red)_55%,transparent),var(--elev-card)]",
         isDragging && "relative z-10 shadow-popover"
       )}
     >
@@ -116,9 +119,11 @@ export default function OperationCard({
           <span className="min-w-0 flex-1">
             <span className="flex items-baseline gap-1.5">
               <span className="font-semibold">{schema.name}</span>
-              <span className="text-caption text-tertiary tabular-nums">{number}</span>
+              <span className="text-caption text-tertiary tabular-nums">
+                {number}
+              </span>
             </span>
-            <span className="allow-select block truncate text-callout text-secondary">
+            <span className="block truncate text-callout text-secondary allow-select">
               {summary.trim() || schema.description}
             </span>
           </span>
@@ -140,7 +145,10 @@ export default function OperationCard({
           onClick={handleExpandToggle}
         >
           <ChevronDown
-            className={cn("transition-transform duration-200", expanded && "rotate-180")}
+            className={cn(
+              "transition-transform duration-200",
+              expanded && "rotate-180"
+            )}
           />
         </IconButton>
       </div>
@@ -154,11 +162,15 @@ export default function OperationCard({
             exit={{ height: 0, opacity: 0 }}
             transition={SPRING}
           >
-            <div className="grid grid-cols-12 gap-x-3 gap-y-3 border-t px-3 pt-3 pb-3.5">
+            <div className="grid grid-cols-12 gap-3 border-t px-3 pt-3 pb-3.5">
               {schema.inputs.map((inputSchema, inputIndex) => {
-                const width = inputSchema.type === "block" ? 12 : inputSchema.width;
+                const width =
+                  inputSchema.type === "block" ? 12 : inputSchema.width;
                 return (
-                  <div key={`${id}-input-${inputIndex}`} className={INPUT_WIDTH_CLASSES[width]}>
+                  <div
+                    key={`${id}-input-${inputIndex}`}
+                    className={INPUT_WIDTH_CLASSES[width]}
+                  >
                     <OperationInput
                       operationId={id}
                       inputIndex={inputIndex}

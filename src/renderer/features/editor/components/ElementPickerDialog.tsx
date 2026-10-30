@@ -1,9 +1,11 @@
-import { type KeyboardEvent, useEffect, useId, useState } from "react";
+import { type KeyboardEvent, useId, useState } from "react";
 import { toast } from "sonner";
+
 import { TOAST_MESSAGES } from "@/lib/messages";
 import { Button } from "@/ui/Button";
 import { Sheet } from "@/ui/Sheet";
 import { TextField } from "@/ui/TextField";
+
 import {
   selectElementPicker,
   selectFirstOpenUrl,
@@ -19,18 +21,17 @@ export default function ElementPickerDialog() {
   // Default to the page the script already opens, so picking usually targets
   // the right site without retyping.
   const defaultUrl = useEditorStore(selectFirstOpenUrl);
-  const [url, setUrl] = useState(defaultUrl);
+  // null = untouched, so each opening starts from the current default.
+  const [draftUrl, setDraftUrl] = useState<string | null>(null);
+  const url = draftUrl ?? defaultUrl;
   const urlInputId = useId();
 
   const isOpen = target != null;
 
-  useEffect(() => {
-    if (isOpen) {
-      setUrl(defaultUrl);
-    }
-  }, [isOpen, defaultUrl]);
-
-  const handlePickerClose = () => hideElementPicker();
+  const handlePickerClose = () => {
+    hideElementPicker();
+    setDraftUrl(null);
+  };
 
   const handlePickClick = async () => {
     const raw = url.trim();
@@ -76,24 +77,29 @@ export default function ElementPickerDialog() {
       footer={
         <>
           <Button onClick={handlePickerClose}>Cancel</Button>
-          <Button variant="primary" disabled={!url.trim()} onClick={handlePickClick}>
+          <Button
+            variant="primary"
+            disabled={!url.trim()}
+            onClick={handlePickClick}
+          >
             Open Page
           </Button>
         </>
       }
     >
       <div className="flex flex-col gap-1">
-        <label htmlFor={urlInputId} className="text-caption font-medium text-secondary">
+        <label
+          htmlFor={urlInputId}
+          className="text-caption font-medium text-secondary"
+        >
           Page URL
         </label>
-        {/* biome-ignore lint/a11y/noAutofocus: focusing the sole field on open is expected */}
         <TextField
           id={urlInputId}
-          autoFocus
           spellCheck={false}
           placeholder="https://example.com"
           value={url}
-          onChange={(event) => setUrl(event.target.value)}
+          onChange={(event) => setDraftUrl(event.target.value)}
           onKeyDown={handleKeyDown}
         />
       </div>

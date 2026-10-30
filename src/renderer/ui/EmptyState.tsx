@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import type { ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 // Centered placeholder for empty panes ("No Script Selected" etc.).

@@ -1,10 +1,12 @@
 import { ChevronDown, Terminal } from "lucide-react";
 import { motion } from "motion/react";
 import { useState } from "react";
-import { SPRING } from "@/lib/motion";
+
 import { pluralize } from "@/features/scripts/appearance";
+import { SPRING } from "@/lib/motion";
 import { cn } from "@/lib/utils";
 import type { RunLogEntry } from "@/types/run";
+
 import type { TableData } from "../types";
 import ResultTable from "./ResultTable";
 import RunLogPanel from "./RunLogPanel";
@@ -37,7 +39,9 @@ export default function RunReport({
         >
           <Terminal className="size-3.5" />
           <span className="font-medium">Log</span>
-          <span className="text-tertiary">{pluralize(log.length, "event")}</span>
+          <span className="text-tertiary">
+            {pluralize(log.length, "event")}
+          </span>
           <span className="flex-1" />
           {result ? (
             <span className="text-tertiary">

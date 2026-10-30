@@ -1,4 +1,5 @@
 import { createContext, useContext } from "react";
+
 import type { Script } from "@/types/script";
 
 export type LibraryFilter = "all" | "favorites";

@@ -1,6 +1,8 @@
 import type { SelectInputSchema } from "@common/types/operationSchema";
 import { useId } from "react";
+
 import { PopUpButton } from "@/ui/PopUpButton";
+
 import { useEditorStore } from "../store/editorStore";
 
 export default function SelectInput({
@@ -21,7 +23,10 @@ export default function SelectInput({
 
   return (
     <div className="flex flex-col gap-1">
-      <label htmlFor={inputId} className="text-caption font-medium text-secondary">
+      <label
+        htmlFor={inputId}
+        className="text-caption font-medium text-secondary"
+      >
         {schema.label}
       </label>
       <PopUpButton
@@ -31,7 +36,9 @@ export default function SelectInput({
         options={schema.options}
         placeholder={schema.label}
         invalid={Boolean(error)}
-        onValueChange={(next) => updateInput({ operationId, inputIndex, value: next })}
+        onValueChange={(next) =>
+          updateInput({ operationId, inputIndex, value: next })
+        }
       />
       {error ? <p className="text-caption text-red">{error}</p> : null}
     </div>

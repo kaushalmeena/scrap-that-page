@@ -9,6 +9,7 @@ import type {
 import { validateWithRules } from "@common/utils/operation";
 import { produce } from "immer";
 import { nanoid } from "nanoid";
+
 import type { Script } from "@/types/script";
 
 /**
@@ -115,11 +116,10 @@ export const createEditorOperation = (
 ): EditorOperation => ({
   id: nanoid(),
   type,
-  inputs: OPERATION_SCHEMA[type].inputs.map(
-    (input): EditorInput =>
-      input.type === "block"
-        ? { type: "block", operationIds: [] }
-        : { type: input.type, value: input.defaultValue, error: "" }
+  inputs: OPERATION_SCHEMA[type].inputs.map((input): EditorInput =>
+    input.type === "block"
+      ? { type: "block", operationIds: [] }
+      : { type: input.type, value: input.defaultValue, error: "" }
   )
 });
 

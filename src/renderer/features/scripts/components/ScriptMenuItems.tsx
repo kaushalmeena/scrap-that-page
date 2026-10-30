@@ -1,7 +1,9 @@
 import { Copy, Heart, Pencil, Play, Share, Trash2 } from "lucide-react";
+
 import { shortcutLabel } from "@/lib/commands";
 import type { Script } from "@/types/script";
 import { MenuItem, MenuSeparator } from "@/ui/Menu";
+
 import { scriptActions } from "../scriptActions";
 
 // The per-script action menu, shared by the row context menu and the detail
@@ -26,10 +28,18 @@ export default function ScriptMenuItems({
 
   return (
     <>
-      <MenuItem icon={<Play />} shortcut={shortcutLabel("run-script")} onSelect={onRun}>
+      <MenuItem
+        icon={<Play />}
+        shortcut={shortcutLabel("run-script")}
+        onSelect={onRun}
+      >
         Run
       </MenuItem>
-      <MenuItem icon={<Pencil />} shortcut={shortcutLabel("edit-script")} onSelect={onEdit}>
+      <MenuItem
+        icon={<Pencil />}
+        shortcut={shortcutLabel("edit-script")}
+        onSelect={onEdit}
+      >
         Edit
       </MenuItem>
       <MenuSeparator />

@@ -1,4 +1,5 @@
 import { Toaster as Sonner } from "sonner";
+
 import { useResolvedTheme } from "@/app/ThemeProvider";
 
 // Notification-style toasts: material panel, compact type.

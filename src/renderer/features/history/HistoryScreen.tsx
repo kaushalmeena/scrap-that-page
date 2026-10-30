@@ -3,6 +3,7 @@ import { Clock } from "lucide-react";
 import { type KeyboardEvent, useState } from "react";
 import { Navigate, Outlet, useNavigate, useParams } from "react-router";
 import { toast } from "sonner";
+
 import db from "@/database";
 import RunStatusIcon from "@/features/runner/components/RunStatusIcon";
 import { pluralize } from "@/features/scripts/appearance";
@@ -55,7 +56,10 @@ export default function HistoryScreen() {
 
   return (
     <>
-      <div data-pane className="flex w-[300px] shrink-0 flex-col border-r bg-window">
+      <div
+        data-pane
+        className="flex w-[300px] shrink-0 flex-col border-r bg-window"
+      >
         <Toolbar
           title="History"
           subtitle={runs ? pluralize(runs.length, "run") : undefined}
@@ -85,6 +89,7 @@ export default function HistoryScreen() {
               <div
                 key={run.id}
                 role="option"
+                tabIndex={-1}
                 aria-selected={selected}
                 onPointerDown={(event) => {
                   if (event.button === 0) {
@@ -110,7 +115,9 @@ export default function HistoryScreen() {
                     )}
                   >
                     {formatRelative(run.startedAt)} ·{" "}
-                    {run.result ? pluralize(run.result.rows.length, "row") : "No data"}
+                    {run.result
+                      ? pluralize(run.result.rows.length, "row")
+                      : "No data"}
                   </p>
                 </div>
               </div>

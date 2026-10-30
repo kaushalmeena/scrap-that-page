@@ -5,13 +5,9 @@ import type {
 } from "@common/types/scraper";
 import type { VariableMapping } from "@common/types/variable";
 import { produce } from "immer";
+
 import { INITIAL_TABLE_DATA } from "../constants/table";
-import type {
-  RunnerGenerator,
-  RunnerHeaderInfo,
-  RunnerStatus,
-  TableData
-} from "../types";
+import type { RunnerGenerator, RunnerHeaderInfo, TableData } from "../types";
 
 // Upper bound on `while` loop iterations to prevent an ill-formed condition
 // from locking up the renderer.

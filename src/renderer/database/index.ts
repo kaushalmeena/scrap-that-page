@@ -1,4 +1,5 @@
 import Dexie, { type PromiseExtended, type Table } from "dexie";
+
 import type { Run } from "../types/run";
 import type { Script } from "../types/script";
 import { parseStoredScript, prepareScriptForWrite } from "./schema";

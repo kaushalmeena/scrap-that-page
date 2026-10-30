@@ -1,6 +1,7 @@
 import { ContextMenu as CM } from "@base-ui/react/context-menu";
 import { Menu as M } from "@base-ui/react/menu";
 import type { ComponentProps, ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 // NSMenu look shared by pull-down menus and context menus: a translucent
@@ -12,8 +13,7 @@ const popupClasses =
 const itemClasses =
   "relative flex h-[22px] items-center gap-2 rounded-[4px] px-2 outline-none select-none data-disabled:opacity-40 data-highlighted:bg-accent data-highlighted:text-white [&_svg]:size-3.5 [&_svg]:shrink-0 [&_svg]:text-secondary data-highlighted:[&_svg]:text-white";
 
-const destructiveClasses =
-  "text-red [&_svg]:text-red data-highlighted:bg-red";
+const destructiveClasses = "text-red [&_svg]:text-red data-highlighted:bg-red";
 
 type ItemProps = {
   icon?: ReactNode;

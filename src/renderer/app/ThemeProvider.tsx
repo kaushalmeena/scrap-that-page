@@ -1,4 +1,5 @@
 import { type ReactNode, useEffect, useSyncExternalStore } from "react";
+
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 
 const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");

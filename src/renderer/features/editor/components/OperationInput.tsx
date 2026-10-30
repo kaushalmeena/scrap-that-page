@@ -1,6 +1,7 @@
 import { OPERATION_SCHEMA } from "@common/constants/operationSchema";
+
+import { useNestedStepList } from "../context/NestedStepsContext";
 import { useEditorStore } from "../store/editorStore";
-import OperationPanel from "./OperationPanel";
 import SelectInput from "./SelectInput";
 import TextInput from "./TextInput";
 
@@ -24,6 +25,7 @@ export default function OperationInput({
   const input = useEditorStore(
     (s) => s.operations[operationId]?.inputs[inputIndex]
   );
+  const StepList = useNestedStepList();
 
   if (!type || !input) {
     return null;
@@ -61,7 +63,9 @@ export default function OperationInput({
             {inputSchema.label}
           </p>
           <div className="rounded-[8px] bg-fill/70 p-2">
-            <OperationPanel
+            {/* StepList is a stable module-level component from context. */}
+            {/* oxlint-disable-next-line react/static-components */}
+            <StepList
               listRef={{ parentId: operationId, inputIndex }}
               numberPrefix={numberPrefix}
             />

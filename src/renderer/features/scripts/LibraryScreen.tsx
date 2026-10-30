@@ -9,6 +9,7 @@ import {
   useState
 } from "react";
 import { Outlet, useNavigate, useParams } from "react-router";
+
 import db from "@/database";
 import { useRunScript } from "@/features/runner/useRunScript";
 import { shortcutLabel, useCommand } from "@/lib/commands";
@@ -17,9 +18,14 @@ import { IconButton } from "@/ui/Button";
 import { EmptyState } from "@/ui/EmptyState";
 import { SearchField } from "@/ui/TextField";
 import { Toolbar } from "@/ui/Toolbar";
+
 import { pluralize } from "./appearance";
 import ScriptRow from "./components/ScriptRow";
-import { type Library, LibraryContext, type LibraryFilter } from "./LibraryContext";
+import {
+  type Library,
+  LibraryContext,
+  type LibraryFilter
+} from "./LibraryContext";
 import { scriptActions } from "./scriptActions";
 
 const TITLES: Record<LibraryFilter, string> = {
@@ -63,9 +69,7 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
     (script: Script) => navigate(`${basePath}/${script.id}`, { replace: true }),
     [navigate, basePath]
   );
-  const runRef = useRef(runScript);
-  runRef.current = runScript;
-  const handleRun = useCallback((script: Script) => runRef.current(script), []);
+  const handleRun = runScript;
   const handleEdit = useCallback(
     (script: Script) => navigate(`/edit/${script.id}`),
     [navigate]
@@ -115,7 +119,10 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
 
   return (
     <LibraryContext value={library}>
-      <div data-pane className="flex w-[300px] shrink-0 flex-col border-r bg-window">
+      <div
+        data-pane
+        className="flex w-[300px] shrink-0 flex-col border-r bg-window"
+      >
         <Toolbar
           title={TITLES[filter]}
           subtitle={scripts ? pluralize(scripts.length, "script") : undefined}
@@ -164,7 +171,10 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
           ))}
           {visible && visible.length === 0 ? (
             query ? (
-              <EmptyState title="No Results" message={`Nothing matches “${search}”.`} />
+              <EmptyState
+                title="No Results"
+                message={`Nothing matches “${search}”.`}
+              />
             ) : filter === "favorites" ? (
               <EmptyState
                 Icon={Heart}

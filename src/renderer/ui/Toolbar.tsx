@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+
 import { cn } from "@/lib/utils";
 
 // Unified title bar + toolbar strip at the top of every pane (52px, like a
@@ -23,7 +24,7 @@ export function Toolbar({
     <header
       data-toolbar
       className={cn(
-        "app-region-drag flex h-[52px] shrink-0 items-center gap-2 border-b px-3",
+        "flex h-[52px] shrink-0 items-center gap-2 border-b px-3 app-region-drag",
         className
       )}
     >

@@ -7,6 +7,8 @@ import {
 import { useLiveQuery } from "dexie-react-hooks";
 import { ChevronRight, Ellipsis, Heart, Pencil, Play } from "lucide-react";
 import { Navigate, useNavigate, useParams } from "react-router";
+
+import { preloadEditor } from "@/app/lazyScreens";
 import db from "@/database";
 import RunStatusIcon from "@/features/runner/components/RunStatusIcon";
 import { useRunScript } from "@/features/runner/useRunScript";
@@ -14,12 +16,12 @@ import { shortcutLabel, useCommand } from "@/lib/commands";
 import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
 import { formatDuration, formatRelative } from "@/lib/time";
 import { cn } from "@/lib/utils";
-import { preloadEditor } from "@/app/lazyScreens";
 import { Button, IconButton } from "@/ui/Button";
 import { FormSection } from "@/ui/Form";
 import { Menu } from "@/ui/Menu";
 import { Tile } from "@/ui/Tile";
 import { Toolbar, ToolbarDivider } from "@/ui/Toolbar";
+
 import { pluralize, scriptAppearance } from "./appearance";
 import ScriptMenuItems from "./components/ScriptMenuItems";
 import { useScriptById } from "./hooks/useScriptById";
@@ -62,7 +64,7 @@ function StepOutline({
           <Tile Icon={Icon} tint={tint} size="small" />
           <span className="shrink-0 font-medium">{schema.name}</span>
           <span
-            className="allow-select min-w-0 truncate text-secondary"
+            className="min-w-0 truncate text-secondary allow-select"
             title={detail}
           >
             {detail}
@@ -149,8 +151,10 @@ export default function ScriptDetail() {
           <header className="flex items-start gap-4">
             <Tile Icon={Icon} tint={tint} size="large" />
             <div className="min-w-0 flex-1 pt-0.5">
-              <h1 className="allow-select text-title1 font-bold">{script.name}</h1>
-              <p className="allow-select mt-0.5 text-body text-secondary">
+              <h1 className="text-title1 font-bold allow-select">
+                {script.name}
+              </h1>
+              <p className="mt-0.5 text-body text-secondary allow-select">
                 {script.description || "No description"}
               </p>
               <p className="mt-2 text-callout text-tertiary">
@@ -170,7 +174,11 @@ export default function ScriptDetail() {
             ) : (
               <p className="px-3 py-6 text-center text-secondary">
                 This script has no steps yet.{" "}
-                <button type="button" className="text-accent" onClick={handleEdit}>
+                <button
+                  type="button"
+                  className="text-accent"
+                  onClick={handleEdit}
+                >
                   Add steps…
                 </button>
               </p>
@@ -187,9 +195,13 @@ export default function ScriptDetail() {
                   className="flex w-full items-center gap-2.5 px-3 py-2 text-left first:rounded-t-box last:rounded-b-box hover:bg-fill"
                 >
                   <RunStatusIcon status={run.status} />
-                  <span className="flex-1">{formatRelative(run.startedAt)}</span>
+                  <span className="flex-1">
+                    {formatRelative(run.startedAt)}
+                  </span>
                   <span className="text-secondary tabular-nums">
-                    {run.result ? pluralize(run.result.rows.length, "row") : "No data"}
+                    {run.result
+                      ? pluralize(run.result.rows.length, "row")
+                      : "No data"}
                   </span>
                   <span className="w-10 text-right text-tertiary tabular-nums">
                     {formatDuration(run.finishedAt - run.startedAt)}

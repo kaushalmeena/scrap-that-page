@@ -37,14 +37,12 @@
   --pink: #ff2d55;
   --gray: #8e8e93;
 
-  --elev-control:
-    0 0 0 0.5px rgb(0 0 0 / 0.14), 0 0.5px 1.5px rgb(0 0 0 / 0.1);
+  --elev-control: 0 0 0 0.5px rgb(0 0 0 / 0.14), 0 0.5px 1.5px rgb(0 0 0 / 0.1);
   --elev-popover:
     0 0 0 0.5px rgb(0 0 0 / 0.14), 0 10px 32px -4px rgb(0 0 0 / 0.22);
   --elev-sheet:
     0 0 0 0.5px rgb(0 0 0 / 0.16), 0 24px 64px -8px rgb(0 0 0 / 0.32);
-  --elev-card:
-    0 0 0 0.5px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
+  --elev-card: 0 0 0 0.5px rgb(0 0 0 / 0.08), 0 1px 3px rgb(0 0 0 / 0.06);
 }
 
 .dark {
@@ -176,11 +174,6 @@
   [contenteditable="true"] {
     @apply cursor-text select-text;
   }
-  /* Opt-in class for content the user should be able to copy (results,
-     logs, selectors). */
-  .allow-select {
-    @apply select-text;
-  }
   /* Native apps keep the arrow cursor on controls. */
   button {
     cursor: default;
@@ -216,12 +209,21 @@
   background: transparent;
 }
 
-/* Frameless-window drag regions (Electron). Interactive children must set
-   app-region-no-drag or they become part of the window drag handle. */
-.app-region-drag {
+/* Opt-in for content the user should be able to copy (results, logs,
+   selectors) inside the otherwise non-selectable chrome. */
+@utility allow-select {
+  user-select: text;
+}
+
+/* Frameless-window drag regions (Electron). Interactive children opt out
+   (automatically for controls below, or with app-region-no-drag) or they
+   become part of the window drag handle. */
+@utility app-region-drag {
   -webkit-app-region: drag;
 }
-.app-region-no-drag,
+@utility app-region-no-drag {
+  -webkit-app-region: no-drag;
+}
 .app-region-drag button,
 .app-region-drag input,
 .app-region-drag [role="button"],

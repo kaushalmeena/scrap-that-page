@@ -1,5 +1,6 @@
 import { cva, type VariantProps } from "class-variance-authority";
 import type { ComponentProps } from "react";
+
 import { cn } from "@/lib/utils";
 
 // macOS push buttons. "push" is the bordered default, "primary" the accented
@@ -7,7 +8,7 @@ import { cn } from "@/lib/utils";
 // the red confirm used in alerts. Press feedback is a quick dim + slight
 // shrink on pointer-down, no transition delay on release.
 const buttonVariants = cva(
-  "inline-flex shrink-0 items-center justify-center gap-1.5 whitespace-nowrap font-medium outline-none transition-[background-color,box-shadow,opacity,transform] duration-100 select-none active:scale-[0.97] disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0",
+  "inline-flex shrink-0 items-center justify-center gap-1.5 font-medium whitespace-nowrap transition-[background-color,box-shadow,opacity,transform] duration-100 outline-none select-none active:scale-[0.97] disabled:pointer-events-none disabled:opacity-40 [&_svg]:pointer-events-none [&_svg]:shrink-0",
   {
     variants: {
       variant: {
@@ -68,8 +69,10 @@ export function IconButton({
       aria-label={label}
       aria-pressed={active || undefined}
       className={cn(
-        "inline-flex shrink-0 items-center justify-center rounded-control text-secondary outline-none transition-[background-color,color,transform] duration-100 hover:bg-fill hover:text-label active:scale-95 active:bg-fill-strong disabled:pointer-events-none disabled:opacity-35",
-        size === "regular" ? "size-7 [&_svg]:size-4" : "size-5 [&_svg]:size-3.5",
+        "inline-flex shrink-0 items-center justify-center rounded-control text-secondary transition-[background-color,color,transform] duration-100 outline-none hover:bg-fill hover:text-label active:scale-95 active:bg-fill-strong disabled:pointer-events-none disabled:opacity-35",
+        size === "regular"
+          ? "size-7 [&_svg]:size-4"
+          : "size-5 [&_svg]:size-3.5",
         active && "text-accent hover:text-accent",
         className
       )}

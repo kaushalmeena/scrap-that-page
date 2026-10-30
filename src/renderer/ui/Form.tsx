@@ -16,7 +16,7 @@ export function FormSection({
       {title ? (
         <h2 className="px-2.5 text-body font-semibold">{title}</h2>
       ) : null}
-      <div className="divide-y rounded-box border border-box-border bg-box [&>*]:border-separator">
+      <div className="divide-y rounded-box border border-box-border bg-box *:border-separator">
         {children}
       </div>
       {footer ? (

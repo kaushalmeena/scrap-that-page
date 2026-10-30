@@ -5,11 +5,12 @@ import {
   type ScraperOperation
 } from "@common/types/scraper";
 import { app, ipcMain } from "electron";
+
 import type Scraper from "../lib/Scraper";
 import { PickCancelledError } from "../lib/Scraper/DebuggerPage";
 import { executeOperation } from "../utils/scraper";
 
-const SCRAPER_OPERATION_TYPES = [
+const SCRAPER_OPERATION_TYPES = new Set([
   "open",
   "extract",
   "click",
@@ -17,7 +18,7 @@ const SCRAPER_OPERATION_TYPES = [
   "wait",
   "delay",
   "scroll"
-];
+]);
 
 // The renderer is treated as untrusted, so every IPC argument is validated
 // before it reaches the scraper.
@@ -28,7 +29,7 @@ const isScraperOperation = (value: unknown): value is ScraperOperation =>
   typeof value === "object" &&
   value !== null &&
   "type" in value &&
-  SCRAPER_OPERATION_TYPES.includes((value as { type: string }).type);
+  SCRAPER_OPERATION_TYPES.has((value as { type: string }).type);
 
 export const connectScraperProxy = (scraper: Scraper) => {
   ipcMain.on(ScraperChannel.OPEN_WINDOW, () => {

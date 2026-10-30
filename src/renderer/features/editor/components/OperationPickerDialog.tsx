@@ -1,15 +1,25 @@
-import { OPERATION_SCHEMA, OPERATION_TYPES } from "@common/constants/operationSchema";
+import {
+  OPERATION_SCHEMA,
+  OPERATION_TYPES
+} from "@common/constants/operationSchema";
 import type { OperationType } from "@common/types/operation";
-import { OPERATION_APPEARANCE, OPERATION_CATEGORIES } from "@/lib/operationAppearance";
+
+import {
+  OPERATION_APPEARANCE,
+  OPERATION_CATEGORIES
+} from "@/lib/operationAppearance";
 import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
 import { Tile } from "@/ui/Tile";
+
 import { selectOperationPicker, useEditorStore } from "../store/editorStore";
 
 // Spotlight-style step picker for "Add Step" (root or inside a block): type
 // to filter, Return to add.
 export default function OperationPickerDialog() {
   const picker = useEditorStore(selectOperationPicker);
-  const { appendOperation, hideOperationPicker } = useEditorStore((s) => s.actions);
+  const { appendOperation, hideOperationPicker } = useEditorStore(
+    (s) => s.actions
+  );
 
   const handleOpenChange = (open: boolean) => {
     if (!open) {

@@ -25,8 +25,7 @@ const dateTime = new Intl.DateTimeFormat(undefined, {
   timeStyle: "short"
 });
 
-export const formatDateTime = (timestamp: number) =>
-  dateTime.format(timestamp);
+export const formatDateTime = (timestamp: number) => dateTime.format(timestamp);
 
 // "1:07"-style duration.
 export const formatDuration = (ms: number) => {

@@ -1,5 +1,6 @@
 import type { AppCommand } from "@common/types/app";
 import { useEffect, useId, useState } from "react";
+
 import Logo from "@/components/Logo";
 import { shortcutLabel } from "@/lib/commands";
 import { FormRow, FormSection } from "@/ui/Form";
@@ -7,6 +8,7 @@ import { SegmentedControl } from "@/ui/SegmentedControl";
 import { TextField } from "@/ui/TextField";
 import { Toggle } from "@/ui/Toggle";
 import { Toolbar } from "@/ui/Toolbar";
+
 import { type Theme, useSettingsStore } from "./store/settingsStore";
 
 const THEME_OPTIONS: { value: Theme; label: string }[] = [
@@ -47,8 +49,15 @@ export default function SettingsScreen() {
       <div className="min-h-0 flex-1 overflow-y-auto">
         <div className="mx-auto flex max-w-[560px] flex-col gap-6 px-6 py-8">
           <FormSection title="Appearance">
-            <FormRow label="Appearance" description="Auto follows your system setting.">
-              <SegmentedControl value={theme} options={THEME_OPTIONS} onChange={setTheme} />
+            <FormRow
+              label="Appearance"
+              description="Auto follows your system setting."
+            >
+              <SegmentedControl
+                value={theme}
+                options={THEME_OPTIONS}
+                onChange={setTheme}
+              />
             </FormRow>
           </FormSection>
 
@@ -61,7 +70,11 @@ export default function SettingsScreen() {
               description="Watch each step happen. Turn off to run in the background."
               htmlFor={showWindowId}
             >
-              <Toggle id={showWindowId} checked={showWindow} onCheckedChange={setShowWindow} />
+              <Toggle
+                id={showWindowId}
+                checked={showWindow}
+                onCheckedChange={setShowWindow}
+              />
             </FormRow>
             <FormRow label="Delay between steps" htmlFor={delayId}>
               <div className="flex items-center gap-1.5">
@@ -72,7 +85,9 @@ export default function SettingsScreen() {
                   step={100}
                   className="w-20 text-right tabular-nums"
                   value={stepDelayMs}
-                  onChange={(event) => setStepDelayMs(Number(event.target.value) || 0)}
+                  onChange={(event) =>
+                    setStepDelayMs(Number(event.target.value) || 0)
+                  }
                 />
                 <span className="text-secondary">ms</span>
               </div>
@@ -82,7 +97,7 @@ export default function SettingsScreen() {
           <FormSection title="Keyboard Shortcuts">
             {SHORTCUTS.map(([command, label]) => (
               <FormRow key={command} label={label}>
-                <kbd className="font-sans text-secondary tracking-wider">
+                <kbd className="font-sans tracking-wider text-secondary">
                   {shortcutLabel(command)}
                 </kbd>
               </FormRow>

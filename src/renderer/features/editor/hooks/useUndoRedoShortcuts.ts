@@ -1,4 +1,5 @@
 import { useEffect } from "react";
+
 import { useEditorStore } from "../store/editorStore";
 
 // Standard editor shortcuts: Cmd/Ctrl+Z undoes, Shift+Cmd/Ctrl+Z redoes.

@@ -1,5 +1,6 @@
 import { Search, XCircle } from "lucide-react";
 import type { ComponentProps, Ref } from "react";
+
 import { cn } from "@/lib/utils";
 
 const fieldClasses =
@@ -12,7 +13,11 @@ export function TextField({ className, ...props }: ComponentProps<"input">) {
 export function TextArea({ className, ...props }: ComponentProps<"textarea">) {
   return (
     <textarea
-      className={cn(fieldClasses, "resize-none py-1.5 leading-[18px]", className)}
+      className={cn(
+        fieldClasses,
+        "resize-none py-1.5 leading-[18px]",
+        className
+      )}
       {...props}
     />
   );
@@ -45,7 +50,7 @@ export function SearchField({
             onValueChange("");
           }
         }}
-        className="h-7 w-full rounded-[7px] bg-fill pr-7 pl-7 text-body text-label outline-none transition-shadow placeholder:text-secondary focus:bg-control focus:shadow-[0_0_0_3.5px_color-mix(in_srgb,var(--accent)_40%,transparent),0_0_0_0.5px_var(--accent)]"
+        className="h-7 w-full rounded-[7px] bg-fill px-7 text-body text-label transition-shadow outline-none placeholder:text-secondary focus:bg-control focus:shadow-[0_0_0_3.5px_color-mix(in_srgb,var(--accent)_40%,transparent),0_0_0_0.5px_var(--accent)]"
         {...props}
       />
       {value ? (

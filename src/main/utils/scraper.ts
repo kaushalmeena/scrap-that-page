@@ -3,6 +3,7 @@ import type {
   ScraperOperation,
   ScraperResult
 } from "@common/types/scraper";
+
 import type Scraper from "../lib/Scraper";
 
 const processOperation = async (

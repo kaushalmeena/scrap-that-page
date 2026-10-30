@@ -1,4 +1,5 @@
 import { FileCode2, type LucideIcon } from "lucide-react";
+
 import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
 import type { Script } from "@/types/script";
 

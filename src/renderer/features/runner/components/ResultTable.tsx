@@ -1,6 +1,8 @@
 import { type CSSProperties, type UIEvent, useState } from "react";
+
 import { cn } from "@/lib/utils";
 import { EmptyState } from "@/ui/EmptyState";
+
 import type { TableData } from "../types";
 
 const ROW_HEIGHT = 24;
@@ -17,7 +19,9 @@ export default function ResultTable({ data }: { data: TableData }) {
   const [viewport, setViewport] = useState(600);
 
   if (data.cols.length === 0) {
-    return <EmptyState title="No Data" message="Extracted values appear here." />;
+    return (
+      <EmptyState title="No Data" message="Extracted values appear here." />
+    );
   }
 
   const handleScroll = (event: UIEvent<HTMLDivElement>) => {
@@ -75,7 +79,7 @@ export default function ResultTable({ data }: { data: TableData }) {
     <div
       role="table"
       onScroll={handleScroll}
-      className="allow-select relative h-full overflow-auto"
+      className="relative h-full overflow-auto allow-select"
     >
       <div
         role="row"

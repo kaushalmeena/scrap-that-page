@@ -1,4 +1,5 @@
 import type { ChangeEvent } from "react";
+
 import { selectInformation, useEditorStore } from "../store/editorStore";
 
 // The script's name and description, edited in place as a document title
@@ -38,7 +39,7 @@ export default function ScriptHeader() {
         value={information.description.value}
         aria-invalid={Boolean(information.description.error)}
         onChange={handleChange}
-        className="field-sizing-content w-full resize-none bg-transparent text-body leading-5 text-secondary outline-none placeholder:text-tertiary"
+        className="field-sizing-content w-full resize-none bg-transparent text-body/5 text-secondary outline-none placeholder:text-tertiary"
       />
       {information.description.error ? (
         <p className="text-callout text-red">{information.description.error}</p>

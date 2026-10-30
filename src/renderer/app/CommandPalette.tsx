@@ -11,6 +11,7 @@ import {
   Sun
 } from "lucide-react";
 import { useNavigate } from "react-router";
+
 import db from "@/database";
 import { useRunScript } from "@/features/runner/useRunScript";
 import { scriptAppearance } from "@/features/scripts/appearance";
@@ -19,9 +20,11 @@ import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import { shortcutLabel } from "@/lib/commands";
 import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
 import { Tile } from "@/ui/Tile";
+
 import { useResolvedTheme } from "./ThemeProvider";
 
-const iconClasses = "size-4 text-secondary group-data-[selected=true]:text-white";
+const iconClasses =
+  "size-4 text-secondary group-data-[selected=true]:text-white";
 
 // ⌘K: jump anywhere, run or edit any script, and reach every app action.
 export default function CommandPalette({
@@ -136,8 +139,14 @@ export default function CommandPalette({
               <Moon className={iconClasses} />
             )
           }
-          title={resolvedTheme === "dark" ? "Use Light Appearance" : "Use Dark Appearance"}
-          onSelect={run(() => setTheme(resolvedTheme === "dark" ? "light" : "dark"))}
+          title={
+            resolvedTheme === "dark"
+              ? "Use Light Appearance"
+              : "Use Dark Appearance"
+          }
+          onSelect={run(() =>
+            setTheme(resolvedTheme === "dark" ? "light" : "dark")
+          )}
         />
       </PaletteGroup>
     </Palette>

@@ -1,4 +1,5 @@
 import { useEffect, useRef } from "react";
+
 import { cn } from "@/lib/utils";
 import type { RunLogEntry } from "@/types/run";
 
@@ -13,18 +14,18 @@ const timeFormat = new Intl.DateTimeFormat(undefined, {
 export default function RunLogPanel({ data }: { data: RunLogEntry[] }) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
-  // biome-ignore lint/correctness/useExhaustiveDependencies: log length is the deliberate trigger
+  // A run appends by replacing the array, so `data` changes per new entry.
   useEffect(() => {
     const el = scrollRef.current;
-    if (el) {
+    if (el && data.length > 0) {
       el.scrollTop = el.scrollHeight;
     }
-  }, [data.length]);
+  }, [data]);
 
   return (
     <div
       ref={scrollRef}
-      className="allow-select h-full overflow-y-auto py-1 font-mono text-callout"
+      className="h-full overflow-y-auto py-1 font-mono text-callout allow-select"
     >
       {data.map((entry, index) => (
         <div
@@ -43,7 +44,10 @@ export default function RunLogPanel({ data }: { data: RunLogEntry[] }) {
           >
             {entry.heading}
           </span>
-          <span className="min-w-0 truncate text-secondary" title={entry.message}>
+          <span
+            className="min-w-0 truncate text-secondary"
+            title={entry.message}
+          >
             {entry.message}
           </span>
         </div>

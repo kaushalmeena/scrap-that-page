@@ -1,9 +1,11 @@
 import type { ScraperResult } from "@common/types/scraper";
 import { create } from "zustand";
+
 import db from "@/database";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 import type { Run, RunLogEntry } from "@/types/run";
 import type { Script } from "@/types/script";
+
 import type { RunnerGenerator, RunnerStatus, TableData } from "../types";
 import {
   createRunnerGenerator,

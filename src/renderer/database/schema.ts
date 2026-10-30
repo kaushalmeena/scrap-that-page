@@ -1,5 +1,6 @@
 import { zOperation } from "@common/types/operation";
 import { z } from "zod";
+
 import type { Script } from "@/types/script";
 
 // Version stamped onto every script written to IndexedDB. Bump it (and add a
