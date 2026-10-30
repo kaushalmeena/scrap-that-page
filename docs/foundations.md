@@ -52,7 +52,9 @@ stack (`system-ui`, SF Pro on macOS).
 
 Radii: `rounded-control` (6 px: buttons, fields), `rounded-box` (10 px: grouped
 boxes, step cards), `rounded-sheet` (14 px: sheets, palette). Elevations:
-`shadow-control`, `shadow-card`, `shadow-popover`, `shadow-sheet`. Dark mode
+`shadow-control`, `shadow-card`, `shadow-popover`, `shadow-sheet`, plus
+`shadow-glyph` (tiles, logo), `shadow-primary`, `shadow-track` and
+`shadow-knob` (switch). Dark mode
 swaps shadows for inner highlights, so do not add ad-hoc shadows.
 
 `cn()` (`lib/utils.ts`) runs tailwind-merge configured with these type, radius

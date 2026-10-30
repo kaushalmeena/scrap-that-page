@@ -6,10 +6,14 @@
   with the same algorithm as prettier-plugin-tailwindcss.
 - **oxlint** lints (`pnpm lint`, `pnpm lint:fix`) with the react, a11y, import,
   unicorn and vitest plugins, plus two JS plugins:
-  - `eslint-plugin-better-tailwindcss` — canonical classes (`px-7`, not
-    `pl-7 pr-7`; `rounded-control`, not `rounded-[6px]`), and no conflicting,
-    duplicate, deprecated or unknown classes. It reads `src/renderer/index.css`,
-    so custom classes must be declared as Tailwind `@utility` to be known.
+  - `oxlint-tailwindcss` — reads the real Tailwind build from
+    `src/renderer/index.css` and enforces canonical classes (`px-7`, not
+    `pl-7 pr-7`; `rounded-control`, not `rounded-[14px]`; `bg-black/9`, not
+    `bg-black/[0.09]`), and rejects unknown, conflicting, duplicate and
+    deprecated classes. Custom classes must be declared as Tailwind `@utility`
+    to be known. Hardcoded colors in arbitrary values warn: add a token
+    instead (as the `shadow-glyph` / `shadow-knob` elevations do). Class
+    _order_ is left to oxfmt, so the plugin's sort rule is off.
   - `tools/oxlint/local-plugin.mjs` — project rules (below).
 - Silence a rule only on the line, with an `oxlint-disable-next-line` comment
   and a one-line reason, as in `DebuggerPage.ts`.

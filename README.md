@@ -81,13 +81,13 @@ windows stay active so lazily rendered content still loads.
 
 ## Tech Stack
 
-| Area          | Tools                                                                                                                                                                                                                          |
-| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
-| **Framework** | [Electron](https://www.electronjs.org/) + [Electron Forge](https://www.electronforge.io/) · [Vite](https://vite.dev/)                                                                                                          |
-| **UI**        | [React 19](https://react.dev/) · [Base UI](https://base-ui.com/) · [Tailwind CSS v4](https://tailwindcss.com/) · [Motion](https://motion.dev/)                                                                                 |
-| **State**     | [Zustand](https://zustand.docs.pmnd.rs/) (with [zundo](https://github.com/charkour/zundo) for undo/redo) · [Dexie](https://dexie.org/) (IndexedDB) · [Zod](https://zod.dev/)                                                   |
-| **Testing**   | [Vitest](https://vitest.dev/)                                                                                                                                                                                                  |
-| **Tooling**   | [TypeScript](https://www.typescriptlang.org/) (strict) · [oxlint](https://oxc.rs/docs/guide/usage/linter) · [oxfmt](https://oxc.rs/docs/guide/usage/formatter) (lint and format, Tailwind class sorting and canonical classes) |
+| Area          | Tools                                                                                                                                                                                                                                                                                                   |
+| ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Framework** | [Electron](https://www.electronjs.org/) + [Electron Forge](https://www.electronforge.io/) · [Vite](https://vite.dev/)                                                                                                                                                                                   |
+| **UI**        | [React 19](https://react.dev/) · [Base UI](https://base-ui.com/) · [Tailwind CSS v4](https://tailwindcss.com/) · [Motion](https://motion.dev/)                                                                                                                                                          |
+| **State**     | [Zustand](https://zustand.docs.pmnd.rs/) (with [zundo](https://github.com/charkour/zundo) for undo/redo) · [Dexie](https://dexie.org/) (IndexedDB) · [Zod](https://zod.dev/)                                                                                                                            |
+| **Testing**   | [Vitest](https://vitest.dev/)                                                                                                                                                                                                                                                                           |
+| **Tooling**   | [TypeScript](https://www.typescriptlang.org/) (strict) · [oxlint](https://oxc.rs/docs/guide/usage/linter) · [oxfmt](https://oxc.rs/docs/guide/usage/formatter) · [oxlint-tailwindcss](https://www.npmjs.com/package/oxlint-tailwindcss) (lint and format, Tailwind class sorting and canonical classes) |
 
 ## Getting Started
 
