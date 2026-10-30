@@ -1,14 +1,40 @@
-import { type ReactNode, useEffect } from "react";
+import { type ReactNode, useEffect, useSyncExternalStore } from "react";
 import { useSettingsStore } from "@/features/settings/store/settingsStore";
 
-// Applies the selected theme by toggling the `dark` class on <html>, which
-// drives every Tailwind `dark:` variant and the shadcn CSS variables.
+const darkQuery = window.matchMedia("(prefers-color-scheme: dark)");
+
+const subscribe = (onChange: () => void) => {
+  darkQuery.addEventListener("change", onChange);
+  return () => darkQuery.removeEventListener("change", onChange);
+};
+
+const getSystemDark = () => darkQuery.matches;
+
+// The appearance actually on screen: the user's choice, or the OS setting
+// when the theme is "system".
+export const useResolvedTheme = (): "light" | "dark" => {
+  const theme = useSettingsStore((s) => s.theme);
+  const systemDark = useSyncExternalStore(subscribe, getSystemDark);
+  if (theme === "system") {
+    return systemDark ? "dark" : "light";
+  }
+  return theme;
+};
+
+// Applies the appearance by toggling `dark` on <html> (drives every token in
+// index.css) and mirrors the choice to the native window so the vibrancy
+// material matches.
 export default function ThemeProvider({ children }: { children: ReactNode }) {
   const theme = useSettingsStore((s) => s.theme);
+  const resolved = useResolvedTheme();
 
   useEffect(() => {
-    document.documentElement.classList.toggle("dark", theme === "dark");
+    window.app?.setTheme(theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.documentElement.classList.toggle("dark", resolved === "dark");
+  }, [resolved]);
 
   return <>{children}</>;
 }
