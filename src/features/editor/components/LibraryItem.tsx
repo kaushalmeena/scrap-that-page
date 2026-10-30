@@ -1,6 +1,6 @@
 import { Tile } from "@/components/Tile";
 import { STEPS } from "@/constants/steps";
-import { STEP_STYLES } from "@/lib/stepStyles";
+import { STEP_GLYPHS } from "@/lib/glyphs";
 import type { OperationType } from "@/types/operation";
 
 export default function LibraryItem({
@@ -11,7 +11,7 @@ export default function LibraryItem({
   onAdd: (type: OperationType) => void;
 }) {
   const schema = STEPS[type];
-  const { Icon, tint } = STEP_STYLES[type];
+  const { Icon, tint } = STEP_GLYPHS[type];
 
   const handleClick = () => onAdd(type);
 

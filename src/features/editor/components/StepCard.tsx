@@ -7,8 +7,8 @@ import { useEffect, useRef, useState } from "react";
 import { IconButton } from "@/components/Button";
 import { Tile } from "@/components/Tile";
 import { STEPS } from "@/constants/steps";
+import { STEP_GLYPHS } from "@/lib/glyphs";
 import { SPRING } from "@/lib/motion";
-import { STEP_STYLES } from "@/lib/stepStyles";
 import { cn } from "@/utils/cn";
 import {
   hasAnyInputValue,
@@ -81,7 +81,7 @@ export default function StepCard({
     ? replaceFormatWithInputs(schema.format, operation.inputs)
     : schema.description;
 
-  const { Icon, tint } = STEP_STYLES[operation.type];
+  const { Icon, tint } = STEP_GLYPHS[operation.type];
   const invalid = !isOperationValid(operation);
 
   // dnd-kit and the scroll-into-view effect both need the card element.

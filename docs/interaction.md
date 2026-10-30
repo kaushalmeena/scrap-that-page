@@ -2,7 +2,7 @@
 
 ## Commands and shortcuts
 
-Every app-level action is an `AppCommand` (`src/types/app.ts`). Two
+Every app-level action is an `AppCommand` (`src/types/desktop.ts`). Two
 sources produce commands and one dispatcher runs them (`lib/commands.ts`):
 
 - **Keyboard:** `connectCommandSources()` (called once in `AppShell`) matches

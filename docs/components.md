@@ -42,6 +42,6 @@ style raw Base UI parts or invent one-off controls.
 - An ellipsis (…) on any command that asks for more input before acting
   ("Export…", "Delete…", "Import Script…").
 - Alerts ask a question ("Delete “Name”?") and say what cannot be undone.
-- Step and script tints come from `lib/stepStyles.ts` and
+- Step and script tints come from `lib/glyphs.ts` and
   `scripts/utils/scriptStyles.ts`; reuse them so a step looks the same
   everywhere.

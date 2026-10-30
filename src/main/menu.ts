@@ -5,7 +5,7 @@ import {
   type MenuItemConstructorOptions
 } from "electron";
 
-import type { AppCommand } from "@/types/app";
+import type { AppCommand } from "@/types/desktop";
 
 const isMac = process.platform === "darwin";
 

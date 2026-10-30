@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-import type { ThemeSource } from "@/types/app";
+import type { ThemeSource } from "@/types/desktop";
 
 export type Theme = ThemeSource;
 

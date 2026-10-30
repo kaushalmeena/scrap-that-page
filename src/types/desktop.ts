@@ -1,6 +1,6 @@
-export enum AppChannel {
-  COMMAND = "app_command",
-  SET_THEME = "app_set_theme"
+export enum DesktopChannel {
+  COMMAND = "desktop_command",
+  SET_THEME = "desktop_set_theme"
 }
 
 export type ThemeSource = "system" | "light" | "dark";

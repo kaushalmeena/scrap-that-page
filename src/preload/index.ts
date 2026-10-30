@@ -1,7 +1,7 @@
 import { contextBridge } from "electron";
 
-import { AppProxy } from "./proxy/app";
+import { DesktopProxy } from "./proxy/desktop";
 import { ScraperProxy } from "./proxy/scraper";
 
 contextBridge.exposeInMainWorld("scraper", ScraperProxy);
-contextBridge.exposeInMainWorld("app", AppProxy);
+contextBridge.exposeInMainWorld("desktop", DesktopProxy);

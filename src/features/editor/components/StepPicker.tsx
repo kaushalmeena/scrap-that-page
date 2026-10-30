@@ -1,6 +1,6 @@
 import { Palette, PaletteGroup } from "@/components/Palette";
 import { STEP_TYPES } from "@/constants/steps";
-import { STEP_STYLES, STEP_CATEGORIES } from "@/lib/stepStyles";
+import { STEP_GLYPHS, STEP_CATEGORIES } from "@/lib/glyphs";
 import type { OperationType } from "@/types/operation";
 
 import { selectOperationPicker, useEditorStore } from "../store/editorStore";
@@ -36,7 +36,7 @@ export default function StepPicker() {
       {STEP_CATEGORIES.map((category) => (
         <PaletteGroup key={category} heading={category}>
           {STEP_TYPES.filter(
-            (type) => STEP_STYLES[type].category === category
+            (type) => STEP_GLYPHS[type].category === category
           ).map((type) => (
             <PickerItem key={type} type={type} onSelect={handleSelect} />
           ))}

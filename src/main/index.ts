@@ -2,7 +2,7 @@ import path from "node:path";
 
 import { app, BrowserWindow, ipcMain, nativeTheme, shell } from "electron";
 
-import { AppChannel, type ThemeSource } from "@/types/app";
+import { DesktopChannel, type ThemeSource } from "@/types/desktop";
 
 import Scraper from "./lib/Scraper";
 import { installAppMenu } from "./menu";
@@ -107,7 +107,8 @@ const createWindow = () => {
 
   installAppMenu(
     () => BrowserWindow.getFocusedWindow() ?? mainWindow,
-    (window, command) => window.webContents.send(AppChannel.COMMAND, command)
+    (window, command) =>
+      window.webContents.send(DesktopChannel.COMMAND, command)
   );
 };
 
@@ -115,7 +116,7 @@ const THEME_SOURCES = new Set<ThemeSource>(["system", "light", "dark"]);
 
 // The renderer picks the appearance; mirroring it into nativeTheme keeps the
 // vibrancy material, menus and scrollbars in the same appearance.
-ipcMain.on(AppChannel.SET_THEME, (_, theme: unknown) => {
+ipcMain.on(DesktopChannel.SET_THEME, (_, theme: unknown) => {
   if (THEME_SOURCES.has(theme as ThemeSource)) {
     nativeTheme.themeSource = theme as ThemeSource;
   }

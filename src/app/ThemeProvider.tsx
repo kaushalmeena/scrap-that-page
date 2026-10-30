@@ -30,7 +30,7 @@ export default function ThemeProvider({ children }: { children: ReactNode }) {
   const resolved = useResolvedTheme();
 
   useEffect(() => {
-    window.app?.setTheme(theme);
+    window.desktop?.setTheme(theme);
   }, [theme]);
 
   useEffect(() => {

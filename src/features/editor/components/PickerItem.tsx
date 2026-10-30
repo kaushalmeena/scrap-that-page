@@ -1,7 +1,7 @@
 import { PaletteItem } from "@/components/Palette";
 import { Tile } from "@/components/Tile";
 import { STEPS } from "@/constants/steps";
-import { STEP_STYLES } from "@/lib/stepStyles";
+import { STEP_GLYPHS } from "@/lib/glyphs";
 import type { OperationType } from "@/types/operation";
 
 export default function PickerItem({
@@ -12,7 +12,7 @@ export default function PickerItem({
   onSelect: (type: OperationType) => void;
 }) {
   const schema = STEPS[type];
-  const { Icon, tint } = STEP_STYLES[type];
+  const { Icon, tint } = STEP_GLYPHS[type];
 
   const handleSelect = () => onSelect(type);
 

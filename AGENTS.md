@@ -40,7 +40,7 @@ Start with [`docs/overview.md`](docs/overview.md), then follow the work:
 - **Selection lives in the URL.** Lists navigate to select; panes read the id
   from the route.
 - **The renderer is untrusted.** It reaches main only through `window.scraper`
-  and `window.app`; main validates every IPC argument.
+  and `window.desktop`; main validates every IPC argument.
 - **Shared code stays pure.** `types/`, `constants/` and `utils/` are imported
   by every process; `main/` and `preload/` import nothing else (lint-enforced).
 - **Handlers are named, above the return.** Lint rejects inline functions in

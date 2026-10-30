@@ -1,6 +1,6 @@
 import { useEffect, useEffectEvent } from "react";
 
-import type { AppCommand } from "@/types/app";
+import type { AppCommand } from "@/types/desktop";
 
 import { isMac } from "./platform";
 
@@ -96,7 +96,7 @@ export const connectCommandSources = (): (() => void) => {
     }
   };
   document.addEventListener("keydown", handleKeyDown);
-  const unsubscribe = window.app?.onCommand((command) => {
+  const unsubscribe = window.desktop?.onCommand((command) => {
     dispatchCommand(command);
   });
   return () => {

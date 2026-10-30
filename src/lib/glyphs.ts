@@ -26,7 +26,7 @@ export type StepCategory =
 // Glyph, tint and library category per step type, shared by the editor, the
 // step library, script outlines and run logs so a step is recognizable
 // everywhere (like action colors in Shortcuts).
-export const STEP_STYLES: Record<
+export const STEP_GLYPHS: Record<
   OperationType,
   { Icon: LucideIcon; tint: string; category: StepCategory }
 > = {

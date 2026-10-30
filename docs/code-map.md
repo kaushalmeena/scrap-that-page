@@ -16,7 +16,7 @@ Where things live. For _why_ they are shaped this way, follow the links.
 
 ## `src/preload`
 
-- **`proxy/`** — `ScraperProxy` and `AppProxy`, the objects exposed on
+- **`proxy/`** — `ScraperProxy` and `DesktopProxy`, the objects exposed on
   `window`. `preload/types/` declares them globally for the renderer.
 
 ## Layout
@@ -57,13 +57,13 @@ Key shared files:
   every step type and the source of the `Operation` types.
 - **`constants/steps.ts`** — the `STEPS` catalog: per-step name,
   description, summary format, inputs, validation and pickers, typed by
-  `types/stepSchema.ts`.
+  `types/steps.ts`.
 
 Vocabulary: a **step** is what the user adds to a script; an **operation** is
 a step's stored value shape (`Operation`, `zOperation`), which is also what
 the database and the scraper IPC carry.
 
-- **`types/scraper.ts`**, **`types/app.ts`** — IPC channels and payloads.
+- **`types/scraper.ts`**, **`types/desktop.ts`** — IPC channels and payloads.
 
 Each feature keeps route entries at its root — `*Screen.tsx` for a top-level
 route, `*Pane.tsx` for a nested route rendered in a screen's detail pane — and

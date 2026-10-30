@@ -1,6 +1,6 @@
 import { FileCode2, type LucideIcon } from "lucide-react";
 
-import { STEP_STYLES } from "@/lib/stepStyles";
+import { STEP_GLYPHS } from "@/lib/glyphs";
 import type { Script } from "@/types/script";
 
 const TINTS = [
@@ -26,7 +26,7 @@ export const scriptStyles = (
   }
   const first = script.operations[0];
   return {
-    Icon: first ? STEP_STYLES[first.type].Icon : FileCode2,
+    Icon: first ? STEP_GLYPHS[first.type].Icon : FileCode2,
     tint: TINTS[Math.abs(hash) % TINTS.length]
   };
 };

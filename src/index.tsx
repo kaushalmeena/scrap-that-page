@@ -10,7 +10,7 @@ import "@/index.css";
 document.documentElement.classList.toggle("platform-mac", isMac);
 document.documentElement.classList.toggle(
   "vibrancy",
-  window.app?.platform === "darwin"
+  window.desktop?.platform === "darwin"
 );
 
 const rootEl = document.getElementById("root");

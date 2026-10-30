@@ -5,7 +5,7 @@ import type {
   SelectInputSchema,
   SelectOption,
   TextInputSchema
-} from "../types/stepSchema";
+} from "../types/steps";
 import type { ValidationRule } from "../types/validation";
 
 // Builders keep the catalog terse: only fields that differ from the defaults

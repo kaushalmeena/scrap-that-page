@@ -1,6 +1,6 @@
-import type { AppCommand, ThemeSource } from "@/types/app";
+import type { AppCommand, ThemeSource } from "@/types/desktop";
 
-export type AppAPI = {
+export type DesktopAPI = {
   platform: NodeJS.Platform;
   // Subscribes to commands sent by the native menu; returns an unsubscribe.
   onCommand: (listener: (command: AppCommand) => void) => () => void;
@@ -10,6 +10,6 @@ export type AppAPI = {
 
 declare global {
   interface Window {
-    app: AppAPI;
+    desktop: DesktopAPI;
   }
 }

@@ -3,7 +3,7 @@ import Dexie, { type PromiseExtended, type Table } from "dexie";
 import type { Run } from "../types/run";
 import type { Script } from "../types/script";
 import { parseStoredScript, prepareScriptForWrite } from "./schema";
-import { mostPopularMoviesScript } from "./seedScripts";
+import { mostPopularMoviesScript } from "./seed";
 
 // Every script passes through the zod schema at this boundary: writes are
 // validated (and version-stamped) so corrupt data never lands in IndexedDB,

@@ -2,7 +2,7 @@ import { useDeferredValue, useState } from "react";
 
 import { SearchField } from "@/components/TextField";
 import { STEPS, STEP_TYPES } from "@/constants/steps";
-import { STEP_STYLES, STEP_CATEGORIES } from "@/lib/stepStyles";
+import { STEP_GLYPHS, STEP_CATEGORIES } from "@/lib/glyphs";
 import type { OperationType } from "@/types/operation";
 
 import { useEditorStore } from "../store/editorStore";
@@ -39,7 +39,7 @@ export default function StepLibrary() {
       <div className="min-h-0 flex-1 overflow-y-auto px-2 pb-3">
         {STEP_CATEGORIES.map((category) => {
           const types = matching.filter(
-            (type) => STEP_STYLES[type].category === category
+            (type) => STEP_GLYPHS[type].category === category
           );
           if (types.length === 0) {
             return null;

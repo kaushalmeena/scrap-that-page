@@ -12,7 +12,7 @@ checker catches most omissions after step 1.
    and pickers. The editor derives its fields from this; no editor component
    changes are needed.
 3. **Appearance** — add the glyph, tint and library category to
-   `STEP_STYLES` in `src/lib/stepStyles.ts`.
+   `STEP_GLYPHS` in `src/lib/glyphs.ts`.
 4. **Run behavior** — handle the type in `createRunnerGenerator`
    (`features/runner/utils/runnerUtils.ts`):
    - renderer-only steps (variables, control flow) update `variables` and

@@ -9,7 +9,7 @@ browser window. Results land in a table you can export.
 | Process      | Source                   | Owns                                                                                   |
 | ------------ | ------------------------ | -------------------------------------------------------------------------------------- |
 | **Main**     | `src/main`               | Windows, native menu, appearance, and the `Scraper` that drives a child browser window |
-| **Preload**  | `src/preload`            | The only bridge: exposes `window.scraper` and `window.app` through `contextBridge`     |
+| **Preload**  | `src/preload`            | The only bridge: exposes `window.scraper` and `window.desktop` through `contextBridge` |
 | **Renderer** | everything else in `src` | The whole UI, the script database (IndexedDB), and the run engine                      |
 
 `src/types`, `src/constants` and `src/utils` hold what more than one process

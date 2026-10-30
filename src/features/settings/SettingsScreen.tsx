@@ -7,7 +7,7 @@ import { TextField } from "@/components/TextField";
 import { Toggle } from "@/components/Toggle";
 import { Toolbar } from "@/components/Toolbar";
 import { shortcutLabel } from "@/lib/commands";
-import type { AppCommand } from "@/types/app";
+import type { AppCommand } from "@/types/desktop";
 
 import { type Theme, useSettingsStore } from "./store/settingsStore";
 

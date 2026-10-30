@@ -1,6 +1,6 @@
 import { Tile } from "@/components/Tile";
 import { STEPS } from "@/constants/steps";
-import { STEP_STYLES } from "@/lib/stepStyles";
+import { STEP_GLYPHS } from "@/lib/glyphs";
 import type { Operation } from "@/types/operation";
 import { hasAnyInputValue, replaceFormatWithInputs } from "@/utils/operation";
 
@@ -25,7 +25,7 @@ export default function StepOutline({
 }) {
   return operations.map((operation, index) => {
     const schema = STEPS[operation.type];
-    const { Icon, tint } = STEP_STYLES[operation.type];
+    const { Icon, tint } = STEP_GLYPHS[operation.type];
     const detail = hasAnyInputValue(operation.inputs)
       ? replaceFormatWithInputs(schema.format, operation.inputs)
       : schema.description;

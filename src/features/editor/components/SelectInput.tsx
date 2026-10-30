@@ -1,7 +1,7 @@
 import { useId } from "react";
 
 import { PopUp } from "@/components/PopUp";
-import type { SelectInputSchema } from "@/types/stepSchema";
+import type { SelectInputSchema } from "@/types/steps";
 
 import { useEditorStore } from "../store/editorStore";
 
