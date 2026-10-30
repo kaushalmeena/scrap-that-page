@@ -1,17 +1,9 @@
 import { type KeyboardEvent, useEffect, useId, useState } from "react";
 import { toast } from "sonner";
-import { Button } from "@/components/ui/button";
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { TOAST_MESSAGES } from "@/lib/messages";
+import { Button } from "@/ui/Button";
+import { Sheet } from "@/ui/Sheet";
+import { TextField } from "@/ui/TextField";
 import {
   selectElementPicker,
   selectFirstOpenUrl,
@@ -72,38 +64,39 @@ export default function ElementPickerDialog() {
   };
 
   return (
-    <Dialog open={isOpen} onOpenChange={handlePickerClose}>
-      <DialogContent className="sm:max-w-md">
-        <DialogHeader>
-          <DialogTitle>Pick an element</DialogTitle>
-          <DialogDescription>
-            Enter the page to open. The scraper window loads it — hover to
-            highlight elements and click the one you want; its selector fills in
-            here. Hold Shift to interact with the page (scroll, follow links)
-            without selecting, or press Esc to cancel.
-          </DialogDescription>
-        </DialogHeader>
-        <div className="flex flex-col gap-1.5">
-          <Label htmlFor={urlInputId}>Page URL</Label>
-          {/* biome-ignore lint/a11y/noAutofocus: focusing the sole field on open is expected */}
-          <Input
-            id={urlInputId}
-            autoFocus
-            placeholder="https://example.com"
-            value={url}
-            onChange={(event) => setUrl(event.target.value)}
-            onKeyDown={handleKeyDown}
-          />
-        </div>
-        <DialogFooter>
-          <Button variant="ghost" onClick={handlePickerClose}>
-            Cancel
+    <Sheet
+      open={isOpen}
+      onOpenChange={(open) => {
+        if (!open) {
+          handlePickerClose();
+        }
+      }}
+      title="Pick an Element"
+      description="The page opens in the scraper window. Hover to highlight, then click the element you want. Hold Shift to scroll or follow links without picking; press Esc to cancel."
+      footer={
+        <>
+          <Button onClick={handlePickerClose}>Cancel</Button>
+          <Button variant="primary" disabled={!url.trim()} onClick={handlePickClick}>
+            Open Page
           </Button>
-          <Button disabled={!url.trim()} onClick={handlePickClick}>
-            Open &amp; pick
-          </Button>
-        </DialogFooter>
-      </DialogContent>
-    </Dialog>
+        </>
+      }
+    >
+      <div className="flex flex-col gap-1">
+        <label htmlFor={urlInputId} className="text-caption font-medium text-secondary">
+          Page URL
+        </label>
+        {/* biome-ignore lint/a11y/noAutofocus: focusing the sole field on open is expected */}
+        <TextField
+          id={urlInputId}
+          autoFocus
+          spellCheck={false}
+          placeholder="https://example.com"
+          value={url}
+          onChange={(event) => setUrl(event.target.value)}
+          onKeyDown={handleKeyDown}
+        />
+      </div>
+    </Sheet>
   );
 }

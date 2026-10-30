@@ -1,19 +1,30 @@
-import { Eye, Palette, Timer } from "lucide-react";
-import type { ChangeEvent } from "react";
-import PageHeader from "@/components/PageHeader";
-import { Card } from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
-import { Switch } from "@/components/ui/switch";
+import type { AppCommand } from "@common/types/app";
+import { useEffect, useId, useState } from "react";
+import Logo from "@/components/Logo";
+import { shortcutLabel } from "@/lib/commands";
+import { FormRow, FormSection } from "@/ui/Form";
+import { SegmentedControl } from "@/ui/SegmentedControl";
+import { TextField } from "@/ui/TextField";
+import { Toggle } from "@/ui/Toggle";
+import { Toolbar } from "@/ui/Toolbar";
 import { type Theme, useSettingsStore } from "./store/settingsStore";
+
+const THEME_OPTIONS: { value: Theme; label: string }[] = [
+  { value: "system", label: "Auto" },
+  { value: "light", label: "Light" },
+  { value: "dark", label: "Dark" }
+];
+
+const SHORTCUTS: [AppCommand, string][] = [
+  ["command-palette", "Command palette"],
+  ["new-script", "New script"],
+  ["run-script", "Run selected script"],
+  ["edit-script", "Edit selected script"],
+  ["toggle-favorite", "Toggle favorite"],
+  ["find", "Search scripts"],
+  ["save", "Save script (in editor)"],
+  ["toggle-sidebar", "Show or hide sidebar"]
+];
 
 export default function SettingsScreen() {
   const showWindow = useSettingsStore((s) => s.showWindow);
@@ -22,70 +33,71 @@ export default function SettingsScreen() {
   const { setShowWindow, setTheme, setStepDelayMs } = useSettingsStore(
     (s) => s.actions
   );
+  const [version, setVersion] = useState("");
+  const showWindowId = useId();
+  const delayId = useId();
 
-  const changeTheme = (value: string) => {
-    setTheme(value as Theme);
-  };
-
-  const changeShowWindow = (value: boolean) => {
-    setShowWindow(value);
-  };
-
-  const changeStepDelay = (event: ChangeEvent<HTMLInputElement>) => {
-    setStepDelayMs(Number(event.target.value) || 0);
-  };
+  useEffect(() => {
+    window.scraper?.getVersion().then(setVersion);
+  }, []);
 
   return (
-    <>
-      <PageHeader
-        title="Settings"
-        subtitle="Appearance and scraping preferences"
-      />
-      <Card className="max-w-md p-4">
-        <div className="flex items-center gap-4">
-          <Palette className="size-5 text-muted-foreground" />
-          <Label className="flex-1">Theme</Label>
-          <Select value={theme} onValueChange={changeTheme}>
-            <SelectTrigger size="sm">
-              <SelectValue />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="light">Light</SelectItem>
-              <SelectItem value="dark">Dark</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-        <Separator />
-        <div className="flex items-center gap-4">
-          <Eye className="size-5 text-muted-foreground" />
-          <div className="flex-1">
-            <Label>Show scraper window</Label>
-            <p className="text-xs text-muted-foreground">
-              Turn off to run scripts in the background without opening a
-              browser window
+    <div data-pane className="flex min-w-0 flex-1 flex-col">
+      <Toolbar title="Settings" />
+      <div className="min-h-0 flex-1 overflow-y-auto">
+        <div className="mx-auto flex max-w-[560px] flex-col gap-6 px-6 py-8">
+          <FormSection title="Appearance">
+            <FormRow label="Appearance" description="Auto follows your system setting.">
+              <SegmentedControl value={theme} options={THEME_OPTIONS} onChange={setTheme} />
+            </FormRow>
+          </FormSection>
+
+          <FormSection
+            title="Running Scripts"
+            footer="A short delay between steps is gentler on the sites you scrape."
+          >
+            <FormRow
+              label="Show browser window"
+              description="Watch each step happen. Turn off to run in the background."
+              htmlFor={showWindowId}
+            >
+              <Toggle id={showWindowId} checked={showWindow} onCheckedChange={setShowWindow} />
+            </FormRow>
+            <FormRow label="Delay between steps" htmlFor={delayId}>
+              <div className="flex items-center gap-1.5">
+                <TextField
+                  id={delayId}
+                  type="number"
+                  min={0}
+                  step={100}
+                  className="w-20 text-right tabular-nums"
+                  value={stepDelayMs}
+                  onChange={(event) => setStepDelayMs(Number(event.target.value) || 0)}
+                />
+                <span className="text-secondary">ms</span>
+              </div>
+            </FormRow>
+          </FormSection>
+
+          <FormSection title="Keyboard Shortcuts">
+            {SHORTCUTS.map(([command, label]) => (
+              <FormRow key={command} label={label}>
+                <kbd className="font-sans text-secondary tracking-wider">
+                  {shortcutLabel(command)}
+                </kbd>
+              </FormRow>
+            ))}
+          </FormSection>
+
+          <div className="flex flex-col items-center gap-2 pt-2 text-center">
+            <Logo className="size-12 rounded-[12px]" />
+            <p className="font-semibold">ScrapThatPage</p>
+            <p className="text-caption text-secondary">
+              {version ? `Version ${version}` : " "}
             </p>
           </div>
-          <Switch checked={showWindow} onCheckedChange={changeShowWindow} />
         </div>
-        <Separator />
-        <div className="flex items-center gap-4">
-          <Timer className="size-5 text-muted-foreground" />
-          <div className="flex-1">
-            <Label>Delay between steps</Label>
-            <p className="text-xs text-muted-foreground">
-              Pause (in ms) between steps so sites aren&apos;t hammered with
-              rapid-fire actions
-            </p>
-          </div>
-          <Input
-            type="number"
-            className="h-8 w-24"
-            min={0}
-            value={stepDelayMs}
-            onChange={changeStepDelay}
-          />
-        </div>
-      </Card>
-    </>
+      </div>
+    </div>
   );
 }

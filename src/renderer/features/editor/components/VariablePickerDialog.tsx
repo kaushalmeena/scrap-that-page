@@ -1,20 +1,15 @@
 import type { Variable } from "@common/types/variable";
-import EmptyState from "@/components/EmptyState";
-import { Badge } from "@/components/ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle
-} from "@/components/ui/dialog";
+import { Braces } from "lucide-react";
+import { Palette, PaletteGroup, PaletteItem } from "@/ui/Palette";
 import {
   selectVariablePicker,
   selectVariables,
   useEditorStore
 } from "../store/editorStore";
 
+// Picks a script variable to insert into the field that opened it.
 export default function VariablePickerDialog() {
-  const selector = useEditorStore(selectVariablePicker);
+  const picker = useEditorStore(selectVariablePicker);
   const variables = useEditorStore(selectVariables);
   const { hideVariablePicker, updateInputWithVariable } = useEditorStore(
     (s) => s.actions
@@ -31,37 +26,35 @@ export default function VariablePickerDialog() {
     hideVariablePicker();
   };
 
-  const filteredVariables =
-    selector.filterType === "any"
-      ? variables
-      : variables.filter((item: Variable) => item.type === selector.filterType);
+  const available = variables.filter(
+    (item) =>
+      item.name && (picker.filterType === "any" || item.type === picker.filterType)
+  );
 
   return (
-    <Dialog open={selector.target !== null} onOpenChange={handleOpenChange}>
-      <DialogContent>
-        <DialogHeader>
-          <DialogTitle>Select Variable</DialogTitle>
-        </DialogHeader>
-        <div className="max-h-96 overflow-y-auto">
-          {filteredVariables.length > 0 ? (
-            <div className="flex flex-col gap-1">
-              {filteredVariables.map((variable: Variable) => (
-                <button
-                  key={`variable-${variable.name}`}
-                  type="button"
-                  className="flex w-full cursor-pointer items-center justify-between gap-2 rounded-md p-3 text-left transition-colors hover:bg-accent"
-                  onClick={() => handleSelect(variable)}
-                >
-                  <span className="truncate font-medium">{variable.name}</span>
-                  <Badge variant="secondary">{variable.type}</Badge>
-                </button>
-              ))}
-            </div>
-          ) : (
-            <EmptyState message="No variables available" />
-          )}
-        </div>
-      </DialogContent>
-    </Dialog>
+    <Palette
+      open={picker.target !== null}
+      onOpenChange={handleOpenChange}
+      label="Insert Variable"
+      placeholder="Search variables"
+      emptyMessage="No variables yet — add a “Set variable” step first."
+    >
+      {available.length > 0 ? (
+        <PaletteGroup heading="Variables">
+          {available.map((variable) => (
+            <PaletteItem
+              key={variable.ownerId}
+              value={variable.name}
+              icon={
+                <Braces className="size-4 text-teal group-data-[selected=true]:text-white" />
+              }
+              title={variable.name}
+              shortcut={variable.type}
+              onSelect={() => handleSelect(variable)}
+            />
+          ))}
+        </PaletteGroup>
+      ) : null}
+    </Palette>
   );
 }

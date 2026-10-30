@@ -275,3 +275,25 @@
     transition-duration: 1ms !important;
   }
 }
+
+@keyframes progress {
+  from {
+    transform: translateX(-100%);
+  }
+  to {
+    transform: translateX(300%);
+  }
+}
+
+/* Window chrome layout. The traffic lights (macOS) occupy the top-left
+   corner; when the sidebar is hidden the first pane's toolbar makes room for
+   them and for the sidebar toggle. */
+:root {
+  --traffic-inset: 8px;
+}
+.platform-mac {
+  --traffic-inset: 84px;
+}
+[data-sidebar="closed"] main > [data-pane]:first-child > [data-toolbar] {
+  padding-left: calc(var(--traffic-inset) + 40px);
+}

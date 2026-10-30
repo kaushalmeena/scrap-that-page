@@ -35,7 +35,8 @@ type EditorActions = {
     key: "name" | "description";
     value: string;
   }) => void;
-  appendOperation: (type: OperationType) => void;
+  // Appends to `listRef`, or to the list the step picker was opened for.
+  appendOperation: (type: OperationType, listRef?: OperationListRef) => void;
   deleteOperation: (payload: { listRef: OperationListRef; id: string }) => void;
   duplicateOperation: (payload: {
     listRef: OperationListRef;
@@ -89,6 +90,18 @@ const throttle = <Args extends unknown[]>(
       }, remaining);
     }
   };
+};
+
+// The most recently appended step, so its card can open and scroll into view
+// once when it mounts. Kept outside the store: it is UI focus, not data.
+let justAddedId: string | null = null;
+
+export const consumeJustAdded = (id: string): boolean => {
+  if (justAddedId !== id) {
+    return false;
+  }
+  justAddedId = null;
+  return true;
 };
 
 // --- draft mutators (operate on the immer draft inside actions) ---
@@ -174,15 +187,16 @@ export const useEditorStore = create<EditorStore>()(
             field.error = validateWithRules(value, field.rules);
             field.value = value;
           }),
-        appendOperation: (type) =>
+        appendOperation: (type, listRef) =>
           set((state) => {
-            const target = state.operationPicker.target;
+            const target = listRef ?? state.operationPicker.target;
             if (!target) {
               return;
             }
             const operation = createEditorOperation(type);
             state.operations[operation.id] = operation;
             getOperationIds(state, target).push(operation.id);
+            justAddedId = operation.id;
           }),
         deleteOperation: ({ listRef, id }) =>
           set((state) => {

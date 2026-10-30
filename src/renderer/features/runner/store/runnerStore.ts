@@ -12,6 +12,8 @@ import {
 } from "../utils/runnerUtils";
 
 type RunnerState = {
+  // Script the current/last run belongs to (null before any run).
+  scriptId: number | null;
   status: RunnerStatus;
   heading: string;
   message: string;
@@ -26,11 +28,12 @@ type RunnerState = {
 type RunnerActions = {
   start: (script: Script) => void;
   stop: () => void;
-  // Resets to the idle "ready" state (used when opening the run screen fresh).
+  // Back to the idle "ready" state (no-op while a run is in progress).
   reset: () => void;
 };
 
 const READY: RunnerState = {
+  scriptId: null,
   status: "ready",
   heading: "Ready",
   message: "Press play to run this script",
@@ -50,7 +53,9 @@ const READY: RunnerState = {
  */
 export const useRunnerStore = create<RunnerState & RunnerActions>(() => ({
   ...READY,
-  start: (script) => startRun(script),
+  start: (script) => {
+    startRun(script);
+  },
   stop: () => endRun(STOPPED),
   reset: () => {
     if (useRunnerStore.getState().status === "started") {
@@ -218,17 +223,20 @@ const executeNext = () => {
     });
 };
 
-const startRun = (script: Script) => {
+const startRun = async (script: Script) => {
+  if (get().status === "started") {
+    return;
+  }
   const { showWindow } = useSettingsStore.getState();
   window.scraper.configure({ showWindow });
 
   runningScript = script;
-  generator = createRunnerGenerator(script.operations);
   persisted = false;
   startedAt = Date.now();
 
   set({
     ...READY,
+    scriptId: script.id ?? null,
     status: "started",
     heading: "Running",
     message: "Working through the script steps…"
@@ -239,5 +247,8 @@ const startRun = (script: Script) => {
   }
   timer = setInterval(() => set({ elapsedMs: Date.now() - startedAt }), 500);
 
+  // mathjs (if/while conditions) is big; load it on the first run only.
+  const { evaluate } = await import("mathjs");
+  generator = createRunnerGenerator(script.operations, evaluate);
   executeNext();
 };

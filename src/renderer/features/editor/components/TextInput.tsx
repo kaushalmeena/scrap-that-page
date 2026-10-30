@@ -1,10 +1,9 @@
 import type { TextInputSchema } from "@common/types/operationSchema";
-import { CopyPlus, Crosshair } from "lucide-react";
+import { Braces, Crosshair } from "lucide-react";
 import { type ChangeEvent, useId } from "react";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { IconButton } from "@/ui/Button";
+import { TextField } from "@/ui/TextField";
 import { useEditorStore } from "../store/editorStore";
 
 export default function TextInput({
@@ -27,29 +26,21 @@ export default function TextInput({
 
   const hasVariablePicker = Boolean(schema.variablePicker);
   const hasElementPicker = Boolean(schema.elementPicker);
-  const inputPadding =
-    hasVariablePicker && hasElementPicker
-      ? "pr-14"
-      : hasVariablePicker || hasElementPicker
-        ? "pr-8"
-        : "";
+  const pickerCount = Number(hasVariablePicker) + Number(hasElementPicker);
 
   const handleChange = (event: ChangeEvent<HTMLInputElement>) =>
     updateInput({ operationId, inputIndex, value: event.target.value });
 
-  const handleVariablePickerOpen = () =>
-    showVariablePicker({ operationId, inputIndex });
-
-  const handleElementPickerOpen = () =>
-    showElementPicker({ operationId, inputIndex });
-
   return (
-    <div className="flex flex-col gap-1.5">
-      <Label htmlFor={inputId}>{schema.label}</Label>
+    <div className="flex flex-col gap-1">
+      <label htmlFor={inputId} className="text-caption font-medium text-secondary">
+        {schema.label}
+      </label>
       <div className="relative">
-        <Input
+        <TextField
           id={inputId}
-          className={cn("h-8", inputPadding)}
+          spellCheck={false}
+          className={cn(pickerCount === 1 && "pr-7", pickerCount === 2 && "pr-12")}
           value={value}
           readOnly={schema.inputProps?.readOnly}
           placeholder={schema.inputProps?.placeholder}
@@ -57,35 +48,28 @@ export default function TextInput({
           aria-invalid={Boolean(error)}
           onChange={handleChange}
         />
-        {hasVariablePicker && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-xs"
-            title="Show variable picker"
-            className="absolute top-1 right-1"
-            onClick={handleVariablePickerOpen}
-          >
-            <CopyPlus className="size-4" />
-          </Button>
-        )}
-        {hasElementPicker && (
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-xs"
-            title="Pick element from page"
-            className={cn(
-              "absolute top-1",
-              hasVariablePicker ? "right-8" : "right-1"
-            )}
-            onClick={handleElementPickerOpen}
-          >
-            <Crosshair className="size-4" />
-          </Button>
-        )}
+        <div className="absolute inset-y-0 right-0.5 flex items-center">
+          {hasElementPicker ? (
+            <IconButton
+              size="small"
+              label="Pick Element from Page"
+              onClick={() => showElementPicker({ operationId, inputIndex })}
+            >
+              <Crosshair />
+            </IconButton>
+          ) : null}
+          {hasVariablePicker ? (
+            <IconButton
+              size="small"
+              label="Insert Variable"
+              onClick={() => showVariablePicker({ operationId, inputIndex })}
+            >
+              <Braces />
+            </IconButton>
+          ) : null}
+        </div>
       </div>
-      {error && <p className="text-xs text-destructive">{error}</p>}
+      {error ? <p className="text-caption text-red">{error}</p> : null}
     </div>
   );
 }

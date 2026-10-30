@@ -56,10 +56,17 @@ export default function OperationInput({
       );
     case "block":
       return (
-        <OperationPanel
-          listRef={{ parentId: operationId, inputIndex }}
-          numberPrefix={numberPrefix}
-        />
+        <div className="flex flex-col gap-1.5">
+          <p className="text-caption font-medium text-secondary">
+            {inputSchema.label}
+          </p>
+          <div className="rounded-[8px] bg-fill/70 p-2">
+            <OperationPanel
+              listRef={{ parentId: operationId, inputIndex }}
+              numberPrefix={numberPrefix}
+            />
+          </div>
+        </div>
       );
   }
 }

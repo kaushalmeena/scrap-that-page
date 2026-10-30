@@ -1,11 +1,9 @@
 import type { Operation } from "@common/types/operation";
 import type { ExtractOperationResult } from "@common/types/scraper";
 import { describe, expect, it, vi } from "vitest";
-import {
-  createRunnerGenerator,
-  downloadAsCSV,
-  getRunnerTableData
-} from "./runnerUtils";
+import { evaluate } from "mathjs";
+import { downloadAsCSV } from "./exportUtils";
+import { createRunnerGenerator, getRunnerTableData } from "./runnerUtils";
 
 const setOperation = (name: string, value: string): Operation => ({
   type: "set",
@@ -46,7 +44,7 @@ describe("getRunnerGenerator", () => {
       }
     ];
 
-    const yielded = [...createRunnerGenerator(operations)];
+    const yielded = [...createRunnerGenerator(operations, evaluate)];
     expect(yielded).toEqual([
       { type: "open", url: "https://example.com?p=1" },
       { type: "open", url: "https://example.com?p=2" }
@@ -67,7 +65,7 @@ describe("getRunnerGenerator", () => {
       { type: "scroll", inputs: [{ type: "text", value: "" }] }
     ];
 
-    expect([...createRunnerGenerator(operations)]).toEqual([
+    expect([...createRunnerGenerator(operations, evaluate)]).toEqual([
       { type: "wait", selector: ".item-2", timeoutMs: 5000 },
       { type: "delay", ms: 0 },
       { type: "scroll", selector: "" }
@@ -85,7 +83,7 @@ describe("getRunnerGenerator", () => {
       }
     ];
 
-    expect(() => [...createRunnerGenerator(operations)]).toThrow(/iterations/);
+    expect(() => [...createRunnerGenerator(operations, evaluate)]).toThrow(/iterations/);
   });
 });
 

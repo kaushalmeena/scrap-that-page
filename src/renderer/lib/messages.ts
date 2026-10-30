@@ -5,6 +5,7 @@ export const TOAST_MESSAGES = {
   SCRIPT_UPDATE_FAILURE: "Couldn't save changes. Please try again.",
   SCRIPT_DELETE_SUCCESS: "Script deleted",
   SCRIPT_DELETE_FAILURE: "Couldn't delete the script. Please try again.",
+  SCRIPT_DUPLICATE_SUCCESS: "Script duplicated",
   SCRIPT_FAVORITE_ADD: "Added to favorites",
   SCRIPT_FAVORITE_REMOVE: "Removed from favorites",
   SCRIPT_IMPORT_SUCCESS: "Script imported",

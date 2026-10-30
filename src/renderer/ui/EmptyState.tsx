@@ -5,12 +5,15 @@ import { cn } from "@/lib/utils";
 // Centered placeholder for empty panes ("No Script Selected" etc.).
 export function EmptyState({
   Icon,
+  art,
   title,
   message,
   action,
   className
 }: {
   Icon?: LucideIcon;
+  // Custom artwork shown instead of `Icon` (e.g. a script tile).
+  art?: ReactNode;
   title: string;
   message?: ReactNode;
   action?: ReactNode;
@@ -23,7 +26,8 @@ export function EmptyState({
         className
       )}
     >
-      {Icon ? (
+      {art ? <div className="mb-3">{art}</div> : null}
+      {Icon && !art ? (
         <Icon className="mb-2 size-10 text-tertiary" strokeWidth={1.25} />
       ) : null}
       <p className="text-title3 font-semibold text-secondary">{title}</p>

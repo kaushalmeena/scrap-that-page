@@ -74,6 +74,13 @@ class AppDatabase extends Dexie {
   getRecentRuns = (limit = 50): Promise<Run[]> =>
     this.runs.orderBy("startedAt").reverse().limit(limit).toArray();
 
+  getRunsForScript = async (scriptId: number, limit = 5): Promise<Run[]> => {
+    const runs = await this.runs.where("scriptId").equals(scriptId).toArray();
+    return runs.sort((a, b) => b.startedAt - a.startedAt).slice(0, limit);
+  };
+
+  countRuns = (): PromiseExtended<number> => this.runs.count();
+
   getRunById = (id: number): PromiseExtended<Run | undefined> =>
     this.runs.get(id);
 

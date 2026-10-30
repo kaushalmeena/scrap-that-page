@@ -4,13 +4,9 @@ import type {
   ScraperOperation
 } from "@common/types/scraper";
 import type { VariableMapping } from "@common/types/variable";
-import ExcelJS from "exceljs";
 import { produce } from "immer";
-import { Play, RotateCw, Square } from "lucide-react";
-import { evaluate } from "mathjs";
 import { INITIAL_TABLE_DATA } from "../constants/table";
 import type {
-  RunnerCardInfo,
   RunnerGenerator,
   RunnerHeaderInfo,
   RunnerStatus,
@@ -39,8 +35,14 @@ const replaceFormatWithVariables = (
 // Control-flow and variable operations (set/increase/decrease/if/while) are
 // evaluated here in the renderer and don't yield; if/while recurse into their
 // nested operations, sharing the same mutable `variables` map.
+//
+// `evaluate` computes if/while conditions. It is injected (mathjs's evaluate
+// in the app, loaded on demand) so this module stays light and testable.
+export type Evaluate = (expression: string) => unknown;
+
 export function* createRunnerGenerator(
   operations: Operation[],
+  evaluate: Evaluate,
   variables: VariableMapping = {}
 ): RunnerGenerator {
   for (let i = 0; i < operations.length; i += 1) {
@@ -127,7 +129,7 @@ export function* createRunnerGenerator(
           );
           const evaluatedValue = evaluate(formattedCondition);
           if (evaluatedValue) {
-            yield* createRunnerGenerator(nestedOperations, variables);
+            yield* createRunnerGenerator(nestedOperations, evaluate, variables);
           }
         }
         break;
@@ -150,7 +152,7 @@ export function* createRunnerGenerator(
                 `"while" loop exceeded ${MAX_WHILE_ITERATIONS} iterations`
               );
             }
-            yield* createRunnerGenerator(nestedOperations, variables);
+            yield* createRunnerGenerator(nestedOperations, evaluate, variables);
             formattedCondition = replaceFormatWithVariables(
               condition,
               variables
@@ -263,116 +265,4 @@ export const getRunnerHeaderInfo = (
         message: operation.selector ? `[${operation.selector}]` : "page bottom"
       };
   }
-};
-
-export const getRunnerCardInfo = (status: RunnerStatus): RunnerCardInfo => {
-  switch (status) {
-    case "ready":
-      return {
-        title: "Run script",
-        color: "default",
-        Icon: Play
-      };
-    case "started":
-      return {
-        title: "Stop run",
-        color: "default",
-        Icon: Square
-      };
-    case "stopped":
-      return {
-        title: "Run again",
-        color: "default",
-        Icon: RotateCw
-      };
-    case "finished":
-      return {
-        title: "Run again",
-        color: "success",
-        tone: "success",
-        Icon: RotateCw
-      };
-    case "error":
-      return {
-        title: "Run again",
-        color: "destructive",
-        tone: "error",
-        Icon: RotateCw
-      };
-  }
-};
-
-// Quote a CSV field only when it contains a delimiter, quote, or newline,
-// escaping embedded quotes by doubling them (RFC 4180).
-const escapeCSVField = (value: string) =>
-  /[",\r\n]/.test(value) ? `"${value.replace(/"/g, '""')}"` : value;
-
-const convertToCSV = (data: TableData) => {
-  const toRow = (cells: string[]) =>
-    data.cols.map((_, colIdx) => escapeCSVField(cells[colIdx] || "")).join(",");
-
-  const header = data.cols.map(escapeCSVField).join(",");
-  const body = data.rows.map(toRow);
-  return [header, ...body].join("\r\n");
-};
-
-const convertToJSON = (data: TableData) => {
-  const array = [];
-  let result = "";
-  for (let i = 0; i < data.rows.length; i += 1) {
-    const row: Record<string, string> = {};
-    for (let j = 0; j < data.cols.length; j += 1) {
-      row[data.cols[j]] = data.rows[i][j] || "";
-    }
-    array.push(row);
-  }
-  result = JSON.stringify(array, null, 2);
-  return result;
-};
-
-const saveFile = (
-  data: string | ArrayBuffer,
-  extension = "txt",
-  type = "text/plain"
-) => {
-  const blob = new Blob([data], { type });
-  const href = window.URL.createObjectURL(blob);
-  const anchorEl = document.createElement("a");
-  anchorEl.download = `output.${extension}`;
-  anchorEl.href = href;
-  anchorEl.click();
-  window.URL.revokeObjectURL(href);
-};
-
-export const downloadAsCSV = (data: TableData) => {
-  const csvString = convertToCSV(data);
-  saveFile(csvString, "csv", "text/csv");
-};
-
-export const downloadAsJSON = (data: TableData) => {
-  const jsonString = convertToJSON(data);
-  saveFile(jsonString, "json", "application/json");
-};
-
-export const downloadAsXLSX = async (data: TableData): Promise<void> => {
-  const workbook = new ExcelJS.Workbook();
-  const sheet = workbook.addWorksheet("Results");
-  sheet.addRow(data.cols);
-  sheet.getRow(1).font = { bold: true };
-  for (const row of data.rows) {
-    sheet.addRow(data.cols.map((_, i) => row[i] ?? ""));
-  }
-  const buffer = await workbook.xlsx.writeBuffer();
-  saveFile(
-    buffer,
-    "xlsx",
-    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
-  );
-};
-
-export const copyTableToClipboard = async (data: TableData): Promise<void> => {
-  const toRow = (cells: string[]) =>
-    data.cols.map((_, colIdx) => cells[colIdx] || "").join("\t");
-  const tsv = [data.cols.join("\t"), ...data.rows.map(toRow)].join("\n");
-  await navigator.clipboard.writeText(tsv);
 };

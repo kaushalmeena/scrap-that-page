@@ -1,5 +1,4 @@
 import type { ScraperOperation } from "@common/types/scraper";
-import type { LucideIcon } from "lucide-react";
 
 // TNext is unset (unknown): the generator never reads the value passed to
 // next(), and typing it as ScraperOperation made spread/for-of illegal under
@@ -16,17 +15,6 @@ export type RunnerStatus =
 export type RunnerHeaderInfo = {
   heading: string;
   message: string;
-};
-
-export type ActionButtonColor = "default" | "success" | "destructive";
-
-export type RunnerCardInfo = {
-  title: string;
-  color: ActionButtonColor;
-  // Palette key used to tint the card background for terminal states; the
-  // component resolves it to a theme color so it adapts to light/dark mode.
-  tone?: "success" | "error";
-  Icon: LucideIcon;
 };
 
 export type TableData = {

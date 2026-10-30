@@ -16,8 +16,8 @@ import {
   sortableKeyboardCoordinates,
   verticalListSortingStrategy
 } from "@dnd-kit/sortable";
-import { Plus } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import { ListPlus, Plus } from "lucide-react";
+import { Button } from "@/ui/Button";
 import {
   getOperationIds,
   type OperationListRef,
@@ -85,26 +85,23 @@ export default function OperationPanel({
             ))}
           </SortableContext>
         </DndContext>
-      ) : (
-        isRootList && (
-          <div className="rounded-lg border border-dashed px-4 py-6 text-center">
-            <p className="text-sm font-medium">No steps yet</p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              Most scripts start with “Open page” to load the site you want to
-              scrape.
-            </p>
-          </div>
-        )
-      )}
+      ) : isRootList ? (
+        <div className="flex flex-col items-center gap-1 rounded-box border border-dashed border-tertiary/60 px-6 py-10 text-center">
+          <ListPlus className="mb-1 size-8 text-tertiary" strokeWidth={1.5} />
+          <p className="font-semibold text-secondary">No Steps Yet</p>
+          <p className="max-w-80 text-callout text-secondary">
+            Pick steps from the library on the right. Most scripts start with
+            “Open page” to load the site you want to scrape.
+          </p>
+        </div>
+      ) : null}
       <Button
-        variant="outline"
-        size="sm"
-        className="w-full justify-center gap-2 border-dashed text-muted-foreground hover:text-foreground"
-        title="Add a step"
+        variant="accent"
+        className={isRootList ? "self-center" : "self-start"}
         onClick={handleAddClick}
       >
-        <Plus className="size-4" />
-        Add step
+        <Plus />
+        Add Step
       </Button>
     </div>
   );

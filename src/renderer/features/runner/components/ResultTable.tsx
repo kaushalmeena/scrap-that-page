@@ -1,109 +1,103 @@
-import { ChevronLeft, ChevronRight } from "lucide-react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue
-} from "@/components/ui/select";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow
-} from "@/components/ui/table";
+import { type CSSProperties, type UIEvent, useState } from "react";
+import { cn } from "@/lib/utils";
+import { EmptyState } from "@/ui/EmptyState";
 import type { TableData } from "../types";
-import TableToolbar from "./TableToolbar";
 
-const ROWS_PER_PAGE_OPTIONS = [10, 25, 50];
+const ROW_HEIGHT = 24;
+const OVERSCAN = 10;
 
+/**
+ * NSTableView-style result grid: sticky header, alternating stripes, a row
+ * number gutter, and fixed-height rows that are windowed — only the rows in
+ * view (plus overscan) are rendered, so tens of thousands of scraped rows
+ * scroll as smoothly as ten. Fills its container (give it a height).
+ */
 export default function ResultTable({ data }: { data: TableData }) {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
+  const [scrollTop, setScrollTop] = useState(0);
+  const [viewport, setViewport] = useState(600);
 
-  const pageCount = Math.max(1, Math.ceil(data.rows.length / rowsPerPage));
+  if (data.cols.length === 0) {
+    return <EmptyState title="No Data" message="Extracted values appear here." />;
+  }
 
-  const handleRowsPerPageChange = (value: string) => {
-    setRowsPerPage(+value);
-    setPage(0);
+  const handleScroll = (event: UIEvent<HTMLDivElement>) => {
+    setScrollTop(event.currentTarget.scrollTop);
+    setViewport(event.currentTarget.clientHeight);
   };
 
-  const handlePrevPage = () => setPage(page - 1);
-
-  const handleNextPage = () => setPage(page + 1);
-
-  const pageRows = data.rows.slice(
-    page * rowsPerPage,
-    (page + 1) * rowsPerPage
+  const first = Math.max(0, Math.floor(scrollTop / ROW_HEIGHT) - OVERSCAN);
+  const last = Math.min(
+    data.rows.length,
+    Math.ceil((scrollTop + viewport) / ROW_HEIGHT) + OVERSCAN
   );
 
-  return (
-    <div className="allow-select overflow-hidden rounded-xl border bg-card">
-      <TableToolbar data={data} />
-      <Table>
-        <TableHeader>
-          <TableRow>
-            {data.cols.map((key) => (
-              <TableHead key={`th-${key}`}>{key}</TableHead>
-            ))}
-          </TableRow>
-        </TableHeader>
-        <TableBody>
-          {pageRows.map((row, rowIdx) => (
-            <TableRow key={`tr-${rowIdx}`}>
-              {row.map((item, colIdx) => (
-                <TableCell key={`td-${rowIdx}-${colIdx}`}>
-                  {item || <span className="text-muted-foreground">—</span>}
-                </TableCell>
-              ))}
-            </TableRow>
-          ))}
-        </TableBody>
-      </Table>
-      <div className="flex items-center justify-end gap-4 border-t p-2 text-sm">
-        <span className="text-muted-foreground">Rows per page</span>
-        <Select
-          value={String(rowsPerPage)}
-          onValueChange={handleRowsPerPageChange}
-        >
-          <SelectTrigger size="sm">
-            <SelectValue />
-          </SelectTrigger>
-          <SelectContent>
-            {ROWS_PER_PAGE_OPTIONS.map((option) => (
-              <SelectItem key={`option-${option}`} value={String(option)}>
-                {option}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-        <span>
-          page {page + 1} of {pageCount}
+  const gutter = `${Math.max(3, String(data.rows.length).length) + 2}ch`;
+  const grid: CSSProperties = {
+    gridTemplateColumns: `${gutter} repeat(${data.cols.length}, minmax(160px, 1fr))`
+  };
+
+  const rows = [];
+  for (let index = first; index < last; index += 1) {
+    const row = data.rows[index];
+    rows.push(
+      <div
+        key={index}
+        role="row"
+        style={{ ...grid, top: index * ROW_HEIGHT, height: ROW_HEIGHT }}
+        className={cn(
+          "absolute inset-x-0 grid items-center hover:bg-fill",
+          // Parity from the absolute index so stripes don't flicker as the
+          // rendered window shifts.
+          index % 2 === 1 && "bg-stripe"
+        )}
+      >
+        <span className="pr-2 text-right text-caption text-tertiary tabular-nums">
+          {index + 1}
         </span>
-        <div className="flex items-center gap-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            title="Previous page"
-            disabled={page === 0}
-            onClick={handlePrevPage}
+        {data.cols.map((col, colIdx) => {
+          const value = row[colIdx];
+          return (
+            <span
+              key={col}
+              role="cell"
+              title={value}
+              className="truncate border-l border-separator/60 px-2 text-body"
+            >
+              {value || <span className="text-tertiary">—</span>}
+            </span>
+          );
+        })}
+      </div>
+    );
+  }
+
+  return (
+    <div
+      role="table"
+      onScroll={handleScroll}
+      className="allow-select relative h-full overflow-auto"
+    >
+      <div
+        role="row"
+        style={grid}
+        className="sticky top-0 z-10 grid h-6 min-w-max items-center border-b bg-window/90 backdrop-blur-md"
+      >
+        <span />
+        {data.cols.map((col) => (
+          <span
+            key={col}
+            role="columnheader"
+            className="truncate border-l border-separator/60 px-2 text-callout font-semibold text-secondary"
           >
-            <ChevronLeft className="size-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            title="Next page"
-            disabled={page >= pageCount - 1}
-            onClick={handleNextPage}
-          >
-            <ChevronRight className="size-4" />
-          </Button>
-        </div>
+            {col}
+          </span>
+        ))}
+      </div>
+      <div
+        className="relative min-w-max"
+        style={{ height: data.rows.length * ROW_HEIGHT }}
+      >
+        {rows}
       </div>
     </div>
   );

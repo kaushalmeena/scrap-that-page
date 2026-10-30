@@ -6,14 +6,19 @@ import {
 } from "@common/utils/operation";
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { ChevronDown, Copy, GripVertical, X } from "lucide-react";
+import { ChevronDown, Copy, GripVertical, Trash2 } from "lucide-react";
 import { AnimatePresence, motion } from "motion/react";
-import { useState } from "react";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useEffect, useRef, useState } from "react";
+import { SPRING } from "@/lib/motion";
+import { OPERATION_APPEARANCE } from "@/lib/operationAppearance";
 import { cn } from "@/lib/utils";
-import { OPERATION_ICONS } from "../constants/operationIcons";
-import { type OperationListRef, useEditorStore } from "../store/editorStore";
+import { IconButton } from "@/ui/Button";
+import { Tile } from "@/ui/Tile";
+import {
+  consumeJustAdded,
+  type OperationListRef,
+  useEditorStore
+} from "../store/editorStore";
 import OperationInput from "./OperationInput";
 
 const INPUT_WIDTH_CLASSES: Record<number, string> = {
@@ -22,6 +27,8 @@ const INPUT_WIDTH_CLASSES: Record<number, string> = {
   12: "col-span-12"
 };
 
+// One step as a Shortcuts-style block: tinted glyph, name and a one-line
+// summary; click to expand its fields. Drag by the grip to reorder.
 export default function OperationCard({
   id,
   listRef,
@@ -37,7 +44,9 @@ export default function OperationCard({
     (s) => s.actions
   );
 
-  const [expanded, setExpanded] = useState(false);
+  // Freshly added steps open (and scroll into view) so they can be filled in.
+  const [expanded, setExpanded] = useState(() => consumeJustAdded(id));
+  const cardRef = useRef<HTMLDivElement | null>(null);
 
   const {
     attributes,
@@ -48,146 +57,120 @@ export default function OperationCard({
     isDragging
   } = useSortable({ id });
 
+  // biome-ignore lint/correctness/useExhaustiveDependencies: on mount only
+  useEffect(() => {
+    if (expanded) {
+      cardRef.current?.scrollIntoView({ block: "nearest", behavior: "smooth" });
+    }
+  }, []);
+
   if (!operation) {
     return null;
   }
 
   const handleExpandToggle = () => setExpanded((prev) => !prev);
-
   const handleDuplicateClick = () => duplicateOperation({ listRef, id });
-
   const handleDeleteClick = () => deleteOperation({ listRef, id });
 
   const schema = OPERATION_SCHEMA[operation.type];
   // Until the user fills something in, the format string is all placeholders;
   // show the step description instead so new steps stay self-explanatory.
-  const operationSubheader = hasAnyInputValue(operation.inputs)
+  const summary = hasAnyInputValue(operation.inputs)
     ? replaceFormatWithInputs(schema.format, operation.inputs)
     : schema.description;
 
-  const TypeIcon = OPERATION_ICONS[operation.type];
+  const { Icon, tint } = OPERATION_APPEARANCE[operation.type];
   const invalid = !isOperationValid(operation);
 
   return (
-    <Card
-      ref={setNodeRef}
+    <div
+      ref={(node) => {
+        setNodeRef(node);
+        cardRef.current = node;
+      }}
       style={{ transform: CSS.Transform.toString(transform), transition }}
       className={cn(
-        "gap-0 overflow-hidden py-0",
-        invalid && "border-destructive/50 bg-destructive/5",
-        isDragging && "relative z-10 opacity-60 shadow-lg"
+        "group/card rounded-box bg-control shadow-card",
+        invalid && "shadow-[0_0_0_1px_color-mix(in_srgb,var(--red)_55%,transparent),var(--elev-card)]",
+        isDragging && "relative z-10 shadow-popover"
       )}
     >
-      <div className="flex flex-row items-stretch">
+      <div className="flex items-center gap-1 py-1.5 pr-1.5 pl-0.5">
         <button
           type="button"
+          aria-label="Drag to reorder"
           title="Drag to reorder"
-          className="flex shrink-0 cursor-grab touch-none items-center px-2 text-muted-foreground transition-colors hover:bg-accent active:cursor-grabbing"
+          className="flex h-8 w-5 shrink-0 cursor-grab touch-none items-center justify-center text-tertiary opacity-0 transition-opacity group-hover/card:opacity-100 focus-visible:opacity-100 active:cursor-grabbing"
           {...attributes}
           {...listeners}
         >
-          <GripVertical className="size-4" />
+          <GripVertical className="size-3.5" />
         </button>
         <button
           type="button"
-          className="flex min-w-0 flex-1 cursor-pointer items-center gap-3 py-2.5 pr-3 pl-2 text-left transition-colors hover:bg-accent"
-          title={expanded ? "Hide step settings" : "Edit step settings"}
+          aria-expanded={expanded}
+          className="flex min-w-0 flex-1 items-center gap-2.5 py-0.5 text-left"
           onClick={handleExpandToggle}
         >
-          {/* Fixed-width, right-aligned number so 1/2/3 form an aligned column
-              regardless of step-name length (2.1 etc. for nested steps). */}
-          <span className="min-w-6 shrink-0 text-right text-xs font-medium text-muted-foreground tabular-nums">
-            {number}
-          </span>
-          <span
-            className={cn(
-              "flex size-7 shrink-0 items-center justify-center rounded-md",
-              invalid
-                ? "bg-destructive/10 text-destructive"
-                : "bg-primary/10 text-primary"
-            )}
-          >
-            <TypeIcon className="size-4" />
-          </span>
+          <Tile Icon={Icon} tint={invalid ? "var(--red)" : tint} />
           <span className="min-w-0 flex-1">
-            <span className="block truncate text-sm font-medium">
-              {schema.name}
+            <span className="flex items-baseline gap-1.5">
+              <span className="font-semibold">{schema.name}</span>
+              <span className="text-caption text-tertiary tabular-nums">{number}</span>
             </span>
-            <span className="block truncate text-sm text-muted-foreground">
-              {operationSubheader.trim() || schema.description}
+            <span className="allow-select block truncate text-callout text-secondary">
+              {summary.trim() || schema.description}
             </span>
           </span>
         </button>
-        <div className="flex shrink-0 items-center gap-0.5 pr-2 pl-1">
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-primary"
-            title="Duplicate step"
-            onClick={handleDuplicateClick}
-          >
-            <Copy className="size-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground hover:text-destructive"
-            title="Delete step"
+        <div className="flex items-center opacity-0 transition-opacity group-hover/card:opacity-100 focus-within:opacity-100">
+          <IconButton label="Duplicate Step" onClick={handleDuplicateClick}>
+            <Copy />
+          </IconButton>
+          <IconButton
+            label="Delete Step"
+            className="hover:text-red"
             onClick={handleDeleteClick}
           >
-            <X className="size-4" />
-          </Button>
-          <Button
-            variant="ghost"
-            size="icon"
-            className="text-muted-foreground"
-            title={expanded ? "Hide step settings" : "Edit step settings"}
-            onClick={handleExpandToggle}
-          >
-            <ChevronDown
-              className={cn(
-                "size-4 transition-transform",
-                expanded && "rotate-180"
-              )}
-            />
-          </Button>
+            <Trash2 />
+          </IconButton>
         </div>
+        <IconButton
+          label={expanded ? "Collapse" : "Expand"}
+          onClick={handleExpandToggle}
+        >
+          <ChevronDown
+            className={cn("transition-transform duration-200", expanded && "rotate-180")}
+          />
+        </IconButton>
       </div>
-      {/* Height auto-animation so the settings section slides open/closed
-          instead of snapping. initial={false} skips the animation on mount. */}
       <AnimatePresence initial={false}>
-        {expanded && (
+        {expanded ? (
           <motion.div
-            key="step-settings"
+            key="fields"
             className="overflow-hidden"
             initial={{ height: 0, opacity: 0 }}
             animate={{ height: "auto", opacity: 1 }}
             exit={{ height: 0, opacity: 0 }}
-            transition={{ duration: 0.2, ease: "easeInOut" }}
+            transition={SPRING}
           >
-            <div className="border-t p-4">
-              <div className="grid grid-cols-12 gap-3">
-                {schema.inputs.map((inputSchema, inputIndex) => {
-                  const width =
-                    inputSchema.type === "block" ? 12 : inputSchema.width;
-                  return (
-                    <div
-                      key={`${id}-input-${inputIndex}`}
-                      className={INPUT_WIDTH_CLASSES[width]}
-                    >
-                      <OperationInput
-                        operationId={id}
-                        inputIndex={inputIndex}
-                        numberPrefix={`${number}.`}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+            <div className="grid grid-cols-12 gap-x-3 gap-y-3 border-t px-3 pt-3 pb-3.5">
+              {schema.inputs.map((inputSchema, inputIndex) => {
+                const width = inputSchema.type === "block" ? 12 : inputSchema.width;
+                return (
+                  <div key={`${id}-input-${inputIndex}`} className={INPUT_WIDTH_CLASSES[width]}>
+                    <OperationInput
+                      operationId={id}
+                      inputIndex={inputIndex}
+                      numberPrefix={`${number}.`}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </motion.div>
-        )}
+        ) : null}
       </AnimatePresence>
-    </Card>
+    </div>
   );
 }
