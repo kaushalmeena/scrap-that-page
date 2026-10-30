@@ -1,6 +1,8 @@
 import path from "node:path";
-import { app, BrowserWindow, shell } from "electron";
+import { AppChannel, type ThemeSource } from "@common/types/app";
+import { app, BrowserWindow, ipcMain, nativeTheme, shell } from "electron";
 import Scraper from "./lib/Scraper";
+import { installAppMenu } from "./menu";
 import { connectScraperProxy, disconnectScraperProxy } from "./proxy/scraper";
 
 // Lock a window down: block navigation away from the app's own origin and never
@@ -51,15 +53,22 @@ if (process.env.STP_REMOTE_DEBUG) {
 const createWindow = () => {
   // Create the browser window.
   const mainWindow = new BrowserWindow({
-    width: 1200,
-    height: 700,
-    minWidth: 800,
-    minHeight: 500,
-    // Frameless look on macOS: the traffic lights float over the sidebar and
-    // the renderer marks its own drag regions. Other platforms keep their
-    // native frame.
+    width: 1240,
+    height: 780,
+    minWidth: 860,
+    minHeight: 520,
+    // Native macOS chrome: the traffic lights float over a translucent
+    // sidebar (system vibrancy material) and line up with the renderer's
+    // 52px unified toolbar, which marks its own drag regions. Other
+    // platforms keep their native frame and an opaque window.
     ...(process.platform === "darwin"
-      ? { titleBarStyle: "hiddenInset" as const }
+      ? {
+          titleBarStyle: "hidden" as const,
+          trafficLightPosition: { x: 18, y: 18 },
+          vibrancy: "sidebar" as const,
+          visualEffectState: "followWindow" as const,
+          backgroundColor: "#00000000"
+        }
       : {}),
     webPreferences: {
       preload: path.join(__dirname, "preload.js"),
@@ -80,7 +89,7 @@ const createWindow = () => {
     mainWindow.loadURL(MAIN_WINDOW_VITE_DEV_SERVER_URL);
 
     // Open the DevTools if dev environment
-    mainWindow.webContents.openDevTools();
+    mainWindow.webContents.openDevTools({ mode: "detach" });
   } else {
     mainWindow.loadFile(
       path.join(__dirname, `../renderer/${MAIN_WINDOW_VITE_NAME}/index.html`)
@@ -92,7 +101,22 @@ const createWindow = () => {
 
   // Connect scraper ipcMain handles
   connectScraperProxy(scraper);
+
+  installAppMenu(
+    () => BrowserWindow.getFocusedWindow() ?? mainWindow,
+    (window, command) => window.webContents.send(AppChannel.COMMAND, command)
+  );
 };
+
+const THEME_SOURCES: ThemeSource[] = ["system", "light", "dark"];
+
+// The renderer picks the appearance; mirroring it into nativeTheme keeps the
+// vibrancy material, menus and scrollbars in the same appearance.
+ipcMain.on(AppChannel.SET_THEME, (_, theme: unknown) => {
+  if (THEME_SOURCES.includes(theme as ThemeSource)) {
+    nativeTheme.themeSource = theme as ThemeSource;
+  }
+});
 
 // This method will be called when Electron has finished
 // initialization and is ready to create browser windows.
