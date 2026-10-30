@@ -139,7 +139,7 @@ export default function ScriptEditor({
 
         <div className="flex min-h-0 flex-1">
           <div className="min-w-0 flex-1 overflow-y-auto bg-fill/60 dark:bg-black/20">
-            <div className="mx-auto flex max-w-[720px] flex-col gap-6 px-8 pt-8 pb-24">
+            <div className="mx-auto flex max-w-180 flex-col gap-6 px-8 pt-8 pb-24">
               <ScriptHeader />
               <OperationPanel listRef={ROOT} numberPrefix="" />
             </div>

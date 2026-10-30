@@ -23,7 +23,7 @@ export function Palette({
   return (
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
-        <Dialog.Popup className="fixed top-[16%] left-1/2 z-50 w-[600px] max-w-[calc(100vw-32px)] -translate-x-1/2 overflow-hidden rounded-sheet bg-popover shadow-sheet backdrop-blur-2xl backdrop-saturate-[1.8] transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.2,0.9,0.3,1.1)] outline-none data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.96] data-starting-style:opacity-0">
+        <Dialog.Popup className="fixed top-[16%] left-1/2 z-50 w-150 max-w-[calc(100vw-32px)] -translate-x-1/2 overflow-hidden rounded-sheet bg-popover shadow-sheet backdrop-blur-2xl backdrop-saturate-[1.8] transition-[opacity,scale] duration-150 ease-[cubic-bezier(0.2,0.9,0.3,1.1)] outline-none data-ending-style:scale-[0.98] data-ending-style:opacity-0 data-starting-style:scale-[0.96] data-starting-style:opacity-0">
           <Dialog.Title className="sr-only">{label}</Dialog.Title>
           <Command label={label} loop className="flex flex-col">
             <div className="flex h-12 items-center gap-3 px-4">
@@ -82,7 +82,7 @@ export function PaletteItem({
     <Command.Item
       value={value}
       onSelect={onSelect}
-      className="group flex min-h-9 items-center gap-3 rounded-[8px] px-2.5 py-1.5 outline-none data-[selected=true]:bg-accent data-[selected=true]:text-white"
+      className="group flex min-h-9 items-center gap-3 rounded-lg px-2.5 py-1.5 outline-none data-[selected=true]:bg-accent data-[selected=true]:text-white"
     >
       {icon}
       <span className="min-w-0 flex-1">

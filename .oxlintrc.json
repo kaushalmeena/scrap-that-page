@@ -68,7 +68,8 @@
     "tailwindcss/enforce-consistent-variable-syntax": "error",
     "tailwindcss/enforce-shorthand": "error",
     "tailwindcss/no-unnecessary-whitespace": "error",
-    "tailwindcss/no-hardcoded-colors": "warn"
+    "tailwindcss/no-hardcoded-colors": "warn",
+    "tailwindcss/prefer-scale-token": "error"
   },
   "ignorePatterns": [".vite", "out", "dist", "node_modules", "src/assets"],
   "overrides": [

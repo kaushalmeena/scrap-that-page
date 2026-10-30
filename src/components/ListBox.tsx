@@ -121,7 +121,7 @@ export function ListBox<T>({
 // list's focus state.
 export function listRowClasses({ selected, focused }: ListBoxItemState) {
   return cn(
-    "mx-2 flex items-center gap-2.5 rounded-[7px] px-2 py-[7px]",
+    "mx-2 flex items-center gap-2.5 rounded-[7px] px-2 py-1.75",
     selected && focused && "bg-accent text-white",
     selected && !focused && "bg-fill-strong"
   );

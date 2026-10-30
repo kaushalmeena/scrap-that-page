@@ -53,7 +53,7 @@ export default function Sidebar({ open }: { open: boolean }) {
         style={{ width: SIDEBAR_WIDTH }}
         inert={!open}
       >
-        <div className="h-[52px] shrink-0 app-region-drag" />
+        <div className="h-13 shrink-0 app-region-drag" />
         <nav className="min-h-0 flex-1 overflow-y-auto px-2.5 pb-3">
           <SidebarSection title="Library">
             <SidebarItem

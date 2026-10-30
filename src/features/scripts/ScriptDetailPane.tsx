@@ -101,7 +101,7 @@ export default function ScriptDetailPane() {
       </Toolbar>
 
       <div className="min-h-0 flex-1 overflow-y-auto">
-        <div className="mx-auto flex max-w-[680px] flex-col gap-7 px-8 pt-8 pb-12">
+        <div className="mx-auto flex max-w-170 flex-col gap-7 px-8 pt-8 pb-12">
           <header className="flex items-start gap-4">
             <Tile Icon={Icon} tint={tint} size="large" />
             <div className="min-w-0 flex-1 pt-0.5">

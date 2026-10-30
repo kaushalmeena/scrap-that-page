@@ -13,7 +13,7 @@ export function Spinner({ className }: { className?: string }) {
       {SPOKES.map((i) => (
         <span
           key={i}
-          className="absolute top-0 left-[calc(50%-1px)] h-full w-[2px]"
+          className="absolute top-0 left-[calc(50%-1px)] h-full w-0.5"
           style={{ transform: `rotate(${i * 45}deg)` }}
         >
           <span

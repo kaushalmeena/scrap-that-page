@@ -36,7 +36,7 @@ export function Sheet({
     <Dialog.Root open={open} onOpenChange={onOpenChange}>
       <Dialog.Portal>
         <Dialog.Backdrop className={backdropClasses} />
-        <Dialog.Popup className={cn(popupClasses, "w-[440px] p-5", className)}>
+        <Dialog.Popup className={cn(popupClasses, "w-110 p-5", className)}>
           <Dialog.Title className="text-title3 font-semibold">
             {title}
           </Dialog.Title>
@@ -85,7 +85,7 @@ export function Alert({
         <AlertDialog.Popup
           className={cn(
             popupClasses,
-            "flex w-[260px] flex-col items-center p-4 pt-5 text-center"
+            "flex w-65 flex-col items-center p-4 pt-5 text-center"
           )}
         >
           <Logo className="size-14 rounded-[13px]" />

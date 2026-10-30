@@ -30,7 +30,7 @@ export default function RunLogPanel({ data }: { data: RunLogEntry[] }) {
       {data.map((entry, index) => (
         <div
           key={`${index}-${entry.timestamp}`}
-          className="flex items-baseline gap-3 px-3 py-[3px]"
+          className="flex items-baseline gap-3 px-3 py-0.75"
         >
           <span className="shrink-0 text-tertiary tabular-nums">
             {timeFormat.format(entry.timestamp)}

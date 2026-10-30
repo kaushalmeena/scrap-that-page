@@ -24,10 +24,7 @@ export default function HistoryScreen() {
 
   return (
     <>
-      <div
-        data-pane
-        className="flex w-[300px] shrink-0 flex-col border-r bg-window"
-      >
+      <div data-pane className="flex w-75 shrink-0 flex-col border-r bg-window">
         <Toolbar
           title="History"
           subtitle={runs ? pluralize(runs.length, "run") : undefined}

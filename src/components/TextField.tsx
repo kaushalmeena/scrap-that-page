@@ -13,11 +13,7 @@ export function TextField({ className, ...props }: ComponentProps<"input">) {
 export function TextArea({ className, ...props }: ComponentProps<"textarea">) {
   return (
     <textarea
-      className={cn(
-        fieldClasses,
-        "resize-none py-1.5 leading-[18px]",
-        className
-      )}
+      className={cn(fieldClasses, "resize-none py-1.5 leading-4.5", className)}
       {...props}
     />
   );

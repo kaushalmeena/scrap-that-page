@@ -23,7 +23,7 @@ const buttonVariants = cva(
       size: {
         small: "h-5 rounded-[5px] px-2 text-caption [&_svg]:size-3",
         regular: "h-6 rounded-control px-2.5 text-body [&_svg]:size-3.5",
-        large: "h-8 rounded-[8px] px-3.5 text-body [&_svg]:size-4"
+        large: "h-8 rounded-lg px-3.5 text-body [&_svg]:size-4"
       }
     },
     defaultVariants: { variant: "push", size: "regular" }

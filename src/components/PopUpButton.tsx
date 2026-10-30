@@ -46,19 +46,19 @@ export function PopUpButton({
           placeholder={placeholder}
           className="truncate data-placeholder:text-tertiary"
         />
-        <Select.Icon className="flex size-4 items-center justify-center rounded-[4px] bg-accent text-white">
+        <Select.Icon className="flex size-4 items-center justify-center rounded-sm bg-accent text-white">
           <ChevronsUpDown className="size-3" />
         </Select.Icon>
       </Select.Trigger>
       <Select.Portal>
         <Select.Positioner className="z-50" alignItemWithTrigger>
-          <Select.Popup className="min-w-(--anchor-width) origin-(--transform-origin) rounded-[8px] bg-popover p-[5px] text-body text-label shadow-popover backdrop-blur-xl backdrop-saturate-[1.8] transition-opacity duration-100 data-ending-style:opacity-0">
+          <Select.Popup className="min-w-(--anchor-width) origin-(--transform-origin) rounded-lg bg-popover p-1.25 text-body text-label shadow-popover backdrop-blur-xl backdrop-saturate-[1.8] transition-opacity duration-100 data-ending-style:opacity-0">
             <Select.List>
               {options.map((option) => (
                 <Select.Item
                   key={option.value}
                   value={option.value}
-                  className="relative flex h-[22px] items-center rounded-[4px] pr-3 pl-6 outline-none select-none data-highlighted:bg-accent data-highlighted:text-white"
+                  className="relative flex h-5.5 items-center rounded-sm pr-3 pl-6 outline-none select-none data-highlighted:bg-accent data-highlighted:text-white"
                 >
                   <Select.ItemIndicator className="absolute left-1.5">
                     <Check className="size-3" strokeWidth={3} />

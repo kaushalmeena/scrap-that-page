@@ -79,10 +79,7 @@ export default function LibraryScreen({ filter }: { filter: LibraryFilter }) {
 
   return (
     <LibraryContext value={library}>
-      <div
-        data-pane
-        className="flex w-[300px] shrink-0 flex-col border-r bg-window"
-      >
+      <div data-pane className="flex w-75 shrink-0 flex-col border-r bg-window">
         <Toolbar
           title={TITLES[filter]}
           subtitle={scripts ? pluralize(scripts.length, "script") : undefined}

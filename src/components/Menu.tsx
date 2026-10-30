@@ -8,10 +8,10 @@ import { cn } from "@/utils/cn";
 // material panel with compact rows that fill with the accent on hover. It
 // scales in from its anchor (transform origin) and fades out on close.
 const popupClasses =
-  "min-w-[180px] origin-(--transform-origin) rounded-[8px] bg-popover p-[5px] text-body text-label shadow-popover outline-none backdrop-blur-xl backdrop-saturate-[1.8] transition-[opacity,transform] duration-150 ease-out data-ending-style:opacity-0 data-ending-style:duration-100 data-starting-style:scale-[0.97] data-starting-style:opacity-0";
+  "min-w-45 origin-(--transform-origin) rounded-lg bg-popover p-1.25 text-body text-label shadow-popover outline-none backdrop-blur-xl backdrop-saturate-[1.8] transition-[opacity,transform] duration-150 ease-out data-ending-style:opacity-0 data-ending-style:duration-100 data-starting-style:scale-[0.97] data-starting-style:opacity-0";
 
 const itemClasses =
-  "relative flex h-[22px] items-center gap-2 rounded-[4px] px-2 outline-none select-none data-disabled:opacity-40 data-highlighted:bg-accent data-highlighted:text-white [&_svg]:size-3.5 [&_svg]:shrink-0 [&_svg]:text-secondary data-highlighted:[&_svg]:text-white";
+  "relative flex h-5.5 items-center gap-2 rounded-sm px-2 outline-none select-none data-disabled:opacity-40 data-highlighted:bg-accent data-highlighted:text-white [&_svg]:size-3.5 [&_svg]:shrink-0 [&_svg]:text-secondary data-highlighted:[&_svg]:text-white";
 
 const destructiveClasses = "text-red [&_svg]:text-red data-highlighted:bg-red";
 

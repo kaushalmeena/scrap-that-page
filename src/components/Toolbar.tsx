@@ -24,7 +24,7 @@ export function Toolbar({
     <header
       data-toolbar
       className={cn(
-        "flex h-[52px] shrink-0 items-center gap-2 border-b px-3 app-region-drag",
+        "flex h-13 shrink-0 items-center gap-2 border-b px-3 app-region-drag",
         className
       )}
     >

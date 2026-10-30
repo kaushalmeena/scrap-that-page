@@ -47,7 +47,7 @@ export default function StepOutline({
           </span>
         </div>
         {children.length > 0 ? (
-          <div className="ml-[42px] border-l border-separator pl-1">
+          <div className="ml-10.5 border-l border-separator pl-1">
             <StepOutline operations={children} prefix={`${number}.`} />
           </div>
         ) : null}

@@ -62,7 +62,7 @@ export default function OperationInput({
           <p className="text-caption font-medium text-secondary">
             {inputSchema.label}
           </p>
-          <div className="rounded-[8px] bg-fill/70 p-2">
+          <div className="rounded-lg bg-fill/70 p-2">
             {/* StepList is a stable module-level component from context. */}
             {/* oxlint-disable-next-line react/static-components */}
             <StepList

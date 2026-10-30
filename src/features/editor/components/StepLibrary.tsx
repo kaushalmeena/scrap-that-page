@@ -31,7 +31,7 @@ export default function StepLibrary() {
   });
 
   return (
-    <aside className="flex w-[268px] shrink-0 flex-col border-l bg-window">
+    <aside className="flex w-67 shrink-0 flex-col border-l bg-window">
       <div className="px-3 pt-3 pb-2">
         <SearchField
           value={search}
