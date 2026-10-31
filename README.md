@@ -23,7 +23,7 @@ or copy.
 
 <table>
   <tr>
-    <td width="50%"><img src="screenshots/Run.png" alt="A finished run with its results table and log, in dark appearance"></td>
+    <td width="50%"><img src="screenshots/Settings.png" alt="Settings"></td>
     <td width="50%"><img src="screenshots/Editor.png" alt="Script editor with step blocks and the step library"></td>
   </tr>
   <tr>
@@ -41,7 +41,7 @@ or copy.
     <td width="50%"><img src="screenshots/Palette.png" alt="Command palette"></td>
   </tr>
   <tr>
-    <td width="50%"><img src="screenshots/Settings.png" alt="Settings"></td>
+    <td width="50%"><img src="screenshots/Run.png" alt="A finished run with its results table and log, in dark appearance"></td>
     <td width="50%"></td>
   </tr>
 </table>
