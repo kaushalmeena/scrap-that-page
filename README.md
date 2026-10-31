@@ -27,8 +27,8 @@ or copy.
     <td width="50%"><img src="screenshots/Editor.png" alt="Script editor with step blocks and the step library"></td>
   </tr>
   <tr>
+    <td width="50%"><img src="screenshots/ControlFlow.png" alt="A while loop collecting quotes and authors from three pages with a {{page}} variable"></td>
     <td width="50%"><img src="screenshots/Export.png" alt="Exporting run results as CSV, JSON or an Excel workbook"></td>
-    <td width="50%"><img src="screenshots/History.png" alt="Run history with saved results"></td>
   </tr>
 </table>
 
@@ -37,8 +37,12 @@ or copy.
 
 <table>
   <tr>
+    <td width="50%"><img src="screenshots/History.png" alt="Run history with saved results"></td>
     <td width="50%"><img src="screenshots/Palette.png" alt="Command palette"></td>
+  </tr>
+  <tr>
     <td width="50%"><img src="screenshots/Settings.png" alt="Settings"></td>
+    <td width="50%"></td>
   </tr>
 </table>
 
