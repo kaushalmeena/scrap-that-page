@@ -119,11 +119,24 @@ describe("getRunnerTableData", () => {
     expect(second.rows[2][0]).toBeUndefined();
   });
 
-  it("overwrites an existing column with the same name", () => {
+  it("appends to an existing column with the same name", () => {
     const first = getRunnerTableData(extractResult("title", ["a"]));
     const second = getRunnerTableData(extractResult("title", ["q"]), first);
     expect(second.cols).toEqual(["title"]);
-    expect(second.rows[0]).toEqual(["q"]);
+    expect(second.rows).toEqual([["a"], ["q"]]);
+  });
+
+  it("keeps paired columns aligned across loop iterations", () => {
+    let table = getRunnerTableData(extractResult("quote", ["q1", "q2"]));
+    table = getRunnerTableData(extractResult("author", ["a1", "a2"]), table);
+    table = getRunnerTableData(extractResult("quote", ["q3", "q4"]), table);
+    table = getRunnerTableData(extractResult("author", ["a3", "a4"]), table);
+    expect(table.rows).toEqual([
+      ["q1", "a1"],
+      ["q2", "a2"],
+      ["q3", "a3"],
+      ["q4", "a4"]
+    ]);
   });
 });
 

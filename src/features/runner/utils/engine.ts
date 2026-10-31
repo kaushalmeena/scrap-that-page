@@ -189,15 +189,15 @@ export function* createRunnerGenerator(
 }
 
 // Merges one extract result into the accumulating table. Columns are keyed by
-// the extract's name (reused if already present, otherwise appended) and rows
-// are filled by index, so repeated extracts into the same column overwrite and
-// longer results grow the table.
+// the extract's name (reused if already present, otherwise appended). Each
+// column fills from its first row after its last value, so an extract repeated
+// in a loop (one per page) appends instead of overwriting, and longer results
+// grow the table.
 export const getRunnerTableData = (
   result: ExtractOperationResult,
   oldTableData?: TableData | null
 ): TableData =>
   produce(oldTableData || INITIAL_TABLE_DATA, (draft) => {
-    let rowIdx = 0;
     let colIdx = draft.cols.indexOf(result.name);
 
     if (colIdx === -1) {
@@ -206,16 +206,16 @@ export const getRunnerTableData = (
       colIdx = draft.cols.push(result.name) - 1;
     }
 
-    while (rowIdx < draft.rows.length && rowIdx < result.data.length) {
-      draft.rows[rowIdx].splice(colIdx, 1, result.data[rowIdx]);
+    let rowIdx = draft.rows.findLastIndex((row) => row[colIdx] !== undefined);
+    for (const value of result.data) {
       rowIdx += 1;
-    }
-
-    while (rowIdx < result.data.length) {
-      const row = [];
-      row[colIdx] = result.data[rowIdx];
-      draft.rows.push(row);
-      rowIdx += 1;
+      if (rowIdx < draft.rows.length) {
+        draft.rows[rowIdx][colIdx] = value;
+      } else {
+        const row = [];
+        row[colIdx] = value;
+        draft.rows.push(row);
+      }
     }
   });
 
