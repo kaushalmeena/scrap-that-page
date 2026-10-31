@@ -55,4 +55,10 @@ describe("validateWithRules", () => {
   it("returns empty string when all rules pass", () => {
     expect(validateWithRules("https://example.com", rules)).toBe("");
   });
+
+  it("accepts URLs with {{variable}} placeholders", () => {
+    expect(
+      validateWithRules("https://quotes.toscrape.com/page/{{page}}/", rules)
+    ).toBe("");
+  });
 });
