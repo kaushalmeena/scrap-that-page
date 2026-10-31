@@ -22,10 +22,10 @@ const extract = (
   inputs: [text(name), text(selector), select(attribute)]
 });
 
-const mostPopularMovies: Script = {
+const popularMovies: Script = {
   favorite: false,
-  name: "Most Popular Movies",
-  description: "Fetches list of popular movies from IMDb",
+  name: "Popular Movies",
+  description: "Popular movie titles from IMDb's MovieMeter chart",
   operations: [
     open("https://www.imdb.com/chart/moviemeter/"),
     extract("Title", "li .ipc-title__text")
@@ -85,7 +85,7 @@ const hackerNews: Script = {
 
 // Insertion order: the library lists newest first, so the last is on top.
 export const SEED_SCRIPTS: Script[] = [
-  mostPopularMovies,
+  popularMovies,
   quotesByTag,
   githubTrending,
   bookPrices,
